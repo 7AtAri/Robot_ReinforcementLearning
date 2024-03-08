@@ -1,6 +1,11 @@
-The solution presented in the paper achieves a better solution compared to previous solutions for the problem of free gait generation, 
-continuous improvement of gaits, and adaptation to unexpected conditions, such as a rear-leg deficiency, for a six-legged robot. 
-The novel approach combines the methods of free gait generation with reinforcement learning, effectively addressing several key challenges:
+### Drawbacks of Previous Solutions
+
+- Limited adaptability (dependence on pre-programmed behaviors)
+- No mechanism for continuous improvement in real-time applications
+- Challenges in real-time RL due to computational and practical complexities.
+
+
+The integration of free gait generation with reinforcement learning addresses some limitations of earlier methods: 
 
 1. **Continuous Improvement and Adaptation**: The reinforcement learning component allows for the continuous improvement of gaits based on stability margins. This leads to the robot adapting more stable gaits over time, enhancing its walking efficiency and stability, even under normal conditions without external effects of instability.
 
@@ -10,11 +15,7 @@ The novel approach combines the methods of free gait generation with reinforceme
 
 4. **Real Robot Application**: Unlike many previous solutions that were confined to simulations or theoretical models, the FGGRL algorithm is successfully implemented and tested on the actual Robot-EA308. This application to a real-world scenario demonstrates the practical viability of the solution.
 
-### Drawbacks of Previous Solutions
-Previous solutions, while valuable, had limitations such as:
-- Limited adaptability and lack of a mechanism for continuous improvement, especially in real-time applications.
-- Dependence on pre-programmed behaviors or offline learning, which restricted the robot's ability to adapt dynamically to new environments or changes in its own physical condition.
-- Challenges in applying reinforcement learning directly to robots in real-time due to computational and practical complexities.
 
-### Conclusion
-The approach taken in the paper represents a substantial advancement in the field of robotic gait generation, particularly for six-legged robots. By effectively integrating free gait generation with reinforcement learning, the solution not only addresses the limitations of previous approaches but also demonstrates enhanced adaptability, stability, and practical applicability to real-world scenarios.
+conclusion: the FGGRL algorithm provides a better solution in terms of adaptability, stability, efficiency, and practical applicability compared to previous approaches.
+
+
