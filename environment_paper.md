@@ -24,6 +24,11 @@ This function rewards transitions that lead to a state with a stability margin g
 
 $$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
 
+6. **Evaporation Mechanism (Discounting Over Time)**:
+$$ u_{P(n) \to P(n+1)} := β * u_{P(n) \to P(n+1)} $$
+
+This formula represents the evaporation mechanism where $\beta = 0.9 $ acts similarly to a discount factor but is applied across all utilities globally at regular intervals (e.g., after each iteration or epoch), rather than being tied to the calculation of future rewards as in traditional reinforcement learning models.
+
 ### Decision Process for Actions
 The next state is chosen based on the memorized transitions with the highest utility or by generating a new state through the free gait generation algorithm. The probability of using a memorized transition is proportional to the utilities of the available transitions from the current state.
 
