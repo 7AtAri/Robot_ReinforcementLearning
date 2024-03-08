@@ -19,7 +19,21 @@ Where $\(sm_{n+1}\)$ is the stability margin of the next state $\(P(n+1)\)$, and
 
 4. **Policy (π)**: The policy is a strategy that the learning algorithm uses to decide the actions to take based on the current state. It aims to maximize the cumulative reward. The FGGRL (Free Gait Generation with Reinforcement Learning) dynamically updates the policy based on the observed rewards, utilizing reinforcement learning to favor transitions that have historically led to stable and efficient gaits.
 
-5. **Learning Mechanism**: The learning mechanism updates the utilities (values) of state transitions based on the reinforcement signals received after each action. The utilities are used to inform the selection of actions (state transitions) in future iterations, favoring those that lead to higher rewards. The update rule for the utility $\(u_{P(n) \rightarrow P(n+1)}\)$ of transitioning from state $\(P(n)\)$ to $\(P(n+1)\)$ is influenced by the received reward $\(r_{sm}(n)\)$ and a discount factor $\(\gamma\)$, emphasizing the importance of recent transitions over older ones.
+5. **Learning Mechanism**: The learning mechanism updates the utilities (values) of state transitions based on the reinforcement signals received after each action. The utilities are used to inform the selection of actions (state transitions) in future iterations, favoring those that lead to higher rewards. The update rule for the utility $\(u_{P(n) \rightarrow P(n+1)}\)$ of transitioning from state $\(P(n)\)$ to $\(P(n+1)\)$ is influenced by the received reward $\(r_{sm}(n)\)$ and a discount factor $\(\gamma\)$, emphasizing the importance of recent transitions over older ones. P(n) is initialized to 0.5.
 
 $$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
+
+### Decision Process for Actions
+The next state is chosen based on the memorized transitions with the highest utility or by generating a new state through the free gait generation algorithm. The probability of using a memorized transition is proportional to the utilities of the available transitions from the current state.
+
+### Handling Rear-Leg Deficiency
+For the case of rear-leg deficiency, the learning process focuses on finding quasi-statically stable transitions, adjusting the reward function to reflect the ability to maintain stability despite the deficiency.
+This mathematical framework forms the basis of the reinforcement learning environment used for free gait generation and adaptation in a six-legged robot, allowing the robot to learn and improve its walking patterns dynamically.
+
+
+1 + \frac{e^{(7 - sm_{n+1})} - 1}{2 + e^{(7 - sm_{n+1})} - 1.5} & \text{if } sm_{n+1} \geq 7 \\
+-1.5 & \text{otherwise}
+\end{cases} 
+
+
 
