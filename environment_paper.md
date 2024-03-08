@@ -21,11 +21,5 @@ Where $\(sm_{n+1}\)$ is the stability margin of the next state $\(P(n+1)\)$, and
 
 5. **Learning Mechanism**: The learning mechanism updates the utilities (values) of state transitions based on the reinforcement signals received after each action. The utilities are used to inform the selection of actions (state transitions) in future iterations, favoring those that lead to higher rewards. The update rule for the utility $\(u_{P(n) \rightarrow P(n+1)}\)$ of transitioning from state $\(P(n)\)$ to $\(P(n+1)\)$ is influenced by the received reward $\(r_{sm}(n)\)$ and a discount factor $\(\gamma\)$, emphasizing the importance of recent transitions over older ones.
 
+$$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
 
-The reinforcement signal in the paper, designed to adapt and improve the robot's gait, particularly for enhancing its stability margin, is given as follows:
-
-
-
-where \(r_{\text{sm}}(n)\) is the reinforcement signal after the \(n\)th iteration, and \(sm_{n+1}\) is the stability margin of the next state \(P(n+1)\). 
-
-This formula was designed to issue a reward based on the stability margin of the robot's gait, with the goal of incentivizing higher stability margins. The use of the exponential function ensures a smooth transition of reward values around the critical stability margin threshold, encouraging the robot to seek gaits with stability margins close to or above this threshold.
