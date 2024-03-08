@@ -12,7 +12,7 @@ $$\[r_{sm}(n) = \left\{
   1 + \frac{e^{(7-sm_{n+1})} - 1}{2 + e^{(7-sm_{n+1})} - 1.5} & \text{if } sm_{n+1} \geq 7 \\
   -1.5 & \text{otherwise}
   \end{array}
-\right\} \]$$
+\right \} \]$$
 
 
 
