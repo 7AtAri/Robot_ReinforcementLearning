@@ -7,15 +7,17 @@ The reinforcement learning environment described in the paper for a six-legged r
 3. **Reward Function (R)**: The reward \(r\) is assigned after each transition based on the stability margin of the resulting state and the commanded velocity. The reward function aims to encourage transitions to states with larger stability margins and penalize transitions that lead to falls or unstable configurations. The reward \(r_{sm}(n)\) for moving from state \(P(n)\) to \(P(n+1)\) at iteration \(n\) is calculated as:
 
 ```math
+
 \[r_{sm}(n) = \left\{
   \begin{array}{ll}
   1 + \frac{e^{(7-sm_{n+1})} - 1}{2 + e^{(7-sm_{n+1})} - 1.5} & \text{if } sm_{n+1} \geq 7 \\
   -1.5 & \text{otherwise}
   \end{array}
 \right\} \]
+
 ```math
 
-   Where \(sm_{n+1}\) is the stability margin of the next state \(P(n+1)\), and \(7\) is a nominal value for a desirable stability margin.
+Where \(sm_{n+1}\) is the stability margin of the next state \(P(n+1)\), and \(7\) is a nominal value for a desirable stability margin.
 
 4. **Policy (π)**: The policy is a strategy that the learning algorithm uses to decide the actions to take based on the current state. It aims to maximize the cumulative reward. The FGGRL (Free Gait Generation with Reinforcement Learning) dynamically updates the policy based on the observed rewards, utilizing reinforcement learning to favor transitions that have historically led to stable and efficient gaits.
 
