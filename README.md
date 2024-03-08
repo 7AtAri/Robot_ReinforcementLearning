@@ -3,7 +3,7 @@
 
 ## Paper: 6-legged Robot
 
-- [ ] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
+- [x] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
       
 Presentation of the paper:
 
