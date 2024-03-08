@@ -25,7 +25,7 @@ This function rewards transitions that lead to a state with a stability margin g
 $$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
 
 6. **Evaporation Mechanism (Discounting Over Time)**:
-$$ u_{P(n) \to P(n+1)} := β * u_{P(n) \to P(n+1)} $$
+$$ u_{P(n) \to P(n+1)} := β * (u_{P(n) \to P(n+1)}) $$
 
 This formula represents the evaporation mechanism where $\beta = 0.9 $ acts similarly to a discount factor but is applied across all utilities globally at regular intervals (e.g., after each iteration or epoch), rather than being tied to the calculation of future rewards as in traditional reinforcement learning models.
 
