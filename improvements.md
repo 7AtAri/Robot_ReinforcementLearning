@@ -1,12 +1,12 @@
 ## The paper suggests several areas for further changes and improvements:
 
-1. **Handling "On-the-Border" Situations**: The main difference between applying reinforcement learning in simulations 
+1. **"On-the-Border" Situations**: The main difference between applying reinforcement learning in simulations 
 vs real robot scenarios is the challenge of "on-the-border" situations. 
 These situations occur when the robot is not clearly stable or unstable, which complicates the learning process. 
 The binary nature of the reinforcement signal in the simulation (the robot either falls or does not) 
 does not capture the complexities of these situations.
 
-2. **Developing a Continuous Reinforcement Signal**: Therefor a proposed improvement involves developing a reinforcement signal 
+2. **Continuous Reinforcement Signal**: Therefor a proposed improvement involves developing a reinforcement signal 
 that can represent continuous stability values, rather than the binary signal used in the current approach. 
 This enhancement would provide a more granular feedback on the robot's performance and thereby help avoiding states that lead to instability.
 
