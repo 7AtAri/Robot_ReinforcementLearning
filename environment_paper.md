@@ -25,9 +25,10 @@ This function rewards transitions that lead to a state with a stability margin g
 $$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
 
 6. **Evaporation Mechanism (Discounting Over Time)**:
+   
 $$ u_{P(i) \to P(i+1)} := \beta \cdot u_{P(i) \to P(i+1)} $$
 
-This formula represents the evaporation mechanism where $\beta = 0.9 $ acts similarly to a discount factor but is applied across all utilities globally at regular intervals (e.g., after each iteration or epoch), rather than being tied to the calculation of future rewards as in traditional reinforcement learning models.
+This formula represents the evaporation mechanism where $\beta$  = 0.9 acts similarly to a discount factor but is applied across all utilities globally at regular intervals (e.g., after each iteration or epoch), rather than being tied to the calculation of future rewards as in traditional reinforcement learning models.
 The purpose of this mechanism is to gradually decrease the value of all stored utilities over time, effectively reducing the importance of older transitions and making the algorithm more responsive to new experiences. $\beta$ is set to 0.9, indicating that after each iteration, 90% of each utility value is retained, and 10% is "evaporated."
 
 The key distinction here is that $\gamma$ directly influences how much new reward observations affect the utility of a specific transition, focusing on the integration of new knowledge. In contrast, $\beta$ serves as a mechanism for forgetting or de-emphasizing older information across all transitions, ensuring that the learning process does not become overly reliant on historical data that may no longer be relevant. Both parameters are crucial for balancing exploration and exploitation, as well as adapting to changing conditions or objectives within the learning environment.
