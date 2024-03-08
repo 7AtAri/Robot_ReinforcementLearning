@@ -4,15 +4,14 @@ The authors are testing:
 This algorithm incorporates both free gait generation (FGG) and reinforcement learning (RL) 
 to improve gait stability and adaptability, particularly focusing on challenges such as leg deficiencies.
 
-
 ### Key Aspects of FGGRL
 
 - **Free Gait Generation (FGG)**: This component is responsible for generating stable free states for the robot's movement, 
-ensuring that the gait is statically stable based on the "rule of neighborhood." 
+ensuring that the gait is statically stable based on the "rule of neighborhood".
 This rule guarantees that if a leg is lifted, both neighboring legs must be supporting, ensuring stability.
 
-- **Reinforcement Learning (RL)**: RL is utilized to learn the optimal transitions between states, 
-improving the gait stability over time. It focuses on maximizing the reward, 
+- **Reinforcement Learning (RL)**: RL is utilized to learn the optimal transitions between states,
+improving the gait stability over time. It focuses on maximizing the reward,
 which is tied to the stability margin of the robot's gait, and adapting to new conditions such as speed changes or leg deficiencies.
 
 ### Evaluation of the Algorithm Choice
