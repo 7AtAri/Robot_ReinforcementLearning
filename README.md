@@ -4,15 +4,20 @@
 ## Paper: 6-legged Robot
 
 - [x] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
+- [ ] take [notes](https://docs.google.com/document/d/1rnW2lWlUQMY4ahw68WoXD42BBrlzWxlGkcxe9iR7dCI/edit)
       
 Presentation of the paper:
 
-- [ ] What is the problem? Describe the environment using mathematics
+- [ ] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
+
+Questions:
+
+- [ ] What is the problem? Describe the environment using mathematics (Ari)
 - [ ] How has the problem be solved so far? What are the drawbacks of that solution?
 - [ ] Why can RL solve the problem in a better manner?
 - [ ] What are the metrics? When is a solution good enough for that problem?
-- [ ] Which Algorithms are the authors testing? Are they a good choice?
-- [ ] Do they achieve a better solution compared to the previous solutions?
+- [ ] Which Algorithms are the authors testing? Are they a good choice? 
+- [ ] Do they achieve a better solution compared to the previous solutions? (Ari)
 - [ ] What could be changed / improved (in our opinion)?
 - [ ] A few simulations that confirm our proposals for improvement
 
