@@ -1,8 +1,8 @@
 # Observation Space
 
-x Dimension: [−0.03, 0.03] m
-y Dimension: [−0.03, 0.03] m
-z Dimension: [0, 0.1] m
+- x Dimension: [−0.03, 0.03] m
+- y Dimension: [−0.03, 0.03] m
+- z Dimension: [0, 0.1] m
 
 The voxel space can be described by a 3-dim np.array.
 
