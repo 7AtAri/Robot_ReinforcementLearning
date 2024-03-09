@@ -12,18 +12,22 @@ Steps:
 
 For each joint, calculate its transformation matrix using its D-H parameters $a_i, d_i,\alpha_i$ and $\theta_i$. The transformation matrix for a joint **i** is given by:
 
-$T_i = \begin{bmatrix}
+```math
+T_i = \begin{bmatrix}
 \cos(\theta_i) & -\sin(\theta_i)\cos(\alpha_i) & \sin(\theta_i)\sin(\alpha_i) & a_i\cos(\theta_i) \\
 \sin(\theta_i) & \cos(\theta_i)\cos(\alpha_i) & -\cos(\theta_i)\sin(\alpha_i) & a_i\sin(\theta_i) \\
 0 & \sin(\alpha_i) & \cos(\alpha_i) & d_i \\
 0 & 0 & 0 & 1
-\end{bmatrix}$
+\end{bmatrix}
+```
 
 ## 2: Multiply Transformation Matrices
 
 Multiply all individual transformation matrices in sequence from the base to the TCP to get the overall transformation matrix $T_{TCP}$:
 
-$T_{TCP} = T_1 \cdot T_2 \cdot T_3 \cdot T_4 \cdot T_5 \cdot T_6$
+```math
+T_{TCP} = T_1 \cdot T_2 \cdot T_3 \cdot T_4 \cdot T_5 \cdot T_6
+```
 
 ## 3: Extract Position and Orientation
 
