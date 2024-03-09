@@ -24,10 +24,10 @@ parameters:
 - \(c\): A constant, representing a height offset (c = 0)
 - \(t\): The parameter \(t\) ranges from 0 to 2 for 2 complete turns
 
-$
+```math
 \vec{x}(t) = \begin{pmatrix}
 0.03 \cdot \cos(2\pi \cdot t) \\
 0.03 \cdot \sin(2\pi \cdot t) \\
 0.05 \cdot t
 \end{pmatrix}
-$
+```
