@@ -54,3 +54,16 @@ The starting position of the TCP corresponds to the value of $\vec{x}(t)$ at t=0
 0
 \end{pmatrix}
 ```
+
+### Defining Constant Orientation
+
+We have to set a constant orientation according to the task.
+
+Possible simple orientation: the TCP is always pointing downwards with its z-axis (like for 3D printing or vertical drilling).
+This would correspond to the following orientation:
+
+    Roll (α) = 0° (no rotation about the TCP's x-axis)
+    Pitch (β) = 0° (no rotation about the TCP's y-axis)
+    Yaw (γ) = 0° (no rotation about the TCP's z-axis -> if z-axis of the TCP aligns with the z-axis of the global coordinate system at the starting position)
+
+
