@@ -31,3 +31,20 @@ parameters:
 0.05 \cdot t
 \end{pmatrix}
 ```
+
+## Starting Position of the TCP
+
+The starting position of the TCP is at the value of $\vec{x}(t)$ at t=0.
+This is at the beginning of the trajectory:
+
+```math
+\vec{x}(0) = \begin{pmatrix}
+0.03 \cdot \cos(2\pi \cdot 0) \\
+0.03 \cdot \sin(2\pi \cdot 0) \\
+0.05 \cdot 0
+\end{pmatrix} = \begin{pmatrix}
+0.03 \\
+0 \\
+0
+\end{pmatrix}
+```

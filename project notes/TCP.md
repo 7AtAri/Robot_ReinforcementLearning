@@ -38,3 +38,19 @@ T_{TCP} = T_1 \cdot T_2 \cdot T_3 \cdot T_4 \cdot T_5 \cdot T_6
   - **Roll (α)**: The rotation about the x-axis can be calculated as $\alpha = \text{atan2}(R_{32}, R_{33})$
   - **Pitch (β)**: The rotation about the y-axis can be calculated as $\beta = \text{atan2}(-R_{31}, \sqrt{R_{32}^2 + R_{33}^2})$
   - **Yaw (γ)**: The rotation about the z-axis can be calculated as $\gamma = \text{atan2}(R_{21}, R_{11})$
+
+### Starting Point of the TCP
+
+The starting position of the TCP corresponds to the value of $\vec{x}(t)$ at t=0 , which represents the beginning of the trajectory:
+
+```math
+\vec{x}(0) = \begin{pmatrix}
+0.03 \cdot \cos(2\pi \cdot 0) \\
+0.03 \cdot \sin(2\pi \cdot 0) \\
+0.05 \cdot 0
+\end{pmatrix} = \begin{pmatrix}
+0.03 \\
+0 \\
+0
+\end{pmatrix}
+```
