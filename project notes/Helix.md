@@ -19,10 +19,10 @@ We choose, that each turn of the helix raises h=0.05 meters (5 cm). This leads t
 
 parameters:
 
-- \(r\): Radius of the helix (r = 3cm)
-- \(h\): The height per turn of the helix (h = 5cm)
-- \(c\): A constant, representing a height offset (c = 0)
-- \(t\): The parameter \(t\) ranges from 0 to 2 for 2 complete turns
+- r: Radius of the helix (r = 3cm)
+- h: The height per turn of the helix (h = 5cm)
+- c: A constant, representing a height offset (c = 0)
+- t: The parameter t ranges from 0 to 2 for 2 complete turns
 
 ```math
 \vec{x}(t) = \begin{pmatrix}
