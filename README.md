@@ -13,9 +13,9 @@ Presentation of the paper:
 Questions:
 
 - [ ] What is the problem? Describe the environment using mathematics (Ari)
-- [ ] How has the problem be solved so far? What are the drawbacks of that solution?
+- [ ] How has the problem been solved so far? What are the drawbacks of that solution?
 - [ ] Why can RL solve the problem in a better manner?
-- [ ] What are the metrics? When is a solution good enough for that problem?
+- [ ] What are the metrics (figures of merit)? When is a solution good enough for that problem?
 - [ ] Which Algorithms are the authors testing? Are they a good choice? 
 - [ ] Do they achieve a better solution compared to the previous solutions? (Ari)
 - [ ] What could be changed / improved (in our opinion)?
