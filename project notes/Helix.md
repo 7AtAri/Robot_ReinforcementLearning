@@ -7,13 +7,11 @@ To define a 3D trajectory mathematically one needs to use the equation of a heli
 
 mathematical representation of a helix:
 
-$
-\vec{x}(t) = \begin{pmatrix}
+$\vec{x}(t) = \begin{pmatrix}
 r \cdot \cos(2\pi t) \\
 r \cdot \sin(2\pi t) \\
 h \cdot t + c
-\end{pmatrix}
-$
+\end{pmatrix}$
 
 We choose, that each turn of the helix raises h=0.05 meters (5 cm). This leads to a total ascent of 0.1 meters for 2 turns. We assume **c = 0** for simplicity and define the trajectory:
 
