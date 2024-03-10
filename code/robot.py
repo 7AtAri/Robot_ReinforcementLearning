@@ -5,7 +5,6 @@
 ###
 
 
-
 import numpy as np
 
 # 1.) Define the observation space:
