@@ -24,11 +24,11 @@ Questions:
 
 ## Project: 6-joint Robot Arm
 
-- [ ] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
-- [ ] [notes on the task](https://docs.google.com/document/d/1-oN-ch47fVDCPkOF1WOgRCZygJi9Pc00SBXlcemRMhU/edit?usp=sharing) 
+- [x] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
+- [x] [notes on the task](https://docs.google.com/document/d/1-oN-ch47fVDCPkOF1WOgRCZygJi9Pc00SBXlcemRMhU/edit?usp=sharing) 
 
-- [ ]	Define the 3D-trajectory mathematically.
-- [ ]	Define the Observation Space in the form of the voxel where the trajectory will be.
+- [x]	Define the 3D-trajectory mathematically.
+- [x]	Define the Observation Space in the form of the voxel where the trajectory will be.
 - [ ] Code the Environment with the given direct kinematics and the constraints of the join angles and the chosen voxel.
       Define a suitable Reward Function for the Agent,
       as well as the strategy how to deal with occasions where the TCP leaves the trajectory and/or the voxel.
