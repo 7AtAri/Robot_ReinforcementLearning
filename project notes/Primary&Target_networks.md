@@ -31,13 +31,14 @@ The policy improvement occurs during the learning phase in the `learn` method. H
 1. **Sampling from Replay Memory**: The agent samples a batch of experiences (state, action, reward, next_state, done) from the replay memory. These experiences are used to update the Q-network.
 
 2. **Calculating Target Q-values**: For each experience in the batch, the agent calculates the target Q-value using the reward from the experience and the predicted Q-values from the target network for the next state. The target Q-value for a state-action pair \((s, a)\) is computed as:
-   $
+
+```math
    \text{target} = r + \gamma \max_{a'} Q_{\text{target}}(s', a')
-   $
+```
    where $r$ is the reward, $\gamma$ is the discount factor, $s'$ is the next state, and $\max_{a'} Q_{\text{target}}(s', a')$ is the maximum Q-value predicted by the target network for the next state. This represents the Bellman equation for the Q-value, aiming to approximate the optimal policy.
 
-3. **Updating the Q-network**: The agent then updates the Q-network (the model) to minimize the difference (loss) between its current Q-value predictions and these target Q-values. The loss function used is often Mean Squared Error (MSE) or Huber loss. By minimizing this loss, the Q-network learns to predict Q-values that are closer to the true Q-values of the optimal policy.
+4. **Updating the Q-network**: The agent then updates the Q-network (the model) to minimize the difference (loss) between its current Q-value predictions and these target Q-values. The loss function used is often Mean Squared Error (MSE) or Huber loss. By minimizing this loss, the Q-network learns to predict Q-values that are closer to the true Q-values of the optimal policy.
 
-4. **Synchronizing the Target Network**: Periodically, the weights of the Q-network are copied to the target network. This step ensures that the target Q-values used for training gradually adapt as the Q-network learns and improves.
+5. **Synchronizing the Target Network**: Periodically, the weights of the Q-network are copied to the target network. This step ensures that the target Q-values used for training gradually adapt as the Q-network learns and improves.
 
 The policy is implicitly improved through this learning process. As the Q-network gets better at predicting Q-values that reflect the true value of taking actions in different states, the action selection (exploitation part of the epsilon-greedy strategy) naturally becomes more effective, leading to a better policy. This iterative process of policy evaluation (predicting Q-values) and policy improvement (updating the network based on better target Q-values) underlies many reinforcement learning algorithms, including DQN.
