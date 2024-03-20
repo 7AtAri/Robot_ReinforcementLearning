@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from collections import deque # queue for efficiently adding and removing elements from both ends
-import gym
+import gymnasium as gym
 
 
 

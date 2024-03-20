@@ -39,12 +39,3 @@ The next state is chosen based on the memorized transitions with the highest uti
 ### Handling Rear-Leg Deficiency
 For the case of rear-leg deficiency, the learning process focuses on finding quasi-statically stable transitions, adjusting the reward function to reflect the ability to maintain stability despite the deficiency.
 This mathematical framework forms the basis of the reinforcement learning environment used for free gait generation and adaptation in a six-legged robot, allowing the robot to learn and improve its walking patterns dynamically.
-
-
-
-
-
-
-
-
-
