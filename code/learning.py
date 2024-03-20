@@ -88,7 +88,8 @@ class DQNAgent:
         # set optimizer for updating the online network
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
     
-    def act(self, state, epsilon=0.1):
+    # todo: eventually rather implement epsilon decay
+    def act(self, state, epsilon=0.1): 
         # select action according to epsilon-greedy policy
         if random.random() > epsilon: 
             # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
@@ -150,29 +151,36 @@ if __name__ == "__main__":
     agent = DQNAgent(state_size, action_size)
     num_episodes = 30 # start with low number and raise ...of use as hyperparameter
     visualization_rate = 10 # how often to visualize the environment
+    terminated = False # True if the agent leaves the trajectory of the helix
 
     for episode in range(num_episodes):
-        state = env.reset()  # Reset the environment for a new episode
-        state = np.reshape(state, [1, state_size])  # Reshape state for compatibility with DQNAgent
+        state = env.reset()[0]  # reset the environment to state 0
+        state = np.reshape(state, [1, state_size])  # reshape state for compatibility with DQNAgent
         
-        done = False
         total_reward = 0
+        rewards_per_episode = []
+        #epsilon_history = []
 
-        while not done:
-            action = agent.act(state)  # Select action according to policy
-            next_state, reward, done, _ = env.step(action)  # Take action in environment
+        while not terminated:
+            action = agent.act(state)  # select action according to epsilon-greedy policy
+            next_state, reward, terminated, _ = env.step(action)  # take action in environment
             next_state = np.reshape(next_state, [1, state_size])
             
-            # Store the transition in replay memory
-            agent.memory.push(state, action, reward, next_state, done)
+            # store transition in memory
+            agent.memory.push(state, action, reward, next_state, terminated)
             
-            state = next_state  # Move to the next state
+            state = next_state  # move to the next state
             total_reward += reward
+            if reward == 1:
+                rewards_per_episode.append(1)
+
+                agent.learn()  # learn from memory
             
-            agent.learn()  # Learn from replay memory
-            
+            # visualize the environment regularly
+            if episode % visualization_rate == 0:
+                env.render()
+
         print(f"Episode: {episode+1}, Total reward: {total_reward}")
-        
-        # visualize the environment regularly
-        if episode % visualization_rate == 0:
-            env.render()
+
+    env.close()  # close the environment
+
