@@ -1,5 +1,7 @@
 import numpy as np
 from math import cos, sin, pi
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 class RobotEnvironment:
     def __init__(self):
@@ -8,7 +10,7 @@ class RobotEnvironment:
         self.turns = 2  # Number of turns
         self.start_position = np.array([self.radius, 0, 0])  # Starting position of the TCP
         self.reward = 0 # reward points
-
+        self.reached_target = False
     def dh_transform_matrix(self,a, d, alpha, theta):
     
     ## Compute the Denavit-Hartenberg transformation matrix.
@@ -42,32 +44,111 @@ class RobotEnvironment:
         position = T[:3, 3]
         return position
     
-    def reward_function(self, in_helix, in_voxel):
-        print()
-        # VOxel nur 1 mm 
+    def reward_function(self,tcp_on_helix):
+        if tcp_on_helix:
+            self.reward += 1
+        else:
+            self.reward -=1 
            
-
-    def is_within_trajectory(self, tcp_coordinates):
-        # check if tcp is in trajectory
-        x, y, z = tcp_coordinates
-        t = z / (self.height_per_turn * self.turns) # aktuelle Höhe TCP --> z-Ebene / durch gesamt Höhe teilen
-        x_expected = self.radius * cos(2 * pi * t)
-        y_expected = self.radius * sin(2 * pi * t)
-        distance = np.sqrt((x - x_expected)**2 + (y - y_expected)**2)
-
-        # tolerance? otherwise just --> true
-        return True  
     
-    # hier nochmal besprechen wi edas mit voxel ist??
-    def is_within_voxel(self,TCP_position, x_range, y_range, z_range):
+    def is_on_helix(self,tcp_coords, voxel_space, resolution, x_range, y_range, z_range):
+        # Convert TCP coordinates to voxel indices
+        x_idx = int(round((tcp_coords[0] - x_range[0]) / resolution))
+        y_idx = int(round((tcp_coords[1] - y_range[0]) / resolution))
+        z_idx = int(round((tcp_coords[2] - z_range[0]) / resolution))
 
-        x, y, z = TCP_position
-        x_min, x_max = x_range
-        y_min, y_max = y_range
-        z_min, z_max = z_range
-        if x_min <= x <= x_max and y_min <= y <= y_max and z_min <= z <= z_max:
+        # Check if the TCP is within the bounds of the voxel space
+        if (x_idx < 0 or x_idx >= voxel_space.shape[0] or
+            y_idx < 0 or y_idx >= voxel_space.shape[1] or
+            z_idx < 0 or z_idx >= voxel_space.shape[2]):
+            return False
+
+        # Check the value of the voxel to determine if the TCP is on the helix
+        if voxel_space[x_idx, y_idx, z_idx] == 1 or voxel_space[x_idx, y_idx, z_idx] == 1:
+            if voxel_space[x_idx, y_idx, z_idx] == 1:
+                self.reached_target = True
             return True
         else:
             return False
 
-tcp_position = []   
+
+
+
+# Object of RobotEnvironment
+env = RobotEnvironment()
+
+# 1.) Define the observation space:
+
+## Define the voxel space dimensions
+
+x_range = (-0.03, 0.03)
+y_range = (-0.03, 0.03)
+z_range = (0, 0.1)
+
+## Assuming a resolution of 1 mm (0.001 m) for the voxel space
+
+resolution = 0.001
+
+## Calculate the size of the voxel array for each dimension
+
+x_size = int((x_range[1] - x_range[0]) / resolution) + 1  # +1 to ensure start and end of range are included because of the 0 voxel
+y_size = int((y_range[1] - y_range[0]) / resolution) + 1
+z_size = int((z_range[1] - z_range[0]) / resolution) + 1
+
+## Create the numpy array for the voxel space
+
+#voxel_space = np.zeros((x_size, y_size, z_size))
+voxel_space = np.full((x_size, y_size, z_size), -1)  # Initialize all voxels with -1
+
+print(voxel_space.shape)
+
+# init Helix
+r = 0.03  # Radius Helix
+h = 0.05  # Höhe pro Umdrehung der Helix
+t = np.linspace(0, 2, 100)  # Parameter t von 0 bis 2 für 2 komplette Umdrehungen
+helix_x = r * np.cos(2 * np.pi * t)
+helix_y = r * np.sin(2 * np.pi * t)
+helix_z = h * t
+#print("helix_x: ",helix_x)
+
+# Markierung der Voxel auf der Helix als Rennstrecke
+for i in range(len(helix_x)): # alle haben die selbe Länge...
+    x_idx = int(round((helix_x[i] - x_range[0]) / resolution)) # umrechnung in index 
+    #print(x_idx)
+    y_idx = int(round((helix_y[i] - y_range[0]) / resolution))
+    z_idx = int(round((helix_z[i] - z_range[0]) / resolution))
+    if i == len(helix_x) - 1:  # Letzter Helixpunkt
+        voxel_space[x_idx, y_idx, z_idx] = 1
+    else:
+        voxel_space[x_idx, y_idx, z_idx] = 0  # Helix
+
+print("Voxelshape: ",voxel_space.shape)
+print(voxel_space)
+
+###############
+
+# 3D-Plot Helix Voxels
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(*np.where(voxel_space == 1), c='r', s=50, alpha=1)
+ax.scatter(*np.where(voxel_space == 0), c='b', s=50, alpha=1)  # Leichter Druck für Voxel außerhalb der Helix
+#ax.scatter(*np.where(voxel_space == -1), c='y', s=1, alpha=0.1)  # Leichter Druck für Voxel außerhalb der Helix
+
+#ax.scatter(*tcp_coords_on_voxel, c='g', s=100, label='TCP Position')  # TCP Position
+
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('3D-Plot des Voxel-Raums')
+
+plt.show()
+
+# Test function with TCP position on voxel with value 0
+tcp_coords_on_helix = (0.015, -0.02, 0.045)
+result_0 = env.is_on_helix(tcp_coords_on_helix, voxel_space, resolution, x_range, y_range, z_range)
+print("TCP position on voxel with value 0:", result_0)
+
+# Test function with TCP position on voxel with value -1
+tcp_coords_neg1 = (0.003, 0, 0.005)
+result_neg1 = env.is_on_helix(tcp_coords_neg1, voxel_space, resolution, x_range, y_range, z_range)
+print("TCP position on voxel with value -1:", result_neg1)

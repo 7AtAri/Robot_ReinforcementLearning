@@ -28,9 +28,10 @@ z_size = int((z_range[1] - z_range[0]) / resolution) + 1
 
 ## Create the numpy array for the voxel space
 
-voxel_space = np.zeros((x_size, y_size, z_size))
+#voxel_space = np.zeros((x_size, y_size, z_size))
+voxel_space = np.full((x_size, y_size, z_size), -1)  # Initialize all voxels with -1
 
-print(voxel_space.shape)
+print("Voxelshape",voxel_space.shape)
 
 # Erstellen der Helix
 r = 0.03  # Radius der Helix
@@ -39,13 +40,15 @@ t = np.linspace(0, 2, 100)  # Parameter t von 0 bis 2 für 2 komplette Umdrehung
 helix_x = r * np.cos(2 * np.pi * t)
 helix_y = r * np.sin(2 * np.pi * t)
 helix_z = h * t
+#print("helix_x: ",helix_x)
 
 # Markierung der Voxel auf der Helix als Rennstrecke
-for i in range(len(helix_x)):
-    x_idx = int(round((helix_x[i] - x_range[0]) / resolution))
+for i in range(len(helix_x)): # alle haben die selbe Länge...
+    x_idx = int(round((helix_x[i] - x_range[0]) / resolution)) # umrechnung in index 
+    print(x_idx)
     y_idx = int(round((helix_y[i] - y_range[0]) / resolution))
     z_idx = int(round((helix_z[i] - z_range[0]) / resolution))
-    voxel_space[x_idx, y_idx, z_idx] = 1  # Rennstrecke
+    voxel_space[x_idx, y_idx, z_idx] = 1  # Helix 
 
 print(voxel_space)
 
@@ -55,6 +58,7 @@ print(voxel_space)
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter(*np.where(voxel_space == 1), c='r', s=50, alpha=1)
+#ax.scatter(*np.where(voxel_space == -1), c='b', s=5, alpha=0.1)  # Leichter Druck für Voxel außerhalb der Helix
 
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
@@ -62,20 +66,3 @@ ax.set_zlabel('Z')
 ax.set_title('3D-Plot des Voxel-Raums')
 
 plt.show()
-
-##############
-
-
-
-## 3D-Plot des Voxel-Raums
-#fig = plt.figure()
-#ax = fig.add_subplot(111, projection='3d')
-#ax.scatter(*np.where(voxel_space == 0), c='b', s=5, alpha=0.1)  # Leichter Druck für Voxel außerhalb der Helix
-#ax.scatter(*np.where(voxel_space == 1), c='r', s=50, alpha=1)    # Starker Druck für Voxel auf der Helix
-#
-#ax.set_xlabel('X')
-#ax.set_ylabel('Y')
-#ax.set_zlabel('Z')
-#ax.set_title('3D-Gitter - Rennstrecke mit Helix')
-#
-#plt.show()
