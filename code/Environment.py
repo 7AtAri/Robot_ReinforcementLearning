@@ -7,6 +7,7 @@ class RobotEnvironment:
         self.height_per_turn = 0.05  # Height per turn in meters
         self.turns = 2  # Number of turns
         self.start_position = np.array([self.radius, 0, 0])  # Starting position of the TCP
+        self.reward = 0 # reward points
 
     def dh_transform_matrix(self,a, d, alpha, theta):
     
@@ -41,9 +42,10 @@ class RobotEnvironment:
         position = T[:3, 3]
         return position
     
-    def reward_function(self, tcp_coordinates):
-        # Implementiere die Belohnungsfunktion hier
-        pass
+    def reward_function(self, in_helix, in_voxel):
+        print()
+        # VOxel nur 1 mm 
+           
 
     def is_within_trajectory(self, tcp_coordinates):
         # check if tcp is in trajectory
@@ -53,21 +55,19 @@ class RobotEnvironment:
         y_expected = self.radius * sin(2 * pi * t)
         distance = np.sqrt((x - x_expected)**2 + (y - y_expected)**2)
 
-        # tolerance?
-        return distance   
+        # tolerance? otherwise just --> true
+        return True  
     
     # hier nochmal besprechen wi edas mit voxel ist??
-    def is_within_voxel(tcp_coordinates, x_range, y_range, z_range):
-    
-        # Check if the TCP coordinates are within the voxel space.
+    def is_within_voxel(self,TCP_position, x_range, y_range, z_range):
 
-        x, y, z = tcp_coordinates
-
-        if x_range[0] <= x <= x_range[1] and \
-           y_range[0] <= y <= y_range[1] and \
-           z_range[0] <= z <= z_range[1]:
+        x, y, z = TCP_position
+        x_min, x_max = x_range
+        y_min, y_max = y_range
+        z_min, z_max = z_range
+        if x_min <= x <= x_max and y_min <= y <= y_max and z_min <= z <= z_max:
             return True
         else:
             return False
 
-        
+tcp_position = []   
