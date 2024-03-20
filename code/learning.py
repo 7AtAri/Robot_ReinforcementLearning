@@ -55,8 +55,6 @@ class NStepReplayMemory:
         return len(self.memory)
     
 
-
-
 ##### DQNAgent class ##############################################################################################
 #  This class defines a DQNAgent that uses n-step bootstrapped returns and a target network to stabilize the learning process.                        #
 # - act method:  chooses actions based on the current policy with an epsilon-greedy approach                                                                            #
@@ -101,7 +99,7 @@ class DQNAgent:
             # with probability epsilon, choose a random action --> explore
             return random.randrange(self.action_size)
     
-    def learn(self) #, episodes, render=False, is_slippery=False):
+    def learn(self): #, episodes, render=False, is_slippery=False)
         # online network update based on number of experiences
         if len(self.memory) < self.batch_size:
             return  # no learning if not enough samples in memory
@@ -117,14 +115,17 @@ class DQNAgent:
 
         # convert batches to tensors:
         states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
-        
+        actions = actions.long()  # actions should be long tensors
+        dones = dones.float()  # terminated states are set to float for further calculations
+
         # calc q-values for selected actions
         state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         # get the next state values from target network 
         next_state_values = self.target_model(next_states).max(1)[0].detach()
         # get expected q-values (target values) using n-step returns
         expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
-        
+        # calculates the expected Q-values for each state-action pair, and excludes the value of future states when done is True for a given state.
+
         # calculate loss between the expected q-values and the ones predicted by the online network
         loss = nn.MSELoss()(state_action_values, expected_state_action_values)
         
@@ -144,7 +145,15 @@ class DQNAgent:
 
 if __name__ == "__main__":
 
-    env = gym.make('environment.py') # create environment
+    from gym.envs.registration import register
+
+    register(
+        id='RobotEnvironment-v0',
+        entry_point='code/Environment.py',
+    )
+
+    env = gym.make('RobotEnvironment-v0')
+
     # get env specs to init the agent
     state_size = env.observation_space.shape[0]
     action_size = env.action_space.n
@@ -163,7 +172,7 @@ if __name__ == "__main__":
 
         while not terminated:
             action = agent.act(state)  # select action according to epsilon-greedy policy
-            next_state, reward, terminated, _ = env.step(action)  # take action in environment
+            next_state, reward, terminated = env.step(action)  # take action in environment
             next_state = np.reshape(next_state, [1, state_size])
             
             # store transition in memory

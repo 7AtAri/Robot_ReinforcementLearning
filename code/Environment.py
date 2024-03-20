@@ -17,15 +17,15 @@ class RobotEnvironment(gym.Env):
         self.turns = turns  # number of turns
 
         # voxel space dimensions
-        x_range = (-self.radius, self.radius)
-        y_range = (-self.radius, self.radius)
-        z_range = (0, self.height_per_turn*self.turns)
+        self.x_range = (-self.radius, self.radius)
+        self.y_range = (-self.radius, self.radius)
+        self.z_range = (0, self.height_per_turn*self.turns)
         self.resolution = resolution  # resolution: 1mm
 
         # dimensions of the voxel grid
-        x_size = int((x_range[1] - x_range[0]) / self.resolution) + 1
-        y_size = int((y_range[1] - y_range[0]) / self.resolution) + 1
-        z_size = int((z_range[1] - z_range[0]) / self.resolution) + 1
+        x_size = int((self.x_range[1] - self.x_range[0]) / self.resolution) + 1
+        y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
+        z_size = int((self.z_range[1] - self.z_range[0]) / self.resolution) + 1
 
         # observation space defined by dimensions and possible voxel values (-1 to 1)
         self.observation_space = gym.spaces.Box(low=-1, high=1, 
@@ -39,14 +39,49 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         # Define the initial state of the robot
-        self.start_position = np.array([self.radius, 0, 0])  # Starting position of the TCP
-        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])  # Initial joint angles
-        self.tcp_position = self.forward_kinematics(self.joint_angles)  # Initial end-effector position
-        self.tcp_on_helix = self.is_on_helix(self.tcp_position, voxel_space, resolution, x_range, y_range, z_range)  # Check if the TCP is on the helix
+        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])  # initial joint angles
+        self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
+        self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
         
         self.reward = 0 # reward points
         self.reached_target = False
 
+
+    def step(self, action):
+        # convert action to delta angles and apply them
+        delta_angles = self.process_action(action)
+        self.joint_angles += delta_angles  # update joint angles
+        
+        # update TCP position (based on the new joint angles)
+        self.tcp_position = self.forward_kinematics(self.joint_angles)
+        
+        # is TCP on the helix?
+        self.tcp_on_helix = self.is_on_helix(self.tcp_position)
+        
+        # update the reward (based on the new state)
+        self.reward, done = self.reward_function(self.tcp_on_helix)
+        
+        # eventually also return an info dictionary (for debugging)
+
+        # return the new observation (state), reward, done flag
+        return self.voxel_space, self.reward, done
+
+
+    def reward_function(self, tcp_on_helix):
+        if tcp_on_helix:
+            self.reward += 1
+            done = False
+
+        if self.reached_target:
+            self.reward += 100 # extra reward for reaching the target
+            done = True
+
+        else:
+            done = True # terminate the episode if the tcp is not on the helix any more
+            self.reward -=10
+           
+        return self.reward, done
+    
     def init_helix(self):
         # initialize helix
         r = 0.03  # radius 
@@ -65,17 +100,55 @@ class RobotEnvironment(gym.Env):
                 self.voxel_space[x_idx, y_idx, z_idx] = 1
             else:
                 self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
+    
+    def is_on_helix(self, tcp_coords):
+        # convert TCP coordinates to voxel indices. Therefore find the relative position of the TCP
+        # within the bounds  `x_range`, `y_range`, and `z_range` 
+        # scale this position to the resolution of the voxel grid:
+        x_idx = int(round((tcp_coords[0] - self.x_range[0]) / self.resolution))
+        y_idx = int(round((tcp_coords[1] - self.y_range[0]) / self.resolution))
+        z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
 
+        # check if these indices are in the voxel space. If not, the TCP is outside the voxel space.
+        if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
+            # get value of the voxel at the calculated indices. check if voxel
+            # is on the helix path (0), the target/end of the helix (1), or outside the helix voxels (-1).
+            voxel_value = self.voxel_space[x_idx, y_idx, z_idx]
+            
+            # if the TCP has reached the target (voxel-value = 1):
+            if voxel_value == 1:
+                self.reached_target = True
+                return True  # TCP is on the helix 
+            
+            # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
+            elif voxel_value == 0:
+                return True # TCP is on the helix path
 
-    def step(self, action):
-        # apply action, update the state of the environment, return observation, etc.
-        pass
+        # otherwise the TCP is not on the helix path any more
+        return False
+
 
     def reset(self):
-        # reset the environment to an initial state and return the initial observation
-        self.voxel_space.fill(-1)  # reset the voxel space
-        self.init_helix()  # reinitialize the helix
+        # reset the environment 
+        self.voxel_space.fill(-1)
+        self.init_helix()
+
+        # reset the joint angles and TCP position
+        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])
+        self.tcp_position = self.forward_kinematics(self.joint_angles)
+
+        # reset the reward and Flags
+        self.tcp_on_helix = True
+        self.reward = 0
+        self.reached_target = False
+
         return self.voxel_space
+    
+    # def calculate_initial_joint_angles(self):
+    #     # we don't need this if the initial joint angles are np.array([0, 0, 0, 0, 0, 0]) ---> but is this a valid option?
+    #     initial_position = self.helix_points[0]  # Assuming helix_points[0] is the starting point on the helix
+    #     initial_angles = solve_inverse_kinematics(initial_position)  # You need to implement this
+    #     return initial_angles
 
     def render(self, mode='human', tcp_coords=None):
         fig = plt.figure()
@@ -101,7 +174,6 @@ class RobotEnvironment(gym.Env):
         ax.set_title('3D Plot of the Voxel Space')
         plt.legend()
         plt.show()
-
 
 
     def process_action(self, action):
@@ -143,24 +215,5 @@ class RobotEnvironment(gym.Env):
         position = T[:3, 3]
         return position
     
-    def reward_function(self,tcp_on_helix):
-        if tcp_on_helix:
-            self.reward += 1
-        else:
-            self.reward -=1 
-           
     
-    def is_on_helix(self, tcp_coords):
-        x_idx = int(round((tcp_coords[0] - self.x_range[0]) / self.resolution))
-        y_idx = int(round((tcp_coords[1] - self.y_range[0]) / self.resolution))
-        z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
-
-        if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
-            voxel_value = self.voxel_space[x_idx, y_idx, z_idx]
-            if voxel_value == 1:
-                self.reached_target = True
-                return True
-            elif voxel_value == 0:
-                return True
-        return False
 
