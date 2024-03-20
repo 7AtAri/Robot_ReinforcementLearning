@@ -4,9 +4,9 @@ In the original formulation of Q-Learning and its initial deep learning adaptati
 
 The innovation of using a separate primary (online) network and a target network was introduced to mitigate this problem, and it has become a standard practice in many Deep Q-Learning algorithms, such as the Deep Q-Network (DQN). Here's how the two networks function within this framework:
 
-    - Primary (Online) Network: This network is updated at every step or after a set number of steps during training. It directly interacts with the environment by evaluating the current policy and choosing actions. The weights of this network are adjusted continuously through backpropagation based on the loss calculated from the difference between predicted Q-values and the target Q-values.
+- Primary (Online) Network: This network is updated at every step or after a set number of steps during training. It directly interacts with the environment by evaluating the current policy and choosing actions. The weights of this network are adjusted continuously through backpropagation based on the loss calculated from the difference between predicted Q-values and the target Q-values.
 
-    - Target Network: The target network is a copy of the primary network that is kept static for a certain number of steps. Its main role is to generate stable target values for the Q-value updates. Periodically, the weights of the primary network are copied to the target network to synchronize them. This separation helps in stabilizing the learning process by providing fixed targets for a while.
+- Target Network: The target network is a copy of the primary network that is kept static for a certain number of steps. Its main role is to generate stable target values for the Q-value updates. Periodically, the weights of the primary network are copied to the target network to synchronize them. This separation helps in stabilizing the learning process by providing fixed targets for a while.
 
 The use of both networks addresses the moving target problem by decoupling the target value generation from the weights being updated. This approach significantly improves the stability and convergence of the learning process in complex environments.
 
