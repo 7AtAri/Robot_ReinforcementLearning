@@ -178,9 +178,13 @@ if __name__ == "__main__":
             
             # visualize the environment regularly
             if episode % visualization_rate == 0:
-                env.render()
+                #env.render()   # todo: needs to be defined in the environment.py
+                pass
 
         print(f"Episode: {episode+1}, Total reward: {total_reward}")
 
     env.close()  # close the environment
 
+
+
+## todo: maybe define a train() and test() function ...
