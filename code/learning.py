@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from collections import deque # queue for efficiently adding and removing elements from both ends
+import gym
 
 
 
@@ -20,8 +21,9 @@ class QNetwork(nn.Module):
         self.fc2 = nn.Linear(hidden_size, action_size) # hidden layer to output layer
     
     def forward(self, state):
-        x = self.relu(self.fc1(state))  # activated first layer
-        return self.fc2(x)              # output layer
+        x= self.fc1(state) # 1st layer
+        x = self.relu(x)  # activated first layer
+        return self.fc2(x)            # output layer
 
 
 class NStepReplayMemory:
@@ -46,8 +48,8 @@ class NStepReplayMemory:
             if done:
                 self.n_step_buffer.clear()
     
-    def sample(self, batch_size): 
-        return random.sample(self.memory, batch_size) # returns list of random samples from the memory
+    def sample(self, sample_size): 
+        return random.sample(self.memory, sample_size) # returns list of random samples from the memory
     
     def __len__(self): # returns current length of the memory
         return len(self.memory)
@@ -65,73 +67,112 @@ class NStepReplayMemory:
 #                               The action with the highest Q-value in a given state is considered the best action according to the current policy)              #
 ##################################################################################################################
     
-    class DQNAgent:
-        def __init__(self, state_size, action_size, gamma=0.99, lr=0.001, memory_size=10000, batch_size=64, n_steps=3, sync_rate=1000):
-            # init parameters for the DQN Agent
-            self.state_size = state_size  # size of the state space
-            self.action_size = action_size  # size of the action space
-            self.gamma = gamma ** n_steps  # discount factor raised to the power of n_steps for n-step returns
-            self.batch_size = batch_size  # number of experiences to sample from memory during learning
-            self.sync_rate = sync_rate  # how often to sync the target network with the online network
-            self.steps_done = 0  # counter for the total number of steps 
-            
-            # initialize replay memory with specified size and n-step setting
-            self.memory = NStepReplayMemory(memory_size, n_steps, gamma)
-            # initialize  the online (primary) Q-network
-            self.model = QNetwork(state_size, action_size)
-            # initialize the target Q-network + load it with weights from online network
-            self.target_model = QNetwork(state_size, action_size)
-            self.target_model.load_state_dict(self.model.state_dict())
-            self.target_model.eval()  # set target network to eval mode
-            # set optimizer for updating the online network
-            self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
+class DQNAgent:
+    def __init__(self, state_size, action_size, gamma=0.99, lr=0.001, memory_size=10000, sample_size=64, n_steps=3, sync_rate=1000):
+        # init parameters for the DQN Agent
+        self.state_size = state_size                  # state space size
+        self.action_size = action_size              # action space size
+        self.gamma = gamma ** n_steps         # discount factor raised to the power of n_steps ---> n-step returns
+        self.batch_size = sample_size              # number of experiences to sample from memory during learning
+        self.sync_rate = sync_rate                   # how often to sync the target network with the online network
+        self.steps_done = 0                              # total number of steps (counter)
         
-        def act(self, state, epsilon=0.1):
-            # select action according to epsilon-greedy policy
-            if random.random() > epsilon: 
-                # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
-                state = torch.FloatTensor(state).unsqueeze(0)  # state needs to be in tensor and add batch dimension
-                with torch.no_grad():  # gradient calculation needs to be disabled for inference
-                    q_values = self.model(state)  # get q-values for all actions
-                return np.argmax(q_values.numpy())  # return action with highest q-value (best action)
-            else:
-                # with probability epsilon, choose a random action --> explore
-                return random.randrange(self.action_size)
+        # initialize replay memory with specified size and n-step setting
+        self.memory = NStepReplayMemory(memory_size, n_steps, gamma)
+        # initialize  the online (primary) Q-network
+        self.model = QNetwork(state_size, action_size)
+        # initialize the target Q-network + load it with weights from online network
+        self.target_model = QNetwork(state_size, action_size)
+        self.target_model.load_state_dict(self.model.state_dict())
+        self.target_model.eval()  # set target network to eval mode
+        # set optimizer for updating the online network
+        self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
+    
+    def act(self, state, epsilon=0.1):
+        # select action according to epsilon-greedy policy
+        if random.random() > epsilon: 
+            # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
+            state = torch.FloatTensor(state).unsqueeze(0)  # state needs to be in tensor and add batch dimension
+            with torch.no_grad():  # gradient calculation needs to be disabled for inference
+                q_values = self.model(state)  # get q-values for all actions
+            return np.argmax(q_values.numpy())  # return action with highest q-value (best action)
+        else:
+            # with probability epsilon, choose a random action --> explore
+            return random.randrange(self.action_size)
+    
+    def learn(self) #, episodes, render=False, is_slippery=False):
+        # online network update based on number of experiences
+        if len(self.memory) < self.batch_size:
+            return  # no learning if not enough samples in memory
         
-        def learn(self):
-            # online network update based on number of experiences
-            if len(self.memory) < self.batch_size:
-                return  # no learning if not enough samples in memory
-            
-            # sample experiences from memory:
-            transitions = self.memory.sample(self.batch_size)
-            batch = list(zip(*transitions))  # convert the batch to separate states, actions, etc.
-            # zip function combines elements from each of the input iterables (lists, tuples, etc.) based on their position. 
-            # * operator, when used with an iterable (like "transitions"), unpacks the iterable 
-            # ---> each element of transitions goes as a separate argument to the zip
-            # then zip is called and it combines the first elements of each tuple (all states),
-            # the second elements (all actions), etc., into new tuples.
+        # sample experiences from memory:
+        transition_samples = self.memory.sample(self.batch_size)
+        training_batch = list(zip(*transition_samples))  # convert the batch to separate states, actions, etc.
+        # zip function combines elements from each of the input iterables (lists, tuples, etc.) based on their position. 
+        # * operator, when used with an iterable (like "transition_samples"), unpacks the iterable 
+        # ---> each element goes as a separate argument to the zip
+        # then zip is called and it combines the first elements of each tuple (all states),
+        # the second elements (all actions), etc., into new tuples.
 
-            # convert batches to tensors:
-            states, actions, rewards, next_states, dones = map(torch.FloatTensor, batch)
+        # convert batches to tensors:
+        states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
+        
+        # calc q-values for selected actions
+        state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
+        # get the next state values from target network 
+        next_state_values = self.target_model(next_states).max(1)[0].detach()
+        # get expected q-values (target values) using n-step returns
+        expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
+        
+        # calculate loss between the expected q-values and the ones predicted by the online network
+        loss = nn.MSELoss()(state_action_values, expected_state_action_values)
+        
+        # perform gradient descent to minimize the loss
+        self.optimizer.zero_grad()  # reset gradients to zero
+        loss.backward()  # compute gradient of the loss 
+        self.optimizer.step()  # update network weights
+        
+        # periodically update target network weights
+        if self.steps_done % self.sync_rate == 0: # if the number of steps is a multiple of the sync rate
+            self.target_model.load_state_dict(self.model.state_dict()) # sync weights from online network to target network
+        
+        self.steps_done += 1  # raise total number of steps by one
+
+
+
+
+if __name__ == "__main__":
+
+    env = gym.make('environment.py') # create environment
+    # get env specs to init the agent
+    state_size = env.observation_space.shape[0]
+    action_size = env.action_space.n
+    agent = DQNAgent(state_size, action_size)
+    num_episodes = 30 # start with low number and raise ...of use as hyperparameter
+    visualization_rate = 10 # how often to visualize the environment
+
+    for episode in range(num_episodes):
+        state = env.reset()  # Reset the environment for a new episode
+        state = np.reshape(state, [1, state_size])  # Reshape state for compatibility with DQNAgent
+        
+        done = False
+        total_reward = 0
+
+        while not done:
+            action = agent.act(state)  # Select action according to policy
+            next_state, reward, done, _ = env.step(action)  # Take action in environment
+            next_state = np.reshape(next_state, [1, state_size])
             
-            # calc q-values for selected actions
-            state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
-            # get the next state values from target network 
-            next_state_values = self.target_model(next_states).max(1)[0].detach()
-            # get expected q-values (target values) using n-step returns
-            expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
+            # Store the transition in replay memory
+            agent.memory.push(state, action, reward, next_state, done)
             
-            # calculate loss between the expected q-values and the ones predicted by the online network
-            loss = nn.MSELoss()(state_action_values, expected_state_action_values)
+            state = next_state  # Move to the next state
+            total_reward += reward
             
-            # perform gradient descent to minimize the loss
-            self.optimizer.zero_grad()  # reset gradients to zero
-            loss.backward()  # compute gradient of the loss 
-            self.optimizer.step()  # update network weights
+            agent.learn()  # Learn from replay memory
             
-            # periodically update target network weights
-            if self.steps_done % self.sync_rate == 0: # if the number of steps is a multiple of the sync rate
-                self.target_model.load_state_dict(self.model.state_dict()) # sync weights from online network to target network
-            
-            self.steps_done += 1  # raise total number of steps by one
+        print(f"Episode: {episode+1}, Total reward: {total_reward}")
+        
+        # visualize the environment regularly
+        if episode % visualization_rate == 0:
+            env.render()
