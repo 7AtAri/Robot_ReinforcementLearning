@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 from collections import deque # queue for efficiently adding and removing elements from both ends
 import gymnasium as gym
+from gymnasium.envs.registration import register
 
 
 
@@ -78,9 +79,9 @@ class DQNAgent:
         # initialize replay memory with specified size and n-step setting
         self.memory = NStepReplayMemory(memory_size, n_steps, gamma)
         # initialize  the online (primary) Q-network
-        self.model = QNetwork(state_size, action_size)
+        self.model = QNetwork(state_size, action_size).to(device)
         # initialize the target Q-network + load it with weights from online network
-        self.target_model = QNetwork(state_size, action_size)
+        self.target_model = QNetwork(state_size, action_size).to(device)
         self.target_model.load_state_dict(self.model.state_dict())
         self.target_model.eval()  # set target network to eval mode
         # set optimizer for updating the online network
@@ -116,7 +117,12 @@ class DQNAgent:
         # convert batches to tensors:
         states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
         actions = actions.long()  # actions should be long tensors
-        dones = dones.float()  # terminated states are set to float for further calculations
+        dones = dones.float() # terminated states are set to float for further calculations
+        states = states.to(device)
+        actions = actions.to(device)
+        rewards = rewards.to(device)
+        next_states = next_states.to(device)
+        dones = dones.to(device)
 
         # calc q-values for selected actions
         state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
@@ -144,12 +150,12 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-
-    from gym.envs.registration import register
+    # check which device is available
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
     register(
         id='RobotEnvironment-v0',
-        entry_point='code/Environment.py',
+        entry_point='Environment:RobotEnvironment',
     )
 
     env = gym.make('RobotEnvironment-v0')
