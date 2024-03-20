@@ -80,21 +80,28 @@ class RobotEnvironment(gym.Env):
     def render(self, mode='human', tcp_coords=None):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=50, alpha=1)
-        ax.scatter(*np.where(self.voxel_space == 0), c='b', s=50, alpha=1)
+        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=50, alpha=1)  # helix end points
+        ax.scatter(*np.where(self.voxel_space == 0), c='b', s=50, alpha=1)  # helix path points
         
-        # Optional: Highlight a specific TCP position if provided
+        # if TCP coordinates are provided and valid, then visualize TCP position
         if tcp_coords is not None:
-            tcp_value = self.is_on_helix(tcp_coords)
-            if tcp_value != -1:
-                tcp_x, tcp_y, tcp_z = tcp_coords
-                ax.scatter([tcp_x], [tcp_y], [tcp_z], c='g', s=100, label='TCP Position')
+            is_on_path = self.is_on_helix(tcp_coords)
+            if is_on_path:
+                # convert real-world coordinates to indices for visualization
+                x_idx = (tcp_coords[0] - self.x_range[0]) / self.resolution
+                y_idx = (tcp_coords[1] - self.y_range[0]) / self.resolution
+                z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
+                
+                # highlight TCP position
+                ax.scatter([x_idx], [y_idx], [z_idx], c='g', s=100, label='TCP Position')
 
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Z')
-        ax.set_title('3D-Plot of the Voxel Space')
+        ax.set_xlabel('X Index')
+        ax.set_ylabel('Y Index')
+        ax.set_zlabel('Z Index')
+        ax.set_title('3D Plot of the Voxel Space')
+        plt.legend()
         plt.show()
+
 
 
     def process_action(self, action):
