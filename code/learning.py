@@ -92,10 +92,10 @@ class DQNAgent:
         # select action according to epsilon-greedy policy
         if random.random() > epsilon: 
             # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
-            state = torch.FloatTensor(state).unsqueeze(0)  # state needs to be in tensor and add batch dimension
+            state = torch.FloatTensor(state).unsqueeze(0).to(device)  # state needs to be in tensor and add batch dimension
             with torch.no_grad():  # gradient calculation needs to be disabled for inference
                 q_values = self.model(state)  # get q-values for all actions
-            return np.argmax(q_values.numpy())  # return action with highest q-value (best action)
+            return np.argmax(q_values.cpu().numpy())  # return action with highest q-value (best action)
         else:
             # with probability epsilon, choose a random action --> explore
             return random.randrange(self.action_size)
@@ -118,11 +118,11 @@ class DQNAgent:
         states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
         actions = actions.long()  # actions should be long tensors
         dones = dones.float() # terminated states are set to float for further calculations
-        states = states.to(device)
-        actions = actions.to(device)
-        rewards = rewards.to(device)
-        next_states = next_states.to(device)
-        dones = dones.to(device)
+        states = torch.tensor(states, device=device, dtype=torch.float32)
+        actions = torch.tensor(actions, device=device, dtype=torch.long)
+        rewards = torch.tensor(rewards, device=device, dtype=torch.float32)
+        next_states = torch.tensor(next_states, device=device, dtype=torch.float32)
+        dones = torch.tensor(dones, device=device, dtype=torch.float32)
 
         # calc q-values for selected actions
         state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
