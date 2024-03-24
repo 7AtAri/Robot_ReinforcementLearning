@@ -46,7 +46,7 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         # Define the initial state of the robot
-        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])  # initial joint angles
+        self.joint_angles = np.array([0, 0, 0, 0, 0, 0], dtype=np.float64)  # initial joint angles
         self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
         
@@ -57,21 +57,35 @@ class RobotEnvironment(gym.Env):
     def step(self, action):
         # convert action to delta angles and apply them
         delta_angles = self.process_action(action)
-        self.joint_angles += delta_angles  # update joint angles
-        
+
+        # Convert delta_angles to numpy array
+        delta_angles = np.array(delta_angles)
+
+        # Ensure delta_angles has the same dtype as self.joint_angles
+        delta_angles = delta_angles.astype(self.joint_angles.dtype)
+
+        # update joint angles
+        self.joint_angles += delta_angles
+
         # update TCP position (based on the new joint angles)
         self.tcp_position = self.forward_kinematics(self.joint_angles)
-        
+
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
-        
+
         # update the reward (based on the new state)
         self.reward, done = self.reward_function(self.tcp_on_helix)
-        
+
         # eventually also return an info dictionary (for debugging)
+        info = {
+            'robot_state': self.joint_angles.tolist(),
+            'tcp_position': self.tcp_position.tolist()
+        }
 
         # return the new observation (state), reward, done flag
-        return self.voxel_space, self.reward, done
+        return self.voxel_space.flatten(), self.reward, done, info
+
+
 
 
     def reward_function(self, tcp_on_helix):
@@ -135,6 +149,7 @@ class RobotEnvironment(gym.Env):
         return False
 
 
+
     def reset(self):
         # reset the environment 
         self.voxel_space.fill(-1)
@@ -149,7 +164,37 @@ class RobotEnvironment(gym.Env):
         self.reward = 0
         self.reached_target = False
 
-        return self.voxel_space
+        # Check the size of the state vector
+        state = self.voxel_space.flatten()
+        expected_size = 1 * 61
+        actual_size = state.size
+        print("Actual size of state vector:", actual_size)
+        print("Expected size of state vector:", expected_size)
+
+        # If the sizes don't match, print an error message and return None
+        if actual_size != expected_size:
+            print("Error: Size of state vector doesn't match the expected size.")
+            return None
+
+        # Reshape the state vector
+        state = np.reshape(state, (1, 61))
+    
+        return state
+    # def reset(self):
+    #     # reset the environment 
+    #     self.voxel_space.fill(-1)
+    #     self.init_helix()
+
+    #     # reset the joint angles and TCP position
+    #     self.joint_angles = np.array([0, 0, 0, 0, 0, 0])
+    #     self.tcp_position = self.forward_kinematics(self.joint_angles)
+
+    #     # reset the reward and Flags
+    #     self.tcp_on_helix = True
+    #     self.reward = 0
+    #     self.reached_target = False
+
+    #     return self.voxel_space
     
     # def calculate_initial_joint_angles(self):
     #     # we don't need this if the initial joint angles are np.array([0, 0, 0, 0, 0, 0]) ---> but is this a valid option?
@@ -184,9 +229,51 @@ class RobotEnvironment(gym.Env):
 
 
     def process_action(self, action):
-        # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
-        delta_angles = [(a - 1) * 0.1 for a in action]
+        # Check if action is None
+        if action is None:
+            print("Error: Action is None")
+            return np.zeros(6, dtype=self.joint_angles.dtype)
+
+        # Check if the action is iterable
+        if isinstance(action, (list, tuple)):
+            # If yes, calculate the delta angles for each action
+            delta_angles = [(a - 1) * 0.1 for a in action]
+        else:
+            # Otherwise, there is only one action, so calculate the delta angle directly
+            delta_angles = [(action - 1) * 0.1]
+
+        # Ensure delta_angles always has 6 elements
+        delta_angles += [0] * (6 - len(delta_angles))
+
+        # Convert delta_angles to numpy array
+        delta_angles = np.array(delta_angles, dtype=self.joint_angles.dtype)
+
         return delta_angles
+
+
+
+
+
+
+
+
+
+
+    # def process_action(self, action):
+
+    #     # Check if action is iterable
+    #     if isinstance(action, (list, tuple)):
+    #     # If yes, calculate the delta angles for each action
+    #         delta_angles = [(a - 1) * 0.1 for a in action]
+    #     else:
+    #     # Otherwise, there is only one action, so calculate the delta angle directly
+    #         delta_angles = [(action - 1) * 0.1]
+
+    #     return delta_angles
+
+    #     # # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
+    #     # delta_angles = [(a - 1) * 0.1 for a in action]
+    #     # return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
@@ -215,8 +302,22 @@ class RobotEnvironment(gym.Env):
         ]
 
         T = np.eye(4)
-        for params in dh_params:
-            T = np.dot(T, self.dh_transform_matrix(*params))
+        for i, params in enumerate(dh_params):
+            a, d, alpha, theta_val = params
+            print(f"DH Parameters for joint {i}: a={a}, d={d}, alpha={alpha}, theta={theta_val}")
+
+            T_i = self.dh_transform_matrix(*params)
+            print(f"Transformation Matrix T{i}:\n{T_i}\n")
+
+            # Überprüfe die Form der Transformationsmatrix
+            if T_i.shape != (4, 4):
+                raise ValueError(f"Unexpected shape of transformation matrix T{i}: {T_i.shape}. Expected (4, 4)")
+
+            T = np.dot(T, T_i)
+        print(f"Final Transformation Matrix T:\n{T}\n")  # Neu hinzugefügter Code
+
+        # for params in dh_params:
+        #     T = np.dot(T, self.dh_transform_matrix(*params))
 
         # extract position from the final transformation matrix
         position = T[:3, 3]

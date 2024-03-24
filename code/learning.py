@@ -22,11 +22,19 @@ class QNetwork(nn.Module):
         inputs: states in the state space
         outputs: action values for each action in the action space
     """
-    def __init__(self, state_size, action_size, hidden_size=64):
+    def __init__(self, state_size, action_size, hidden_size=101):
         super(QNetwork, self).__init__()
+        print("State size:", state_size)
+        print("Action size:", action_size)
         self.fc1 = nn.Linear(state_size, hidden_size)  # input layer to hidden layer
         self.relu = nn.ReLU()                          # activation function
         self.fc2 = nn.Linear(hidden_size, action_size) # hidden layer to output layer
+        # Zugriff auf die Gewichtsmatrizen der ersten und zweiten Schicht
+        fc1_weight_shape = self.fc1.weight.shape
+        fc2_weight_shape = self.fc2.weight.shape
+
+        print("Shape of fc1 weight matrix:", fc1_weight_shape)
+        print("Shape of fc2 weight matrix:", fc2_weight_shape)
     
     def forward(self, state):
         x= self.fc1(state) # 1st layer
@@ -48,6 +56,7 @@ class NStepReplayMemory:
      
     def push(self, state, action, reward, next_state, done): # stores a transition in the replay memory
         self.n_step_buffer.append((state, action, reward, next_state, done))  # stores experiences in a temporary buffer until n experiences are collected
+        print("next_state 1",next_state)
         if len(self.n_step_buffer) == self.n_steps: # if the buffer is full:
             R = sum(self.gamma ** i * reward for i, (_, _, reward, _, _) in enumerate(self.n_step_buffer)) # calculate the n-step return
             state, action, _, _, _ = self.n_step_buffer[0]            # get the first transition to get the state and action
@@ -94,64 +103,127 @@ class DQNAgent:
         # set optimizer for updating the online network
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
     
-    # todo: eventually rather implement epsilon decay
-    def act(self, state, epsilon=0.1): 
-        # select action according to epsilon-greedy policy
-        if random.random() > epsilon: 
-            # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
-            state = torch.FloatTensor(state).unsqueeze(0).to(device)  # state needs to be in tensor and add batch dimension
-            with torch.no_grad():  # gradient calculation needs to be disabled for inference
-                q_values = self.model(state)  # get q-values for all actions
-            return np.argmax(q_values.cpu().numpy())  # return action with highest q-value (best action)
-        else:
-            # with probability epsilon, choose a random action --> explore
-            return random.randrange(self.action_size)
-    
-    def learn(self): #, episodes, render=False, is_slippery=False)
-        # online network update based on number of experiences
-        if len(self.memory) < self.batch_size:
-            return  # no learning if not enough samples in memory
-        
-        # sample experiences from memory:
-        transition_samples = self.memory.sample(self.batch_size)
-        training_batch = list(zip(*transition_samples))  # convert the batch to separate states, actions, etc.
-        # zip function combines elements from each of the input iterables (lists, tuples, etc.) based on their position. 
-        # * operator, when used with an iterable (like "transition_samples"), unpacks the iterable 
-        # ---> each element goes as a separate argument to the zip
-        # then zip is called and it combines the first elements of each tuple (all states),
-        # the second elements (all actions), etc., into new tuples.
 
-        # convert batches to tensors:
+    def act(self, state, epsilon=0.1): 
+        # Wählen Sie die Aktion gemäß der epsilon-greedy-Policy aus
+        if random.random() > epsilon: 
+            # (1 - epsilon)-Wahrscheinlichkeit: wählen Sie die beste Aktion basierend auf der aktuellen Policy --> exploit
+            if len(state) != 6161:  # Überprüfen Sie die Größe des Zustandsvektors
+                print("Fehler: Der Zustandsvektor hat nicht die richtige Größe.")
+                return None  # Rückgabe None, da der Zustandsvektor nicht korrekt ist
+            else:
+                state = state[:61]
+                state = np.reshape(state, [1, 61])  # Ändern Sie die Form des Zustandsvektors zu [1, 61]
+                state = torch.tensor(state, device=device, dtype=torch.float32)  # Konvertieren Sie den Zustandsvektor in einen Tensor
+                with torch.no_grad():  # Gradientenberechnung muss für die Inferenz deaktiviert werden
+                    q_values = self.model(state)  # Erhalten Sie Q-Werte für alle Aktionen
+                return np.argmax(q_values.cpu().numpy())  # Rückgabe der Aktion mit dem höchsten Q-Wert (beste Aktion)
+        else:
+            # mit der Wahrscheinlichkeit epsilon: wählen Sie eine zufällige Aktion --> explore
+            return random.randrange(self.action_size)
+
+
+    # # todo: eventually rather implement epsilon decay
+    # def act(self, state, epsilon=0.1): 
+    #     # select action according to epsilon-greedy policy
+    #     if random.random() > epsilon: 
+    #         # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
+    #         state = torch.FloatTensor(state).unsqueeze(0).to(device)  # state needs to be in tensor and add batch dimension
+    #         with torch.no_grad():  # gradient calculation needs to be disabled for inference
+    #             q_values = self.model(state)  # get q-values for all actions
+    #         return np.argmax(q_values.cpu().numpy())  # return action with highest q-value (best action)
+    #     else:
+    #         # with probability epsilon, choose a random action --> explore
+    #         return random.randrange(self.action_size)
+    
+
+    def learn(self): 
+        # Online-Netzwerkupdate basierend auf Anzahl der Erfahrungen
+        if len(self.memory) < self.batch_size:
+            return  # Kein Lernen, wenn nicht genügend Samples im Speicher vorhanden sind
+
+        # Abtasten von Erfahrungen aus dem Speicher:
+        transition_samples = self.memory.sample(self.batch_size)
+        training_batch = list(zip(*transition_samples))  
+
+        # Konvertieren von Batches in Tensoren:
         states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
-        actions = actions.long()  # actions should be long tensors
-        dones = dones.float() # terminated states are set to float for further calculations
+        actions = actions.long()  
+        dones = dones.float() 
         states = torch.tensor(states, device=device, dtype=torch.float32)
         actions = torch.tensor(actions, device=device, dtype=torch.long)
         rewards = torch.tensor(rewards, device=device, dtype=torch.float32)
         next_states = torch.tensor(next_states, device=device, dtype=torch.float32)
         dones = torch.tensor(dones, device=device, dtype=torch.float32)
 
-        # calc q-values for selected actions
-        state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
-        # get the next state values from target network 
-        next_state_values = self.target_model(next_states).max(1)[0].detach()
-        # get expected q-values (target values) using n-step returns
-        expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
-        # calculates the expected Q-values for each state-action pair, and excludes the value of future states when done is True for a given state.
+        # Vorwärtsdurchlauf durch das Netzwerk
+        if len(states) != 6161:  # Überprüfen Sie die Größe des Zustandsvektors
+            print("Fehler: Der Zustandsvektor hat nicht die richtige Größe.")
+            return  # Beenden Sie den Vorwärtsdurchlauf, wenn der Zustandsvektor nicht korrekt ist
+        else:
+            state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
+            next_state_values = self.target_model(next_states).max(1)[0].detach()
+            expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
+            loss = nn.MSELoss()(state_action_values, expected_state_action_values)
 
-        # calculate loss between the expected q-values and the ones predicted by the online network
-        loss = nn.MSELoss()(state_action_values, expected_state_action_values)
+            # Gradientenabstieg zur Minimierung des Verlusts
+            self.optimizer.zero_grad()  
+            loss.backward()  
+            self.optimizer.step()  
+
+            # Periodisches Aktualisieren der Target-Netzwerk-Gewichte
+            if self.steps_done % self.sync_rate == 0: 
+                self.target_model.load_state_dict(self.model.state_dict())
+
+            self.steps_done += 1
+
+
+    # def learn(self): #, episodes, render=False, is_slippery=False)
+    #     # online network update based on number of experiences
+    #     if len(self.memory) < self.batch_size:
+    #         return  # no learning if not enough samples in memory
         
-        # perform gradient descent to minimize the loss
-        self.optimizer.zero_grad()  # reset gradients to zero
-        loss.backward()  # compute gradient of the loss 
-        self.optimizer.step()  # update network weights
+    #     # sample experiences from memory:
+    #     transition_samples = self.memory.sample(self.batch_size)
+    #     training_batch = list(zip(*transition_samples))  # convert the batch to separate states, actions, etc.
+    #     # zip function combines elements from each of the input iterables (lists, tuples, etc.) based on their position. 
+    #     # * operator, when used with an iterable (like "transition_samples"), unpacks the iterable 
+    #     # ---> each element goes as a separate argument to the zip
+    #     # then zip is called and it combines the first elements of each tuple (all states),
+    #     # the second elements (all actions), etc., into new tuples.
+
+    #     # convert batches to tensors:
+    #     states, actions, rewards, next_states, dones = map(torch.FloatTensor, training_batch)
+    #     print("netx_state",next_states)
+    #     actions = actions.long()  # actions should be long tensors
+    #     dones = dones.float() # terminated states are set to float for further calculations
+    #     states = torch.tensor(states, device=device, dtype=torch.float32)
+    #     actions = torch.tensor(actions, device=device, dtype=torch.long)
+    #     rewards = torch.tensor(rewards, device=device, dtype=torch.float32)
+    #     next_states = torch.tensor(next_states, device=device, dtype=torch.float32)
+    #     dones = torch.tensor(dones, device=device, dtype=torch.float32)
+
+    #     # calc q-values for selected actions
+    #     state_action_values = self.model(states).gather(1, actions.unsqueeze(1)).squeeze(1)
+    #     # get the next state values from target network 
+    #     next_state_values = self.target_model(next_states).max(1)[0].detach()
+    #     # get expected q-values (target values) using n-step returns
+    #     expected_state_action_values = rewards + (self.gamma * next_state_values * (1 - dones))
+    #     # calculates the expected Q-values for each state-action pair, and excludes the value of future states when done is True for a given state.
+
+    #     # calculate loss between the expected q-values and the ones predicted by the online network
+    #     loss = nn.MSELoss()(state_action_values, expected_state_action_values)
         
-        # periodically update target network weights
-        if self.steps_done % self.sync_rate == 0: # if the number of steps is a multiple of the sync rate
-            self.target_model.load_state_dict(self.model.state_dict()) # sync weights from online network to target network
+    #     # perform gradient descent to minimize the loss
+    #     self.optimizer.zero_grad()  # reset gradients to zero
+    #     loss.backward()  # compute gradient of the loss 
+    #     self.optimizer.step()  # update network weights
         
-        self.steps_done += 1  # raise total number of steps by one
+    #     # periodically update target network weights
+    #     if self.steps_done % self.sync_rate == 0: # if the number of steps is a multiple of the sync rate
+    #         self.target_model.load_state_dict(self.model.state_dict()) # sync weights from online network to target network
+        
+    #     self.steps_done += 1  # raise total number of steps by one
 
 
 
@@ -166,26 +238,51 @@ if __name__ == "__main__":
     )
 
     env = gym.make('RobotEnvironment-v0')
-
+   
     # get env specs to init the agent
     state_size = env.observation_space.shape[0]
-    action_size = env.action_space.n
+    #action_size = env.action_space.n
+    action_size = env.action_space.nvec.prod()
+    
     agent = DQNAgent(state_size, action_size)
     num_episodes = 30 # start with low number and raise ...of use as hyperparameter
     visualization_rate = 10 # how often to visualize the environment
     terminated = False # True if the agent leaves the trajectory of the helix
 
     for episode in range(num_episodes):
-        state = env.reset()[0]  # reset the environment to state 0
-        state = np.reshape(state, [1, state_size])  # reshape state for compatibility with DQNAgent
+        obs = env.reset()  # reset the environment
         
+        print("Observation after reset:", obs)
+        state = obs[0]  # extract the observation from the tuple
+        print("state",state)
+        #state = env.reset()[0]  # reset the environment to state 0
+        #state = np.reshape(state, [1, state_size])  # reshape state for compatibility with DQNAgent
+        
+        # Vor dem Umformen des Zustands, überprüfe die Form des Arrays
+        print("Zustandsform vor der Umformung:", state.shape)
+
+        # Stelle sicher, dass die Größe des Zustandsarrays mit der erwarteten Größe übereinstimmt
+        expected_size = 1 * 61  # Anzahl der Elemente in der gewünschten Form (1x61)
+        actual_size = state.size  # Anzahl der Elemente im aktuellen Zustandsarray
+        print("Erwartete Größe:", expected_size)
+        print("Tatsächliche Größe:", actual_size)
+
+        # Führe die Umformung nur durch, wenn die Größe des Zustandsarrays korrekt ist
+        if actual_size == expected_size:
+            state = np.reshape(state, [1, 61])
+            print("Zustand erfolgreich umgeformt:", state.shape)
+        else:
+            print("Fehler: Die Größe des Zustandsarrays stimmt nicht mit der erwarteten Größe überein.")
+
+
+
         total_reward = 0
         rewards_per_episode = []
         #epsilon_history = []
 
         while not terminated:
             action = agent.act(state)  # select action according to epsilon-greedy policy
-            next_state, reward, terminated = env.step(action)  # take action in environment
+            next_state, reward, terminated , _ = env.step(action)  # take action in environment
             next_state = np.reshape(next_state, [1, state_size])
             
             # store transition in memory
