@@ -4,11 +4,11 @@
 ## Paper: 6-legged Robot
 
 - [x] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
-- [ ] take [notes](https://docs.google.com/document/d/1rnW2lWlUQMY4ahw68WoXD42BBrlzWxlGkcxe9iR7dCI/edit)
+- [x] take [notes](https://docs.google.com/document/d/1rnW2lWlUQMY4ahw68WoXD42BBrlzWxlGkcxe9iR7dCI/edit)
       
 Presentation of the paper (20 min):
 
-- [ ] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
+- [x] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
 - [ ] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each  
 
 Questions:
@@ -18,8 +18,8 @@ Questions:
 - [ ] Why can RL solve the problem in a better manner? (Dennis)
 - [ ] What are the metrics (figures of merit)? When is a solution good enough for that problem? (Philipp)
 - [ ] Which Algorithms are the authors testing? Are they a good choice? (Dennis)
-- [ ] Do they achieve a better solution compared to the previous solutions? (Ari)
-- [ ] What could be changed / improved (in our opinion)?
+- [x] Do they achieve a better solution compared to the previous solutions? (Ari)
+- [x] What could be changed / improved (in our opinion)?
 - [ ] A few simulations that confirm our proposals for improvement
 
 
@@ -30,7 +30,7 @@ Questions:
 
 - [x]	Define the 3D-trajectory mathematically.
 - [x]	Define the Observation Space in the form of the voxel where the trajectory will be.
-- [ ] Code the Environment with the given direct kinematics and the constraints of the join angles and the chosen voxel.
+- [x] Code the Environment with the given direct kinematics and the constraints of the join angles and the chosen voxel.
       Define a suitable Reward Function for the Agent,
       as well as the strategy how to deal with occasions where the TCP leaves the trajectory and/or the voxel.
 - [ ]	Code the defined algorithm to come to an optimal Policy.
