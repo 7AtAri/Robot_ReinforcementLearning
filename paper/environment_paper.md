@@ -10,7 +10,7 @@ $$
 r_{\text{sm}}(n) = 
 \begin{cases} 
 \frac{2}{1 + e^{(7-sm_{n+1})}} - 1 & \text{if} sm_{n+1} \geq 7 \\
-\frac{2}{1 + e^{(sm_{n+1}-7)}}-1.5 & \text{if} sm_{n+1} < 7 \\
+\frac{2}{1 + e^{(7-sm_{n+1})}}-1.5 & \text{if} sm_{n+1} < 7 \\
 -1.5,                              & \text{if} v_{unit} \ne v_{commanded}
 \end{cases}
 $$
