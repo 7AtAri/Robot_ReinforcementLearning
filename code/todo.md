@@ -55,4 +55,5 @@ nach env 100%:
 - [ ] alle prints die nicht fehlermeldungen sind im env auskommentieren oder löschen
 
 - [ ] besseres Network: DQN mit 2 channels(voxel_space und tcp_pos in voxel space translated) conv3D() und lin layers als output
+- [ ] find out where the .push() method is used?
 - [ ] implement epsilon decay instead of epsilon greedy
