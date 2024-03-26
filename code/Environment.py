@@ -246,7 +246,7 @@ class RobotEnvironment(gym.Env):
         self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
 
         # reset the reward and Flags
-        self.tcp_on_helix = True
+        self.tcp_on_helix = self.is_on_helix(self.tcp_position)
         self.reward = 0
         self.terminated= False
         self.truncated = False
