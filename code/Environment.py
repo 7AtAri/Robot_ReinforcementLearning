@@ -60,8 +60,11 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         # Define the initial state of the robot
-        self.joint_angles = np.array([0, 0, 0, 0, 0, 0], dtype=np.float64)  # initial joint angles
-        self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
+        # set initial TCP position at the start of the helix
+        self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
+        self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
+
+        #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
         
         self.reward = 0 # reward points
@@ -204,9 +207,9 @@ class RobotEnvironment(gym.Env):
         self.voxel_space.fill(-1)
         self.init_helix()
 
-        # reset the joint angles and TCP position
-        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])   # I think this is not correct, because the angles are not all 0 if we want to have this downward orientation I guess
-        self.tcp_position = self.forward_kinematics(self.joint_angles)
+        # reset the joint angles and TCP position to the start of the helix
+        self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
+        self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
 
         # reset the reward and Flags
         self.tcp_on_helix = True
@@ -255,8 +258,13 @@ class RobotEnvironment(gym.Env):
     def render(self, mode='human', tcp_coords=None):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
+<<<<<<< HEAD
         # ax.scatter(*np.where(self.voxel_space == 1), c='r', s=50, alpha=1)  # helix end points
         # ax.scatter(*np.where(self.voxel_space == 0), c='b', s=50, alpha=1)  # helix path points
+=======
+        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
+        ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
+>>>>>>> c7eaa407404920e5f2e84c29df507790659a2b0d
         
         ax.scatter(*np.where(self.observation_space == 1), c='r', s=50, alpha=1)  # helix end points
         ax.scatter(*np.where(self.observation_space == 0), c='b', s=50, alpha=1)
@@ -272,7 +280,11 @@ class RobotEnvironment(gym.Env):
                 z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
                 
                 # highlight TCP position
+<<<<<<< HEAD
                 #ax.scatter([x_idx], [y_idx], [z_idx], c='g', s=100, label='TCP Position')
+=======
+                ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+>>>>>>> c7eaa407404920e5f2e84c29df507790659a2b0d
 
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')

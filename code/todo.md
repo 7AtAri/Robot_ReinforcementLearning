@@ -9,15 +9,15 @@
 - [ ] check correct out size of reset() for input in Qnet
 - [x] process_action() vgl mit main branch version
 
-- [ ] Startkoordinaten fixen auf Helix
-- [ ] joint angles + TCP- start position
+- [x] Startkoordinaten fixen auf Helix
+- [x] joint angles + TCP- start position
 - [ ] Orientation verstehen und einbinden (Euler Angles) --> see TCP.ipynb
-- [ ] Inverse Kinematics?
+- [x] Inverse Kinematics needed?  --> wird glaub ich nicht benötigt, außer 1 mal am Anfang für die Startposition  --> extrafile
 
 - [ ] step funktion (vgl. dev_branch mit main)
-- [ ] check is_on_helix() funktion wenn startkoordinaten stimmen
+- [x] check is_on_helix() funktion wenn startkoordinaten stimmen   -->  correclty returns True now!
 - [ ] check reset() bzgl. states.flatten()
-- [ ] render() checken nach dem startpos fixed
+- [x] render() checken nach dem startpos fixed
 
 - [ ] Environment 100% überprüfen
 
