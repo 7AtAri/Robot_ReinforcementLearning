@@ -316,16 +316,6 @@ class RobotEnvironment(gym.Env):
     def process_action(self, action):
           
         # Check if the angle is within the correct range of -180 to 180 degrees
-
-        ### todo ###
-        if self.joint_angles > 180:
-            self.joint_angles = 180
-        elif self.joint_angles < -180:
-            self.joint_angles = -180
-        else:
-            # update joint angles
-            self.joint_angles += delta_angles
-        ### todo ende ###
   
         # Check if action is iterable
         if isinstance(action, (list, tuple)):
@@ -335,7 +325,7 @@ class RobotEnvironment(gym.Env):
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = [(action - 1) * 0.1]
 
-          for i in range(len(self.joint_angles)):
+        for i in range(len(self.joint_angles)):
             new_angle = self.joint_angles[i] + delta_angles[i]
             if new_angle > 180:
                 self.joint_angles[i] = 180
@@ -353,7 +343,7 @@ class RobotEnvironment(gym.Env):
           #set a range
           #self.joint_angles = np.clip(new_angles, -180, 180)
 
-          return delta_angles
+        return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
