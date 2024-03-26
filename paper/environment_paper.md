@@ -23,7 +23,7 @@ This function rewards transitions that lead to a state with a stability margin g
 $$
 r_{\text{sw}}(n) = 
 \begin{cases} 
-\1,           & \text{if } P_{n+1} \text{ is quasi-static-stable} \\
+1,           & \text{if } P_{n+1} \text{ is quasi-static-stable} \\
 -1.5,         & \text{if } P_{n+1} \text{ is statistically unstable}
 \end{cases}
 $$
