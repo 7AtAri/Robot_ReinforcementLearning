@@ -22,7 +22,7 @@ This function rewards transitions that lead to a state with a stability margin g
 
 5. **Learning Mechanism**: The learning mechanism updates the utilities (values) of state transitions based on the reinforcement signals received after each action. The utilities are used to inform the selection of actions (state transitions) in future iterations, favoring those that lead to higher rewards. The update rule for the utility $u_{P(n) \rightarrow P(n+1)}$ of transitioning from state $P(n)$ to $P(n+1)$ is influenced by the received reward $r_{sm}(n)$ and a discount factor $\gamma$, emphasizing the importance of recent transitions over older ones. P(n) is initialized to 0.5.
 
-$$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma_{i-n}*r(n)* [1 - u_{P(n) \to P(n+1)}] $$
+$$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma_{i-n} * r(n) * [1 - u_{P(n) \to P(n+1)}] $$
 
 for $i=n-4, n-3,...,n$
 
