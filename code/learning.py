@@ -26,6 +26,7 @@ class QNetwork(nn.Module):
         super(QNetwork, self).__init__()
         print("State size:", state_size)
         print("Action size:", action_size)
+        self.flatten = nn.Flatten()
         self.fc1 = nn.Linear(state_size, hidden_size)  # input layer to hidden layer
         self.relu = nn.ReLU()                          # activation function
         self.fc2 = nn.Linear(hidden_size, action_size) # hidden layer to output layer
@@ -37,7 +38,8 @@ class QNetwork(nn.Module):
         print("Shape of fc2 weight matrix:", fc2_weight_shape)
     
     def forward(self, state):
-        x= self.fc1(state) # 1st layer
+        x= self.flatten(state) # flattened input
+        x= self.fc1(x) # 1st layer
         x = self.relu(x)  # activated first layer
         return self.fc2(x)            # output layer
 
@@ -293,6 +295,7 @@ if __name__ == "__main__":
             if reward == 1:
                 rewards_per_episode.append(1)
 
+                # evlt break oder if abfrage vor dem lernen (if not termqinated = True ???)
                 agent.learn()  # learn from memory
             
             # visualize the environment regularly

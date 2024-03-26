@@ -4,6 +4,10 @@
 ### Group: Dennis Huff, Philip, Ari Wahl 
 ### ###############################################################################################################
 
+import os
+
+# mute the MKL warning on macOS
+os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
 import numpy as np
 from math import cos, sin, pi
@@ -41,6 +45,8 @@ class RobotEnvironment(gym.Env):
 
         # init voxel space 
         self.voxel_space = np.full((x_size, y_size, z_size), -1)  # initialize all voxels with -1
+        print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
+        print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
 
         # Populate the voxel space with a helix
         self.init_helix()
@@ -165,8 +171,8 @@ class RobotEnvironment(gym.Env):
         self.reached_target = False
 
         # Check the size of the state vector
-        state = self.voxel_space.flatten()
-        expected_size = 1 * 61  ##why???
+        state = self.voxel_space.flatten()   # flatten besser hier oder im netzwerk
+        expected_size = 1 * 61  * 61 * 101
         actual_size = state.size
         print("Actual size of state vector:", actual_size)
         print("Expected size of state vector:", expected_size)
@@ -177,9 +183,10 @@ class RobotEnvironment(gym.Env):
             return None
 
         # Reshape the state vector
-        state = np.reshape(state, (1, 61))
+        # state = np.reshape(state, (1, 61))
     
         return state
+    
     # def reset(self):
     #     # reset the environment 
     #     self.voxel_space.fill(-1)
@@ -210,7 +217,9 @@ class RobotEnvironment(gym.Env):
         
         # if TCP coordinates are provided and valid, then visualize TCP position
         if tcp_coords is not None:
+            print(f"TCP Coordinates: {tcp_coords}")
             is_on_path = self.is_on_helix(tcp_coords)
+            print(f"Is TCP on Helix Path: {is_on_path}")
             if is_on_path:
                 # convert real-world coordinates to indices for visualization
                 x_idx = (tcp_coords[0] - self.x_range[0]) / self.resolution
@@ -324,4 +333,5 @@ class RobotEnvironment(gym.Env):
         return position
     
     
-
+env = RobotEnvironment()
+env.render(tcp_coords=env.tcp_position)
