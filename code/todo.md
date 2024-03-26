@@ -9,10 +9,10 @@
 - [ ] check correct out size of reset() for input in Qnet
 - [ ] process_action() vgl mit main branch version
 
-- [ ] Startkoordinaten fixen auf Helix
-- [ ] joint angles + TCP- start position
+- [x] Startkoordinaten fixen auf Helix
+- [x] joint angles + TCP- start position
 - [ ] Orientation verstehen und einbinden (Euler Angles) --> see TCP.ipynb
-- [ ] Inverse Kinematics?
+- [x] Inverse Kinematics needed?  --> wird glaub ich nicht benötigt, außer 1 mal am Anfang für die Startposition  --> extrafile
 
 - [ ] step funktion (vgl. dev_branch mit main)
 - [ ] check is_on_helix() funktion wenn startkoordinaten stimmen
