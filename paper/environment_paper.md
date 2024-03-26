@@ -24,7 +24,7 @@ This function rewards transitions that lead to a state with a stability margin g
 
 $$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma_{i-n} * r_{sm}(n) * [1 - u_{P(n) \to P(n+1)}] $$
 
-for $i=n-4, n-3,...,n$
+$$for i=n-4, n-3,...,n$$
 
 6. **Evaporation Mechanism (Discounting Over Time)**:
    
