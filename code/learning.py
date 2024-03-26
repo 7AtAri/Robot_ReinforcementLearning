@@ -19,7 +19,7 @@ from gymnasium.envs.registration import register
 class QNetwork(nn.Module):
     """ neural network that approximates the Q-value function: 
 
-        inputs: states in the state space
+        inputs: state (concatenaded voxel_space and tcp_position) in the state space
         outputs: action values for each action in the action space
     """
     def __init__(self, state_size, action_size, hidden_size=101):
@@ -41,7 +41,7 @@ class QNetwork(nn.Module):
         x= self.flatten(state) # flattened input
         x= self.fc1(x) # 1st layer
         x = self.relu(x)  # activated first layer
-        return self.fc2(x)            # output layer
+        return self.fc2(x)    # output layer
 
 
 class NStepReplayMemory:
@@ -56,15 +56,15 @@ class NStepReplayMemory:
         self.gamma = gamma             # discount factor for bootstrapping
         self.n_step_buffer = deque(maxlen=n_steps) # deque for storing n-step transitions
      
-    def push(self, state, action, reward, next_state, done): # stores a transition in the replay memory
-        self.n_step_buffer.append((state, action, reward, next_state, done))  # stores experiences in a temporary buffer until n experiences are collected
-        print("next_state 1",next_state)
+    def push(self, state, tcp_position, action, reward, next_state, next_tcp_position, terminated, truncated): # stores a transition in the replay memory
+        self.n_step_buffer.append((state, tcp_position, action, reward, next_state, next_tcp_position, terminated, truncated))  # stores experiences in a temporary buffer until n experiences are collected
+        #print("next_state 1",next_state)
         if len(self.n_step_buffer) == self.n_steps: # if the buffer is full:
-            R = sum(self.gamma ** i * reward for i, (_, _, reward, _, _) in enumerate(self.n_step_buffer)) # calculate the n-step return
-            state, action, _, _, _ = self.n_step_buffer[0]            # get the first transition to get the state and action
-            _, _, _, next_state, done = self.n_step_buffer[-1]    # get the last transition to get the next state and done
-            self.memory.append((state, action, R, next_state, done)) #add the n-step transition to the memory
-            if done:
+            R = sum(self.gamma ** i * reward for i, (_, _, _, reward, _, _, _, _) in enumerate(self.n_step_buffer)) # calculate the n-step return
+            state, tcp_position, action, _, _, _, _, _ = self.n_step_buffer[0]            # get the first transition to get the state and action
+            _, _, _, _, next_state, next_tcp_position, terminated, truncated = self.n_step_buffer[-1]    # get the last transition to get the next state and done
+            self.memory.append((state, tcp_position, action, R, next_state, next_tcp_position, terminated, truncated)) #add the n-step transition to the memory
+            if terminated or truncated: # if the episode is terminated or truncated, clear the buffer
                 self.n_step_buffer.clear()
     
     def sample(self, sample_size): 
@@ -253,12 +253,12 @@ if __name__ == "__main__":
     terminated = False # True if the agent leaves the trajectory of the helix
 
     for episode in range(num_episodes):
-        obs = env.reset()  # reset the environment
+        voxel_space, tcp_position, info = env.reset()  # reset the environment
         
-        print("Observation after reset:", obs)
-        state = obs[0]  # extract the observation from the tuple
-        print("statesize: ",state.size)
-        print("state",state)
+        print("Observation after reset:", voxel_space)
+        
+        state = voxel_space
+        actual_size = state.size
         #state = env.reset()[0]  # reset the environment to state 0
         #state = np.reshape(state, [1, state_size])  # reshape state for compatibility with DQNAgent
         
@@ -266,19 +266,14 @@ if __name__ == "__main__":
         print("Zustandsform vor der Umformung:", state.shape)
 
         # Stelle sicher, dass die Größe des Zustandsarrays mit der erwarteten Größe übereinstimmt
-        expected_size = 1 * 61  # Anzahl der Elemente in der gewünschten Form (1x61)
-        actual_size = state.size  # Anzahl der Elemente im aktuellen Zustandsarray
-        print("Erwartete Größe:", expected_size)
-        print("Tatsächliche Größe:", actual_size)
+        expected_size =   61  * 61 * 101 # Erwartete Größe des Zustandsarrays
 
         # Führe die Umformung nur durch, wenn die Größe des Zustandsarrays korrekt ist
         if actual_size == expected_size:
-            state = np.reshape(state, [1, 61])
+            state = np.reshape(state, [1, expected_size])
             print("Zustand erfolgreich umgeformt:", state.shape)
         else:
             print("Fehler: Die Größe des Zustandsarrays stimmt nicht mit der erwarteten Größe überein.")
-
-
 
         total_reward = 0
         rewards_per_episode = []

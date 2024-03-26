@@ -48,19 +48,17 @@ class RobotEnvironment(gym.Env):
         self.observation_space = gym.spaces.Box(low=-1, high=1, 
                                                 shape=(x_size, y_size, z_size), 
                                                 dtype=np.int8)
-        print("Observation Space:", self.observation_space)
-        print("  - Dimensionen:", self.observation_space.shape)
-        print("  - low value:", self.observation_space.low)
-        print("  - high value:", self.observation_space.high)
-        print("  - datatype:", self.observation_space.dtype)
+        #print("Observation Space:", self.observation_space)
+        #print("  - Dimensionen:", self.observation_space.shape)
+        #print("  - low value:", self.observation_space.low)
+        #print("  - high value:", self.observation_space.high)
+        #print("  - datatype:", self.observation_space.dtype)
 
         # init voxel space 
         self.voxel_space = np.full((x_size, y_size, z_size), -1)  # initialize all voxels with -1
-        print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
-        print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
+        #print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
+        #print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
 
-        # create a separate matrix to store the helix path
-        self.helix_path = np.full_like(self.voxel_space, -1, dtype=np.int8)
         #print("observation Space Size flattened:", len(self.observation_space.flatten()) )
         # Populate the voxel space with a helix
         self.init_helix()
@@ -88,7 +86,8 @@ class RobotEnvironment(gym.Env):
             action (np.array): action provided by the agent (array of 6 integers between 0 and 2)
 
         Returns:
-            observation (state):  An element of the environment’s observation_space as the next observation due to the agent actions
+            observation (state):  voxel_space (flattened?) 
+            tcp_position (np.array): The current position of the TCP (end-effector) in the 3D space
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
@@ -102,15 +101,6 @@ class RobotEnvironment(gym.Env):
 
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
-
-        # Check if the angle is within the correct range of -180 to 180 degrees
-        if self.joint_angles > 180:
-            self.joint_angles = 180
-        elif self.joint_angles < -180:
-            self.joint_angles = -180
-        else:
-            # update joint angles
-            self.joint_angles += delta_angles
 
         # update TCP position (based on the new joint angles)
         self.tcp_position = self.forward_kinematics(self.joint_angles)
@@ -129,25 +119,23 @@ class RobotEnvironment(gym.Env):
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
         # return the new observation (state), reward, done flag
-        return self.voxel_space.flatten(), self.reward, self.terminated, self.truncated, info
-
-
+        return self.voxel_space.flatten(), self.tcp_position, self.reward, self.terminated, self.truncated, info
 
 
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
-            self.reward += 1
+            self.reward += 10
             self.truncated = False
 
-        if self.reached_target:
-            self.reward += 100 # extra reward for reaching the target
+        if self.terminated:
+            self.reward += 1000 # extra reward for reaching the target
             self.terminated = True
 
         else:
-            truncated = True # terminate the episode if the tcp is not on the helix any more
-            self.reward -=10
+            self.truncated = True # terminate the episode if the tcp is not on the helix any more
+            self.reward -=1
            
         return self.reward, self.terminated, self.truncated
     
@@ -190,13 +178,10 @@ class RobotEnvironment(gym.Env):
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
             if i == len(helix_x) - 1:  # last helix point
-                self.helix_path[x_idx, y_idx, z_idx] = 1
+                self.voxel_space[x_idx, y_idx, z_idx] = 1
             else:
-                self.helix_path[x_idx, y_idx, z_idx] = 0  # helix path
+                self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
 
-        # assign the helix path matrix to the observation space
-        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=self.helix_path.shape, dtype=np.int8)
-        self.observation_space = self.helix_path
 
     
     def is_on_helix(self, tcp_coords):
@@ -215,7 +200,7 @@ class RobotEnvironment(gym.Env):
             
             # if the TCP has reached the target (voxel-value = 1):
             if voxel_value == 1:
-                self.terminateed = True
+                self.terminated = True
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
@@ -252,13 +237,14 @@ class RobotEnvironment(gym.Env):
         self.truncated = False
 
         state = self.voxel_space.flatten()   # flatten besser hier oder im netzwerk?
+        print("State flattened: ", state)
         # todo: return first observation from observation_space
 
         # Check the size of the state vector
-        expected_size = 1 * 61  * 61 * 101
+        expected_size =  61  * 61 * 101
         actual_size = state.size
-        print("Actual size of state vector:", actual_size)
-        print("Expected size of state vector:", expected_size)
+        #print("Actual size of state vector:", actual_size)
+        #print("Expected size of state vector:", expected_size)
 
         # If the sizes don't match, print an error message and return None
         if actual_size != expected_size:
@@ -266,8 +252,8 @@ class RobotEnvironment(gym.Env):
             return None
 
         # Reshape the state vector
-        state = np.reshape(state, (1, expected_size)) # davor 61
-        print("State: ", state)
+        state = np.reshape(state, (1, expected_size)) # ???
+        print("State reshaped: ", state)
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -275,7 +261,7 @@ class RobotEnvironment(gym.Env):
             'tcp_position': self.tcp_position.tolist()
         }
 
-        return state, info
+        return state, self.tcp_position, info
     
     # def reset(self):
     #     # reset the environment 
@@ -305,21 +291,19 @@ class RobotEnvironment(gym.Env):
         ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
         ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
         
-        ax.scatter(*np.where(self.observation_space == 1), c='r', s=50, alpha=1)  # helix end points
-        ax.scatter(*np.where(self.observation_space == 0), c='b', s=50, alpha=1)
         # if TCP coordinates are provided and valid, then visualize TCP position
         if tcp_coords is not None:
-            print(f"TCP Coordinates: {tcp_coords}")
-            is_on_path = self.is_on_helix(tcp_coords)
-            print(f"Is TCP on Helix Path: {is_on_path}")
-            if is_on_path:
-                # convert real-world coordinates to indices for visualization
-                x_idx = (tcp_coords[0] - self.x_range[0]) / self.resolution
-                y_idx = (tcp_coords[1] - self.y_range[0]) / self.resolution
-                z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
-                
-                # highlight TCP position
-                ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+            #print(f"TCP Coordinates: {tcp_coords}")
+            #is_on_path = self.is_on_helix(tcp_coords)
+            #print(f"Is TCP on Helix Path: {is_on_path}")
+
+            # convert real-world coordinates to indices for visualization
+            x_idx = (tcp_coords[0] - self.x_range[0]) / self.resolution
+            y_idx = (tcp_coords[1] - self.y_range[0]) / self.resolution
+            z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
+            
+            # highlight TCP position
+            ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
@@ -328,19 +312,33 @@ class RobotEnvironment(gym.Env):
         plt.legend()
         plt.show()
 
-    def process_action(self, action):
-  
-          # Check if action is iterable
-          if isinstance(action, (list, tuple)):
-          # If yes, calculate the delta angles for each action
-              delta_angles = [(a - 1) * 0.1 for a in action]
-          else:
-          # Otherwise, there is only one action, so calculate the delta angle directly
-              delta_angles = [(action - 1) * 0.1]
 
-          # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
-          delta_angles = [(a - 1) * 0.1 for a in action]
-          return delta_angles
+    def process_action(self, action):
+          
+        # Check if the angle is within the correct range of -180 to 180 degrees
+
+        ### todo ###
+        if self.joint_angles > 180:
+            self.joint_angles = 180
+        elif self.joint_angles < -180:
+            self.joint_angles = -180
+        else:
+            # update joint angles
+            self.joint_angles += delta_angles
+        ### todo ende ###
+  
+        # Check if action is iterable
+        if isinstance(action, (list, tuple)):
+        # If yes, calculate the delta angles for each action
+            delta_angles = [(a - 1) * 0.1 for a in action]
+        else:
+        # Otherwise, there is only one action, so calculate the delta angle directly
+            delta_angles = [(action - 1) * 0.1]
+
+        # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
+        delta_angles = [(a - 1) * 0.1 for a in action]
+
+        return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
@@ -371,17 +369,17 @@ class RobotEnvironment(gym.Env):
         T = np.eye(4)
         for i, params in enumerate(dh_params):
             a, d, alpha, theta_val = params
-            print(f"DH Parameters for joint {i}: a={a}, d={d}, alpha={alpha}, theta={theta_val}")
+            #print(f"DH Parameters for joint {i}: a={a}, d={d}, alpha={alpha}, theta={theta_val}")
 
             T_i = self.dh_transform_matrix(*params)
-            print(f"Transformation Matrix T{i}:\n{T_i}\n")
+            #print(f"Transformation Matrix T{i}:\n{T_i}\n")
 
             # Überprüfe die Form der Transformationsmatrix
             if T_i.shape != (4, 4):
                 raise ValueError(f"Unexpected shape of transformation matrix T{i}: {T_i.shape}. Expected (4, 4)")
 
             T = np.dot(T, T_i)
-        print(f"Final Transformation Matrix T:\n{T}\n")  # Neu hinzugefügter Code
+        #print(f"Final Transformation Matrix T:\n{T}\n")  # Neu hinzugefügter Code
 
         # for params in dh_params:
         #     T = np.dot(T, self.dh_transform_matrix(*params))
