@@ -103,14 +103,14 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        # Check if the angle is within the correct range of -180 to 180 degrees
-        if self.joint_angles > 180:
-            self.joint_angles = 180
-        elif self.joint_angles < -180:
-            self.joint_angles = -180
-        else:
-            # update joint angles
-            self.joint_angles += delta_angles
+        # # Check if the angle is within the correct range of -180 to 180 degrees
+        # if self.joint_angles > 180:
+        #     self.joint_angles = 180
+        # elif self.joint_angles < -180:
+        #     self.joint_angles = -180
+        # else:
+        #     # update joint angles
+        #     self.joint_angles += delta_angles
 
         # update TCP position (based on the new joint angles)
         self.tcp_position = self.forward_kinematics(self.joint_angles)
@@ -338,8 +338,24 @@ class RobotEnvironment(gym.Env):
           # Otherwise, there is only one action, so calculate the delta angle directly
               delta_angles = [(action - 1) * 0.1]
 
+          for i in range(len(self.joint_angles)):
+            new_angle = self.joint_angles[i] + delta_angles[i]
+            if new_angle > 180:
+                self.joint_angles[i] = 180
+            elif new_angle < -180:
+                self.joint_angles[i] = -180
+            else:
+                self.joint_angles[i] = new_angle
+
           # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
-          delta_angles = [(a - 1) * 0.1 for a in action]
+          #delta_angles = [(a - 1) * 0.1 for a in action] # braucht es das noch?
+                
+          # calculate new angels
+          #new_angles = self.joint_angles + delta_angles * 0.1
+
+          #set a range
+          #self.joint_angles = np.clip(new_angles, -180, 180)
+
           return delta_angles
 
 
