@@ -53,3 +53,6 @@ nach env 100%:
 - [ ] render() im env von plt.show() auf plt.save(...) umstellen
 - [ ] Orientation verstehen und einbinden (Euler Angles) --> see TCP.ipynb  --> ist glaub ich nicht nötig...und aktuell auch nicht so wichtig
 - [ ] alle prints die nicht fehlermeldungen sind im env auskommentieren oder löschen
+
+- [ ] besseres Network: DQN mit 2 channels(voxel_space und tcp_pos in voxel space translated) conv3D() und lin layers als output
+- [ ] implement epsilon decay instead of epsilon greedy

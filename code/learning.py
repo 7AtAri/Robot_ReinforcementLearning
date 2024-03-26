@@ -105,38 +105,19 @@ class DQNAgent:
         # set optimizer for updating the online network
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
     
-
+    
+    # todo: eventually rather implement epsilon decay
     def act(self, state, epsilon=0.1): 
-        # Wählen Sie die Aktion gemäß der epsilon-greedy-Policy aus
+        # select action according to epsilon-greedy policy
         if random.random() > epsilon: 
-            # (1 - epsilon)-Wahrscheinlichkeit: wählen Sie die beste Aktion basierend auf der aktuellen Policy --> exploit
-            if len(state) != 6161:  # Überprüfen Sie die Größe des Zustandsvektors
-                print("Fehler: Der Zustandsvektor hat nicht die richtige Größe.")
-                return None  # Rückgabe None, da der Zustandsvektor nicht korrekt ist
-            else:
-                state = state[:61]
-                state = np.reshape(state, [1, 61])  # Ändern Sie die Form des Zustandsvektors zu [1, 61]
-                state = torch.tensor(state, device=device, dtype=torch.float32)  # Konvertieren Sie den Zustandsvektor in einen Tensor
-                with torch.no_grad():  # Gradientenberechnung muss für die Inferenz deaktiviert werden
-                    q_values = self.model(state)  # Erhalten Sie Q-Werte für alle Aktionen
-                return np.argmax(q_values.cpu().numpy())  # Rückgabe der Aktion mit dem höchsten Q-Wert (beste Aktion)
+            # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
+            state = torch.FloatTensor(state).unsqueeze(0).to(device)  # state needs to be in tensor and add batch dimension
+            with torch.no_grad():  # gradient calculation needs to be disabled for inference
+                q_values = self.model(state)  # get q-values for all actions
+            return np.argmax(q_values.cpu().numpy())  # return action with highest q-value (best action)
         else:
-            # mit der Wahrscheinlichkeit epsilon: wählen Sie eine zufällige Aktion --> explore
+            # with probability epsilon, choose a random action --> explore
             return random.randrange(self.action_size)
-
-
-    # # todo: eventually rather implement epsilon decay
-    # def act(self, state, epsilon=0.1): 
-    #     # select action according to epsilon-greedy policy
-    #     if random.random() > epsilon: 
-    #         # (1 - epsilon)-probability, choose the best action based on the current policy --> exploit
-    #         state = torch.FloatTensor(state).unsqueeze(0).to(device)  # state needs to be in tensor and add batch dimension
-    #         with torch.no_grad():  # gradient calculation needs to be disabled for inference
-    #             q_values = self.model(state)  # get q-values for all actions
-    #         return np.argmax(q_values.cpu().numpy())  # return action with highest q-value (best action)
-    #     else:
-    #         # with probability epsilon, choose a random action --> explore
-    #         return random.randrange(self.action_size)
     
 
     def learn(self): 
