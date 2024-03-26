@@ -256,6 +256,7 @@ if __name__ == "__main__":
         
         print("Observation after reset:", obs)
         state = obs[0]  # extract the observation from the tuple
+        print("statesize: ",state.size)
         print("state",state)
         #state = env.reset()[0]  # reset the environment to state 0
         #state = np.reshape(state, [1, state_size])  # reshape state for compatibility with DQNAgent
