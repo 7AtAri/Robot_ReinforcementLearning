@@ -335,6 +335,6 @@ class RobotEnvironment(gym.Env):
         position = T[:3, 3]
         return position
     
-    
-env = RobotEnvironment()
-env.render(tcp_coords=env.tcp_position)
+if __name__ == "__main__":
+    env = RobotEnvironment()
+    env.render(tcp_coords=env.tcp_position)
