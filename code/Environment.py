@@ -4,6 +4,9 @@
 ### Group: Dennis Huff, Philip, Ari Wahl 
 ### ###############################################################################################################
 
+# https://gymnasium.farama.org/api/env/
+
+
 import os
 
 # mute the MKL warning on macOS
@@ -17,6 +20,9 @@ import gymnasium as gym  # original gym is no longer maintained and now called g
 
 
 class RobotEnvironment(gym.Env):
+    """Custom Environment that follows gym interface"""
+    """Every Gym environment must have the attributes action_space and observation_space (containing states). """
+
     def __init__(self,  radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001):
         # each joint can have one of three actions: decrease (-0.1°), keep (0.0°), increase (+0.1°)
         # represented as 0 (decrease), 1 (keep), 2 (increase) for each join
@@ -68,10 +74,26 @@ class RobotEnvironment(gym.Env):
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
         
         self.reward = 0 # reward points
-        self.reached_target = False
+        self.terminated = False
+        self.truncated = False
 
 
     def step(self, action):
+        """Updates an environment with actions returning the next agent observation, 
+        the reward for taking that actions,
+        if the environment has terminated or truncated due to the latest action 
+        and information from the environment about the step, i.e. metrics, debug info.
+
+        Args:
+            action (np.array): action provided by the agent (array of 6 integers between 0 and 2)
+
+        Returns:
+            observation (state):  An element of the environment’s observation_space as the next observation due to the agent actions
+            reward (float): Amount of reward due to the agent actions
+            terminated (bool): A boolean, indicating whether the episode has ended successfully
+            truncated (bool): A boolean, indicating whether the episode has ended prematurely
+            info (dict): A dictionary containing other diagnostic information from the environment
+        """
         # convert action to delta angles and apply them
         delta_angles = self.process_action(action)
 
@@ -97,7 +119,7 @@ class RobotEnvironment(gym.Env):
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
 
         # update the reward (based on the new state)
-        self.reward, done = self.reward_function(self.tcp_on_helix)
+        self.reward, self.terminated, self.truncated = self.reward_function(self.tcp_on_helix)
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -105,26 +127,29 @@ class RobotEnvironment(gym.Env):
             'tcp_position': self.tcp_position.tolist()
         }
 
+        # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
         # return the new observation (state), reward, done flag
-        return self.voxel_space.flatten(), self.reward, done, info
+        return self.voxel_space.flatten(), self.reward, self.terminated, self.truncated, info
 
 
 
 
     def reward_function(self, tcp_on_helix):
+        """Calculate the reward based on the current state of the environment."""
+        # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
             self.reward += 1
-            done = False
+            self.truncated = False
 
         if self.reached_target:
             self.reward += 100 # extra reward for reaching the target
-            done = True
+            self.terminated = True
 
         else:
-            done = True # terminate the episode if the tcp is not on the helix any more
+            truncated = True # terminate the episode if the tcp is not on the helix any more
             self.reward -=10
            
-        return self.reward, done
+        return self.reward, self.terminated, self.truncated
     
     #def init_helix(self):
     #    # initialize helix
@@ -190,7 +215,7 @@ class RobotEnvironment(gym.Env):
             
             # if the TCP has reached the target (voxel-value = 1):
             if voxel_value == 1:
-                self.reached_target = True
+                self.terminateed = True
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
@@ -203,6 +228,15 @@ class RobotEnvironment(gym.Env):
 
 
     def reset(self):
+        """Resets the environment to an initial internal state, returning an initial observation and info.
+
+        Returns:
+            observsation (state): Observation of the initial state. 
+                                            This will be an element of observation_space (typically a numpy array) 
+                                            and is analogous to the observation returned by step()
+            info(dict): A dictionary containing additional information about the environment
+                            analogous to the info returned by step()
+        """
         # reset the environment 
         self.voxel_space.fill(-1)
         self.init_helix()
@@ -214,10 +248,13 @@ class RobotEnvironment(gym.Env):
         # reset the reward and Flags
         self.tcp_on_helix = True
         self.reward = 0
-        self.reached_target = False
+        self.terminated= False
+        self.truncated = False
+
+        state = self.voxel_space.flatten()   # flatten besser hier oder im netzwerk?
+        # todo: return first observation from observation_space
 
         # Check the size of the state vector
-        state = self.voxel_space.flatten()   # flatten besser hier oder im netzwerk
         expected_size = 1 * 61  * 61 * 101
         actual_size = state.size
         print("Actual size of state vector:", actual_size)
@@ -231,7 +268,14 @@ class RobotEnvironment(gym.Env):
         # Reshape the state vector
         state = np.reshape(state, (1, expected_size)) # davor 61
         print("State: ", state)
-        return state
+
+        # eventually also return an info dictionary (for debugging)
+        info = {
+            'robot_state': self.joint_angles.tolist(),
+            'tcp_position': self.tcp_position.tolist()
+        }
+
+        return state, info
     
     # def reset(self):
     #     # reset the environment 
