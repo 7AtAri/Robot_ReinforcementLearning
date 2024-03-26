@@ -15,9 +15,18 @@ r_{\text{sm}}(n) =
 \end{cases}
 $$
 
-
 Where $sm_{n+1}$ is the stability margin of the next state $P(n+1)$.
 This function rewards transitions that lead to a state with a stability margin greater than or equal to 7 cm, and penalizes transitions resulting in lower stability margins.
+
+3.2 **Reward for 5-leg case** 
+
+$$
+r_{\text{sw}}(n) = 
+\begin{cases} 
+\1,           & \text{if } P_{n+1} \text{ is quasi-static-stable} \\
+-1.5,         & \text{if } P_{n+1} \text{ is statistically unstable}
+\end{cases}
+$$
 
 4. **Policy (π)**: The policy is a strategy that the learning algorithm uses to decide the actions to take based on the current state. It aims to maximize the cumulative reward. The FGGRL (Free Gait Generation with Reinforcement Learning) dynamically updates the policy based on the observed rewards, utilizing reinforcement learning to favor transitions that have historically led to stable and efficient gaits.
 
