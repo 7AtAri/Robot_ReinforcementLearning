@@ -1,27 +1,37 @@
 # todo
 
-## environment bezogen
+## hauptsächlich environment bezogen
+
+Dennis:
 
 - [x] Quellenangaben (mit links) für die Formeln
-- [ ] gymnasium.spaces. Box Objekt: Doku lesen, printen möglich?, wird das Objekt richtig weiterverarbeitet?
-- [ ] brauchen wir den voxel_space dann überhaupt noch?
 - [x] joint angles vor updaten abfragen (max-min grenze) [-180°, + 180°]
 - [ ] check correct out size of reset() for input in Qnet
 - [x] process_action() vgl mit main branch version
 
+Ari: (ich hab mir mal die zwei box object todos geholt, ich glaub das macht mehr sinn wenn ich die fixe,
+weil die direkt ins QNet gehen.)
+
 - [x] Startkoordinaten fixen auf Helix
 - [x] joint angles + TCP- start position
-- [ ] Orientation verstehen und einbinden (Euler Angles) --> see TCP.ipynb
 - [x] Inverse Kinematics needed?  --> wird glaub ich nicht benötigt, außer 1 mal am Anfang für die Startposition  --> extrafile
+- [ ] Orientation verstehen und einbinden (Euler Angles) --> see TCP.ipynb  --> ist glaub ich nicht nötig...und aktuell auch nicht so wichtig
+
+- [ ] gymnasium.spaces. Box Objekt: Doku lesen, printen möglich?, wird das Objekt richtig weiterverarbeitet?
+- [ ] brauchen wir den voxel_space dann überhaupt noch?
+- [ ] check reset() bzgl. states.flatten()
+
+Gemeinsam, wenn das Env steht:
 
 - [ ] step funktion (vgl. dev_branch mit main)
 - [x] check is_on_helix() funktion wenn startkoordinaten stimmen   -->  correclty returns True now!
-- [ ] check reset() bzgl. states.flatten()
 - [x] render() checken nach dem startpos fixed
 
 - [ ] Environment 100% überprüfen
 
 ## learning bezogen
+
+---> @HUmasterFF: das was hier schon geht, kannst du gern schon mal machen
 
 sofort korrektur möglich:
 
