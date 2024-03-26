@@ -224,3 +224,5 @@ class RobotEnvironment(gym.Env):
     
     
 
+env = RobotEnvironment()
+env.render()
