@@ -2,12 +2,12 @@
 
 ## environment bezogen
 
-- [ ] Quellenangaben (mit links) für die Formeln
+- [x] Quellenangaben (mit links) für die Formeln
 - [ ] gymnasium.spaces. Box Objekt: Doku lesen, printen möglich?, wird das Objekt richtig weiterverarbeitet?
 - [ ] brauchen wir den voxel_space dann überhaupt noch?
-- [ ] joint angles vor updaten abfragen (max-min grenze) [-180° , + 180°]
+- [x] joint angles vor updaten abfragen (max-min grenze) [-180°, + 180°]
 - [ ] check correct out size of reset() for input in Qnet
-- [ ] process_action() vgl mit main branch version
+- [x] process_action() vgl mit main branch version
 
 - [x] Startkoordinaten fixen auf Helix
 - [x] joint angles + TCP- start position

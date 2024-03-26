@@ -42,12 +42,20 @@ class RobotEnvironment(gym.Env):
         self.observation_space = gym.spaces.Box(low=-1, high=1, 
                                                 shape=(x_size, y_size, z_size), 
                                                 dtype=np.int8)
+        print("Observation Space:", self.observation_space)
+        print("  - Dimensionen:", self.observation_space.shape)
+        print("  - low value:", self.observation_space.low)
+        print("  - high value:", self.observation_space.high)
+        print("  - datatype:", self.observation_space.dtype)
 
         # init voxel space 
         self.voxel_space = np.full((x_size, y_size, z_size), -1)  # initialize all voxels with -1
         print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
         print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
 
+        # create a separate matrix to store the helix path
+        self.helix_path = np.full_like(self.voxel_space, -1, dtype=np.int8)
+        #print("observation Space Size flattened:", len(self.observation_space.flatten()) )
         # Populate the voxel space with a helix
         self.init_helix()
 
@@ -73,8 +81,14 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        # update joint angles
-        self.joint_angles += delta_angles
+        # Check if the angle is within the correct range of -180 to 180 degrees
+        if self.joint_angles > 180:
+            self.joint_angles = 180
+        elif self.joint_angles < -180:
+            self.joint_angles = -180
+        else:
+            # update joint angles
+            self.joint_angles += delta_angles
 
         # update TCP position (based on the new joint angles)
         self.tcp_position = self.forward_kinematics(self.joint_angles)
@@ -112,7 +126,31 @@ class RobotEnvironment(gym.Env):
            
         return self.reward, done
     
+    #def init_helix(self):
+    #    # initialize helix
+    #    r = 0.03  # radius 
+    #    h = 0.05  # height per turn 
+    #    t = np.linspace(0, 2, 100)  # parameter t from 0 to 2 for 2 complete turns
+    #    helix_x = r * np.cos(2 * np.pi * t)
+    #    helix_y = r * np.sin(2 * np.pi * t)
+    #    helix_z = h * t
+#
+    #    # mark the voxels on the helix path:
+    #    for i in range(len(helix_x)):
+    #        x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
+    #        y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
+    #        z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
+    #        if i == len(helix_x) - 1:  # last helix point
+    #            self.observation_space[x_idx, y_idx, z_idx] = 1
+    #            #self.voxel_space[x_idx, y_idx, z_idx] = 1
+    #        else:
+    #            self.observation_space[x_idx, y_idx, z_idx] = 0
+    #            #self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
+
     def init_helix(self):
+        # # create a separate matrix to store the helix path
+        #helix_path = np.full_like(self.voxel_space, -1, dtype=np.int8)
+
         # initialize helix
         r = 0.03  # radius 
         h = 0.05  # height per turn 
@@ -127,9 +165,14 @@ class RobotEnvironment(gym.Env):
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
             if i == len(helix_x) - 1:  # last helix point
-                self.voxel_space[x_idx, y_idx, z_idx] = 1
+                self.helix_path[x_idx, y_idx, z_idx] = 1
             else:
-                self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
+                self.helix_path[x_idx, y_idx, z_idx] = 0  # helix path
+
+        # assign the helix path matrix to the observation space
+        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=self.helix_path.shape, dtype=np.int8)
+        self.observation_space = self.helix_path
+
     
     def is_on_helix(self, tcp_coords):
         # convert TCP coordinates to voxel indices. Therefore find the relative position of the TCP
@@ -186,8 +229,8 @@ class RobotEnvironment(gym.Env):
             return None
 
         # Reshape the state vector
-        # state = np.reshape(state, (1, 61))
-    
+        state = np.reshape(state, (1, expected_size)) # davor 61
+        print("State: ", state)
         return state
     
     # def reset(self):
@@ -215,9 +258,16 @@ class RobotEnvironment(gym.Env):
     def render(self, mode='human', tcp_coords=None):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
+<<<<<<< HEAD
+        # ax.scatter(*np.where(self.voxel_space == 1), c='r', s=50, alpha=1)  # helix end points
+        # ax.scatter(*np.where(self.voxel_space == 0), c='b', s=50, alpha=1)  # helix path points
+=======
         ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
         ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
+>>>>>>> c7eaa407404920e5f2e84c29df507790659a2b0d
         
+        ax.scatter(*np.where(self.observation_space == 1), c='r', s=50, alpha=1)  # helix end points
+        ax.scatter(*np.where(self.observation_space == 0), c='b', s=50, alpha=1)
         # if TCP coordinates are provided and valid, then visualize TCP position
         if tcp_coords is not None:
             print(f"TCP Coordinates: {tcp_coords}")
@@ -230,7 +280,11 @@ class RobotEnvironment(gym.Env):
                 z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
                 
                 # highlight TCP position
+<<<<<<< HEAD
+                #ax.scatter([x_idx], [y_idx], [z_idx], c='g', s=100, label='TCP Position')
+=======
                 ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+>>>>>>> c7eaa407404920e5f2e84c29df507790659a2b0d
 
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
@@ -239,53 +293,19 @@ class RobotEnvironment(gym.Env):
         plt.legend()
         plt.show()
 
-
     def process_action(self, action):
-        # Check if action is None
-        if action is None:
-            print("Error: Action is None")
-            return np.zeros(6, dtype=self.joint_angles.dtype)
+  
+          # Check if action is iterable
+          if isinstance(action, (list, tuple)):
+          # If yes, calculate the delta angles for each action
+              delta_angles = [(a - 1) * 0.1 for a in action]
+          else:
+          # Otherwise, there is only one action, so calculate the delta angle directly
+              delta_angles = [(action - 1) * 0.1]
 
-        # Check if the action is iterable
-        if isinstance(action, (list, tuple)):
-            # If yes, calculate the delta angles for each action
-            delta_angles = [(a - 1) * 0.1 for a in action]
-        else:
-            # Otherwise, there is only one action, so calculate the delta angle directly
-            delta_angles = [(action - 1) * 0.1]
-
-        # Ensure delta_angles always has 6 elements
-        delta_angles += [0] * (6 - len(delta_angles))
-
-        # Convert delta_angles to numpy array
-        delta_angles = np.array(delta_angles, dtype=self.joint_angles.dtype)
-
-        return delta_angles
-
-
-
-
-
-
-
-
-
-
-    # def process_action(self, action):
-
-    #     # Check if action is iterable
-    #     if isinstance(action, (list, tuple)):
-    #     # If yes, calculate the delta angles for each action
-    #         delta_angles = [(a - 1) * 0.1 for a in action]
-    #     else:
-    #     # Otherwise, there is only one action, so calculate the delta angle directly
-    #         delta_angles = [(action - 1) * 0.1]
-
-    #     return delta_angles
-
-    #     # # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
-    #     # delta_angles = [(a - 1) * 0.1 for a in action]
-    #     # return delta_angles
+          # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
+          delta_angles = [(a - 1) * 0.1 for a in action]
+          return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
