@@ -22,16 +22,16 @@ class QNetwork(nn.Module):
         inputs: states in the state space
         outputs: action values for each action in the action space
     """
-    def __init__(self, state_size, action_size, hidden_size=64):
+    def __init__(self, state_size, action_size, hidden_size=520):
         super(QNetwork, self).__init__()
-        self.fc1 = nn.Linear(state_size, hidden_size)  # input layer to hidden layer
-        self.relu = nn.ReLU()                          # activation function
-        self.fc2 = nn.Linear(hidden_size, action_size) # hidden layer to output layer
-    
+        self.network = nn.Sequential(
+            nn.Linear(state_size, hidden_size),  # input layer to hidden layer
+            nn.ReLU(),                          # activation function
+            nn.Dropout(0.2),                 # dropout layer
+            nn.Linear(hidden_size, action_size) # hidden layer to output layer
+        )
     def forward(self, state):
-        x= self.fc1(state) # 1st layer
-        x = self.relu(x)  # activated first layer
-        return self.fc2(x)            # output layer
+        return self.network(state)
 
 
 class NStepReplayMemory:

@@ -16,7 +16,7 @@ class RobotEnvironment(gym.Env):
     def __init__(self,  radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001):
         # each joint can have one of three actions: decrease (-0.1°), keep (0.0°), increase (+0.1°)
         # represented as 0 (decrease), 1 (keep), 2 (increase) for each join
-        self.action_space =  gym.spaces.MultiDiscrete([3, 3, 3, 3, 3, 3])
+        self.action_space =  gym.spaces.MultiDiscrete([3, 3, 3, 3, 3, 3])  # 3^6 = 729 possible actions
         
         # define the helix
         self.radius = radius  # radius in meters
