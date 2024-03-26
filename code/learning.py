@@ -243,6 +243,7 @@ if __name__ == "__main__":
    
     # get env specs to init the agent
     state_size = env.observation_space.shape[0]
+    print(state_size)
     #action_size = env.action_space.n
     action_size = env.action_space.nvec.prod()
     
@@ -300,8 +301,8 @@ if __name__ == "__main__":
             
             # visualize the environment regularly
             if episode % visualization_rate == 0:
-                #env.render()   # todo: needs to be defined in the environment.py
-                pass
+                env.render()   
+                #pass
 
         print(f"Episode: {episode+1}, Total reward: {total_reward}")
 
