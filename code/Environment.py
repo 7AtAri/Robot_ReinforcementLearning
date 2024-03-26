@@ -215,8 +215,8 @@ class RobotEnvironment(gym.Env):
     def render(self, mode='human', tcp_coords=None):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=50, alpha=1)  # helix end points
-        ax.scatter(*np.where(self.voxel_space == 0), c='b', s=50, alpha=1)  # helix path points
+        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
+        ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
         
         # if TCP coordinates are provided and valid, then visualize TCP position
         if tcp_coords is not None:
@@ -230,7 +230,7 @@ class RobotEnvironment(gym.Env):
                 z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
                 
                 # highlight TCP position
-                ax.scatter([x_idx], [y_idx], [z_idx], c='g', s=100, label='TCP Position')
+                ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
