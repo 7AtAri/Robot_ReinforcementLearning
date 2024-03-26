@@ -16,7 +16,7 @@ class RobotEnvironment(gym.Env):
     def __init__(self,  radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001):
         # each joint can have one of three actions: decrease (-0.1°), keep (0.0°), increase (+0.1°)
         # represented as 0 (decrease), 1 (keep), 2 (increase) for each join
-        self.action_space =  gym.spaces.MultiDiscrete([3, 3, 3, 3, 3, 3])
+        self.action_space =  gym.spaces.MultiDiscrete([3, 3, 3, 3, 3, 3])  # 3^6 = 729 possible actions
         
         # define the helix
         self.radius = radius  # radius in meters
@@ -156,7 +156,7 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         # reset the joint angles and TCP position
-        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])
+        self.joint_angles = np.array([0, 0, 0, 0, 0, 0])   # I think this is not correct, because the angles are not all 0 if we want to have this downward orientation I guess
         self.tcp_position = self.forward_kinematics(self.joint_angles)
 
         # reset the reward and Flags
@@ -166,7 +166,7 @@ class RobotEnvironment(gym.Env):
 
         # Check the size of the state vector
         state = self.voxel_space.flatten()
-        expected_size = 1 * 61
+        expected_size = 1 * 61  ##why???
         actual_size = state.size
         print("Actual size of state vector:", actual_size)
         print("Expected size of state vector:", expected_size)
