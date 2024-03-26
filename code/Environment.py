@@ -335,10 +335,25 @@ class RobotEnvironment(gym.Env):
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = [(action - 1) * 0.1]
 
-        # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
-        delta_angles = [(a - 1) * 0.1 for a in action]
+          for i in range(len(self.joint_angles)):
+            new_angle = self.joint_angles[i] + delta_angles[i]
+            if new_angle > 180:
+                self.joint_angles[i] = 180
+            elif new_angle < -180:
+                self.joint_angles[i] = -180
+            else:
+                self.joint_angles[i] = new_angle
 
-        return delta_angles
+          # convert action indices (0, 1, 2) to deltas (-0.1, 0.0, +0.1 degrees)
+          #delta_angles = [(a - 1) * 0.1 for a in action] # braucht es das noch?
+                
+          # calculate new angels
+          #new_angles = self.joint_angles + delta_angles * 0.1
+
+          #set a range
+          #self.joint_angles = np.clip(new_angles, -180, 180)
+
+          return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
