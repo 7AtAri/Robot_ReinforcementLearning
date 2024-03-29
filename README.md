@@ -13,7 +13,7 @@ Presentation of the paper (20 min):
 
 Presentation of the project (20 min):
 
-- [x] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
 
 
 Questions:
