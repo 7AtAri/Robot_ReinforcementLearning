@@ -6,7 +6,7 @@
 - [x] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
 - [x] take [notes](https://docs.google.com/document/d/1rnW2lWlUQMY4ahw68WoXD42BBrlzWxlGkcxe9iR7dCI/edit)
       
-Presentation of the paper (20 min):
+###Presentation of the paper (20 min):
 
 - [x] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
 - [ ] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each
@@ -22,9 +22,19 @@ Questions:
 - [x] What could be changed / improved (in our opinion)?
 - [x] A few simulations that confirm our proposals for improvement
 
-Presentation of the project (20 min):
+###Presentation of the project (30 min):
+upload your code + environment two days before the appointment
 
 - [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+
+Questions:
+
+- [ ] Prepare a short summary of the problem and the way to solve it
+- [ ] Create a few test scenarios upfront to test the performance of your code
+- [ ] Document your code
+- [ ] Show the behaviour of the Environment
+- [ ] Show that the learned policy performs well
+- [ ] Be prepared to make a few changes in your code and re-run it showing the new performance!
 
 
 ## Project: 6-joint Robot Arm
