@@ -11,21 +11,20 @@ Presentation of the paper (20 min):
 - [x] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
 - [ ] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each
 
+Questions:
+
+- [x] What is the problem? Describe the environment using mathematics (Ari)
+- [x] How has the problem been solved so far? What are the drawbacks of that solution? (Philipp)
+- [x] Why can RL solve the problem in a better manner? (Dennis)
+- [x] What are the metrics (figures of merit)? When is a solution good enough for that problem? (Philipp)
+- [x] Which Algorithms are the authors testing? Are they a good choice? (Dennis)
+- [x] Do they achieve a better solution compared to the previous solutions? (Ari)
+- [x] What could be changed / improved (in our opinion)?
+- [x] A few simulations that confirm our proposals for improvement
+
 Presentation of the project (20 min):
 
 - [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
-
-
-Questions:
-
-- [ ] What is the problem? Describe the environment using mathematics (Ari)
-- [ ] How has the problem been solved so far? What are the drawbacks of that solution? (Philipp)
-- [ ] Why can RL solve the problem in a better manner? (Dennis)
-- [ ] What are the metrics (figures of merit)? When is a solution good enough for that problem? (Philipp)
-- [ ] Which Algorithms are the authors testing? Are they a good choice? (Dennis)
-- [x] Do they achieve a better solution compared to the previous solutions? (Ari)
-- [x] What could be changed / improved (in our opinion)?
-- [ ] A few simulations that confirm our proposals for improvement
 
 
 ## Project: 6-joint Robot Arm
