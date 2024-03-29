@@ -22,21 +22,6 @@ Questions:
 - [x] What could be changed / improved (in our opinion)?
 - [x] A few simulations that confirm our proposals for improvement
 
-### Presentation of the project (30 min):
-upload your code + environment two days before the appointment
-
-- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
-
-Questions:
-
-- [ ] Prepare a short summary of the problem and the way to solve it
-- [ ] Create a few test scenarios upfront to test the performance of your code
-- [ ] Document your code
-- [ ] Show the behaviour of the Environment
-- [ ] Show that the learned policy performs well
-- [ ] Be prepared to make a few changes in your code and re-run it showing the new performance!
-
-
 ## Project: 6-joint Robot Arm
 
 - [x] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
@@ -56,3 +41,18 @@ Questions:
 - [ ]	Propose new ideas how to reduce the MSE …
       you don’t need to code them, but your ideas must be plausible and realistic: Substantiate them! 
 - [ ]	Make sure that your code has some tools to allow for easy verification of the performance of your Agent.
+
+### Presentation of the project (30 min):
+upload your code + environment two days before the appointment
+
+- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+
+Questions:
+
+- [ ] Prepare a short summary of the problem and the way to solve it
+- [ ] Create a few test scenarios upfront to test the performance of your code
+- [ ] Document your code
+- [ ] Show the behaviour of the Environment
+- [ ] Show that the learned policy performs well
+- [ ] Be prepared to make a few changes in your code and re-run it showing the new performance!
+
