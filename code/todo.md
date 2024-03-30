@@ -12,8 +12,7 @@ Dennis:
 - [x] process_action() vgl mit main branch version
 - [ ] joint angles vor updaten abfragen (max-min grenze) [-180°, + 180°] ---> pro joint abfragen
 
-Ari: (ich hab mir mal die zwei box object todos geholt, ich glaub das macht mehr sinn wenn ich die fixe,
-weil die direkt ins QNet gehen.)
+Ari:
 
 - [x] Startkoordinaten fixen auf Helix
 - [x] joint angles + TCP- start position
@@ -41,7 +40,7 @@ Gemeinsam, wenn das Env steht:
 sofort korrektur möglich:
 
 - [ ] learning funktion zustandsvektor abfrage löschen?
-- [ ]  im main loop:  wenn terminated, macht es sinn noch zu lernen oder lieber if abfrage oder break an der stelle
+- [ ] im main loop:  wenn terminated, macht es sinn noch zu lernen oder lieber if abfrage oder break an der stelle
 
 nach env 100%:
 

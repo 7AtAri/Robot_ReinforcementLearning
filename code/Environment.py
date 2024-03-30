@@ -102,7 +102,8 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        # update TCP position (based on the new joint angles)
+        # update TCP position (based on the new joint angles) 
+        ##-> todo: is this correct? where do the new angles come into play?
         self.tcp_position = self.forward_kinematics(self.joint_angles)
 
         # is TCP on the helix?
@@ -261,7 +262,7 @@ class RobotEnvironment(gym.Env):
             'tcp_position': self.tcp_position.tolist()
         }
 
-        return state, self.tcp_position, info
+        return state, self.tcp_position, info #  self.joint_angles  # also return the joint angles?
     
     # def reset(self):
     #     # reset the environment 
