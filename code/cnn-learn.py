@@ -59,8 +59,8 @@ class DQNAgent:
         self.batch_size = batch_size
         self.gamma = gamma
         
-        self.q_network = QNetworkCNN(state_size, actions)
-        self.target_network = QNetworkCNN(state_size, actions)
+        self.q_network = QNetworkCNN(state_size, actions).to(device)
+        self.target_network = QNetworkCNN(state_size, actions).to(device)
         self.target_network.load_state_dict(self.q_network.state_dict())
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
@@ -82,10 +82,10 @@ class DQNAgent:
         if np.random.rand() <= self.epsilon:
             # return random action for each component
             return [random.randrange(3) for _ in range(6)]
-        state = torch.FloatTensor(state).unsqueeze(0)
+        state = torch.FloatTensor(state).unsqueeze(0).to(device)
         q_values = self.q_network(state)
         # choose action with max Q-value for each component
-        return q_values.detach().numpy().argmax(axis=2).flatten()
+        return q_values.detach().cpu().numpy().argmax(axis=2).flatten()
 
 
     def replay(self):
@@ -93,12 +93,12 @@ class DQNAgent:
             return
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
-        states = torch.FloatTensor(states)
-        actions = torch.LongTensor(actions)
-        rewards = torch.FloatTensor(rewards)
-        next_states = torch.FloatTensor(next_states)
-        terminated = torch.FloatTensor(terminated)
-        truncated = torch.FloatTensor(truncated)
+        states = torch.FloatTensor(states).to(device)
+        actions = torch.LongTensor(actions).to(device)
+        rewards = torch.FloatTensor(rewards).to(device)
+        next_states = torch.FloatTensor(next_states).to(device)
+        terminated = torch.FloatTensor(terminated).to(device)
+        truncated = torch.FloatTensor(truncated).to(device)
 
         Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         Q_targets_next = self.target_network(next_states).detach().max(1)[0]
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 10
+    episodes = 100
     for episode in range(episodes):
         state, info = env.reset()
         #state = torch.FloatTensor(state).unsqueeze(0)  # Add batch dimension
@@ -147,16 +147,16 @@ if __name__ == "__main__":
         total_reward = 0
         while not terminated and not truncated:
             action = agent.act(state)
-            print("action:", action)
+            #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  # Adjust according to your env's step method
-            print("next_state:", next_state)
-            print("next_state shape:", next_state.shape)
+            #print("next_state:", next_state)
+            #print("next_state shape:", next_state.shape)
             #next_state = np.reshape(next_state, [1, state_size])
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
         if terminated or truncated:
-                    print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
+            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
             agent.update_target_network()

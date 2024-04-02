@@ -298,17 +298,17 @@ class RobotEnvironment(gym.Env):
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles:", delta_angles)
+            #print("Delta Angles:", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
             
-        print("joint_angles:", self.joint_angles)
+        #print("joint_angles:", self.joint_angles)
         new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles:", self.joint_angles)
+        #print("New Joint Angles:", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
@@ -341,7 +341,7 @@ class RobotEnvironment(gym.Env):
 
         T = np.eye(4)
         for i, params in enumerate(dh_params):
-            a, d, alpha, theta_val = params
+            #a, d, alpha, theta_val = params
             #print(f"DH Parameters for joint {i}: a={a}, d={d}, alpha={alpha}, theta={theta_val}")
 
             T_i = self.dh_transform_matrix(*params)
@@ -365,7 +365,7 @@ class RobotEnvironment(gym.Env):
         """Converts the TCP position to voxel grid indices."""
         # Implement conversion from TCP position to grid indices based on your environment's specifics
         # This is a placeholder function; you'll need to adjust it based on how your environment and TCP positions are defined
-        print("TCP Position:", tcp_position)
+        #print("TCP Position:", tcp_position)
         x_idx = int((tcp_position[0] - self.x_range[0]) / self.resolution)
         y_idx = int((tcp_position[1] - self.y_range[0]) / self.resolution)
         z_idx = int((tcp_position[2] - self.z_range[0]) / self.resolution)
