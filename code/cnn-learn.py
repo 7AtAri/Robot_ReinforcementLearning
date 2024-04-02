@@ -149,7 +149,9 @@ if __name__ == "__main__":
             action = agent.act(state)
             print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  # Adjust according to your env's step method
-            next_state = np.reshape(next_state, [1, state_size])
+            print("next_state:", next_state)
+            print("next_state shape:", next_state.shape)
+            #next_state = np.reshape(next_state, [1, state_size])
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward

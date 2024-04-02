@@ -123,7 +123,7 @@ class RobotEnvironment(gym.Env):
         # update TCP position (based on the new joint angles - not on the delta angles) 
         self.tcp_position = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
 
-        #   set the TCP position in the voxel space channel 2
+        # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
         self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
@@ -209,9 +209,10 @@ class RobotEnvironment(gym.Env):
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
                 return True # TCP is on the helix path
-
-        # otherwise the TCP is not on the helix path any more
-        return False
+        else:
+            self.truncated = True
+            # otherwise the TCP is not on the helix path any more
+            return False
 
 
 
@@ -376,7 +377,10 @@ class RobotEnvironment(gym.Env):
         grid = np.zeros(self.voxel_space.shape, dtype=np.float32)
         # TCP position to grid index + set to 1
         x, y, z = self.tcp_position_to_grid_index(tcp_position)
-        grid[x, y, z] = 1
+        try:
+            grid[x, y, z] = 1
+        except:
+            print("TCP Position Indices out of bounds!")
         #print("TCP Position Grid:", grid)
         return grid
 
