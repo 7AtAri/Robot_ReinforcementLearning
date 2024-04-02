@@ -142,10 +142,10 @@ if __name__ == "__main__":
     for episode in range(episodes):
         state, info = env.reset()
         #state = torch.FloatTensor(state).unsqueeze(0)  # Add batch dimension
-
-        done = False
+        terminated = False
+        truncated = False
         total_reward = 0
-        while not done:
+        while not terminated and not truncated:
             action = agent.act(state)
             print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  # Adjust according to your env's step method
@@ -155,7 +155,7 @@ if __name__ == "__main__":
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
-        if done:
+        if terminated or truncated:
                     print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
