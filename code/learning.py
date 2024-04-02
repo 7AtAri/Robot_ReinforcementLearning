@@ -1,7 +1,7 @@
 ### ###############################################################################################################
 ### Reinforcement Learning - WS 2023/24 
 ### 6-joint robot arm
-### Group: Dennis Huff, Philip, Ari Wahl 
+### Group: Dennis Huff, Philipp Bodemann, Ari Wahl 
 ### ###############################################################################################################
 
 
@@ -105,7 +105,7 @@ class DQNAgent:
         # set optimizer for updating the online network
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
     
-    
+
     # todo: eventually rather implement epsilon decay
     def act(self, state, epsilon=0.1): 
         # select action according to epsilon-greedy policy

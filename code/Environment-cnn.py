@@ -39,23 +39,31 @@ class RobotEnvironment(gym.Env):
         self.z_range = (0, self.height_per_turn*self.turns)
         self.resolution = resolution  # resolution: 1mm
 
-        # dimensions of the voxel grid
-        x_size = int((self.x_range[1] - self.x_range[0]) / self.resolution) + 1
-        y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
-        z_size = int((self.z_range[1] - self.z_range[0]) / self.resolution) + 1
+        #  extending each range by 5mm on both sides to ensure the robot does not move outside of the voxel-space on the first move
+        # self.x_range = (self.x_range[0] - 0.005, self.x_range[1] + 0.005)
+        # self.y_range = (self.y_range[0] - 0.005, self.y_range[1] + 0.005)
+        # self.z_range = (self.z_range[0] - 0.005, self.z_range[1] + 0.005)
 
+        # dimensions of the voxel grid
+        self.x_size = int((self.x_range[1] - self.x_range[0]) / self.resolution) + 1
+        self.y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
+        self.z_size = int((self.z_range[1] - self.z_range[0]) / self.resolution) + 1
+
+        # Adjusted setup for a two-channel input
+        num_channels = 2  # For voxel_space and TCP position
+        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=(num_channels, self.x_size, self.y_size, self.z_size), dtype=np.float64)
         # observation space defined by dimensions and possible voxel values (-1 to 1)
-        self.observation_space = gym.spaces.Box(low=-1, high=1, 
-                                                shape=(x_size, y_size, z_size), 
-                                                dtype=np.int8)
-        #print("Observation Space:", self.observation_space)
-        #print("  - Dimensionen:", self.observation_space.shape)
+        # self.observation_space = gym.spaces.Box(low=-1, high=1, 
+        #                                         shape=(x_size, y_size, z_size), 
+        #                                         dtype=np.int8)
+        #print("Observation Space:", self.observation_space)  #Observation Space: Box(-inf, inf, (2, 61, 61, 101), float32)
+        #print("  - Dimensionen:", self.observation_space.shape)  # - Dimensionen: (2, 61, 61, 101)
         #print("  - low value:", self.observation_space.low)
         #print("  - high value:", self.observation_space.high)
         #print("  - datatype:", self.observation_space.dtype)
 
         # init voxel space 
-        self.voxel_space = np.full((x_size, y_size, z_size), -1)  # initialize all voxels with -1
+        self.voxel_space = np.full((self.x_size, self.y_size, self.z_size), -1)  # initialize all voxels with -1
         #print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
         #print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
 
@@ -65,8 +73,18 @@ class RobotEnvironment(gym.Env):
 
         # Define the initial state of the robot
         # set initial TCP position at the start of the helix
-        self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
+        tcp_x=self.radius
+        tcp_y=0
+        tcp_z=0
+        self.tcp_position = np.array([tcp_x, tcp_y, tcp_z], dtype=np.float64)  # fixed to the starting point of the helix on z=0
         self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
+
+        # # set the TCP position in the voxel space channel 2
+        # self.tcp_position_grid = np.zeros((self.x_size, self.y_size, self.z_size))  # init TCP position grid
+        # self.tcp_position_grid[tcp_x, tcp_y, tcp_z] = 1  # mark TCP position on voxel grid
+        self.tcp_observation = self.embed_tcp_position(self.tcp_position)
+        # stack to create a two-channel observation
+        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
@@ -86,8 +104,8 @@ class RobotEnvironment(gym.Env):
             action (np.array): action provided by the agent (array of 6 integers between 0 and 2)
 
         Returns:
-            observation (state):  voxel_space (flattened?) 
-            tcp_position (np.array): The current position of the TCP (end-effector) in the 3D space
+            observation (state):  stacked voxel_space and 
+                                            current position of the TCP (end-effector) in the 3D space
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
@@ -102,9 +120,13 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        # update TCP position (based on the new joint angles) 
-        ##-> todo: is this correct? where do the new angles come into play?
-        self.tcp_position = self.forward_kinematics(self.joint_angles)
+        # update TCP position (based on the new joint angles - not on the delta angles) 
+        self.tcp_position = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+
+        #   set the TCP position in the voxel space channel 2
+        self.tcp_observation = self.embed_tcp_position(self.tcp_position)
+        # stack to create a two-channel observation
+        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
@@ -120,7 +142,7 @@ class RobotEnvironment(gym.Env):
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
         # return the new observation (state), reward, done flag
-        return self.voxel_space.flatten(), self.tcp_position, self.reward, self.terminated, self.truncated, info
+        return self.observation, self.reward, self.terminated, self.truncated, info
 
 
     def reward_function(self, tcp_on_helix):
@@ -140,26 +162,6 @@ class RobotEnvironment(gym.Env):
            
         return self.reward, self.terminated, self.truncated
     
-    #def init_helix(self):
-    #    # initialize helix
-    #    r = 0.03  # radius 
-    #    h = 0.05  # height per turn 
-    #    t = np.linspace(0, 2, 100)  # parameter t from 0 to 2 for 2 complete turns
-    #    helix_x = r * np.cos(2 * np.pi * t)
-    #    helix_y = r * np.sin(2 * np.pi * t)
-    #    helix_z = h * t
-#
-    #    # mark the voxels on the helix path:
-    #    for i in range(len(helix_x)):
-    #        x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
-    #        y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
-    #        z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
-    #        if i == len(helix_x) - 1:  # last helix point
-    #            self.observation_space[x_idx, y_idx, z_idx] = 1
-    #            #self.voxel_space[x_idx, y_idx, z_idx] = 1
-    #        else:
-    #            self.observation_space[x_idx, y_idx, z_idx] = 0
-    #            #self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
 
     def init_helix(self):
         # # create a separate matrix to store the helix path
@@ -224,6 +226,7 @@ class RobotEnvironment(gym.Env):
                             analogous to the info returned by step()
         """
         # reset the environment 
+        print("Resetting the environment...")
         _ = seed  # acknowledging the seed parameter without using it to fit the gymnasium requirements
         self.voxel_space.fill(-1)
         self.init_helix()
@@ -231,6 +234,19 @@ class RobotEnvironment(gym.Env):
         # reset the joint angles and TCP position to the start of the helix
         self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
         self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
+        
+        self.tcp_observation = self.embed_tcp_position(self.tcp_position)
+        #print("tcp-obs: ", self.tcp_observation)
+        # # set observation space to the initial state
+        # tcp_x=self.tcp_position[0]
+        # tcp_y=self.tcp_position[1]
+        # tcp_z=self.tcp_position[2]
+        # # set the TCP position in the voxel space channel 2
+        # self.tcp_position_grid = np.zeros((self.x_size, self.y_size, self.z_size))  # init TCP position grid
+        # self.tcp_position_grid[tcp_x, tcp_y, tcp_z] = 1  # mark TCP position on voxel grid
+
+        # Stack to create a two-channel observation
+        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # reset the reward and Flags
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
@@ -238,54 +254,14 @@ class RobotEnvironment(gym.Env):
         self.terminated= False
         self.truncated = False
 
-        state = self.voxel_space.flatten()   # flatten besser hier oder im netzwerk?
-        print("State flattened: ", state)
-        # todo: return first observation from observation_space
-
-        # Check the size of the state vector
-        expected_size =  61  * 61 * 101
-        actual_size = state.size
-        #print("Actual size of state vector:", actual_size)
-        #print("Expected size of state vector:", expected_size)
-
-        # If the sizes don't match, print an error message and return None
-        if actual_size != expected_size:
-            print("Error: Size of state vector doesn't match the expected size.")
-            return None
-
-        # Reshape the state vector
-        #state = np.reshape(state, (1, expected_size)) # ???
-        #print("State reshaped: ", state)
-
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.joint_angles.tolist(),
             'tcp_position': self.tcp_position.tolist()
         }
 
-        return state, info #  self.joint_angles  # also return the joint angles?
-    
-    # def reset(self):
-    #     # reset the environment 
-    #     self.voxel_space.fill(-1)
-    #     self.init_helix()
+        return self.observation, info #  self.joint_angles  # also return the joint angles?
 
-    #     # reset the joint angles and TCP position
-    #     self.joint_angles = np.array([0, 0, 0, 0, 0, 0])
-    #     self.tcp_position = self.forward_kinematics(self.joint_angles)
-
-    #     # reset the reward and Flags
-    #     self.tcp_on_helix = True
-    #     self.reward = 0
-    #     self.reached_target = False
-
-    #     return self.voxel_space
-    
-    # def calculate_initial_joint_angles(self):
-    #     # we don't need this if the initial joint angles are np.array([0, 0, 0, 0, 0, 0]) ---> but is this a valid option?
-    #     initial_position = self.helix_points[0]  # Assuming helix_points[0] is the starting point on the helix
-    #     initial_angles = solve_inverse_kinematics(initial_position)  # You need to implement this
-    #     return initial_angles
 
     def render(self, tcp_coords=None):
         fig = plt.figure()
@@ -317,51 +293,41 @@ class RobotEnvironment(gym.Env):
 
     def process_action(self, action):
           
-        # Check if the angle is within the correct range of -180 to 180 degrees
-  
         # Check if action is iterable
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
-            delta_angles = [(a - 1) * 0.1 for a in action]
+            delta_angles = np.array([(a - 1) * 0.1 for a in action])
+            print("Delta Angles:", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
-            delta_angles = [(action - 1) * 0.1]
-
-        # for i in range(len(self.joint_angles)):
-        #     new_angle = self.joint_angles[i] + delta_angles[i]
-        #     if new_angle > 180:
-        #         self.joint_angles[i] = 180
-        #     elif new_angle < -180:
-        #         self.joint_angles[i] = -180
-        #     else:
-        #         self.joint_angles[i] = new_angle
-        # return delta_angles
-        # Calculate the new joint angles
+            delta_angles = np.array([(action - 1) * 0.1])
             
-        new_angles = self.joint_angles + delta_angles * 0.1
+        print("joint_angles:", self.joint_angles)
+        new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-
+        print("New Joint Angles:", self.joint_angles)
         # Return the delta angles
-        return delta_angles * 0.1
+        return delta_angles
 
 
     def dh_transform_matrix(self,a, d, alpha, theta):
     
-    ## compute the Denavit-Hartenberg transformation matrix.
-    
+    ## compute the standard Denavit-Hartenberg transformation matrix.
+    ## source: wikipedia
         return np.array([
-            [np.cos(theta), -np.sin(theta), 0, a],
-            [np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha), -np.sin(alpha), -d * np.sin(alpha)],
-            [np.sin(theta) * np.sin(alpha), np.cos(theta) * np.sin(alpha), np.cos(alpha), d * np.cos(alpha)],
-            [0, 0, 0, 1]
-        ])
+                [np.cos(theta), -np.sin(theta) * np.cos(alpha), np.sin(theta) * np.sin(alpha), a * np.cos(theta)],
+                [np.sin(theta), np.cos(theta) * np.cos(alpha), -np.cos(theta) * np.sin(alpha), a * np.sin(theta)],
+                [0, np.sin(alpha), np.cos(alpha), d],
+                [0, 0, 0, 1]
+            ])
 
-    def forward_kinematics(self,theta):
+    def forward_kinematics(self, theta_degrees):
         """
         Calculate the end-effector position using the provided joint angles (theta).
         """
+        theta = np.radians(theta_degrees) # convert angles from degree to radians for cos and sin functions
         # DH parameters for each joint: (a, d, alpha, theta)
         dh_params = [
             (0, 0.15185, np.pi/2, theta[0]),
@@ -393,7 +359,36 @@ class RobotEnvironment(gym.Env):
         # extract position from the final transformation matrix
         position = T[:3, 3]
         return position
-    
+
+    def tcp_position_to_grid_index(self, tcp_position):
+        """Converts the TCP position to voxel grid indices."""
+        # Implement conversion from TCP position to grid indices based on your environment's specifics
+        # This is a placeholder function; you'll need to adjust it based on how your environment and TCP positions are defined
+        print("TCP Position:", tcp_position)
+        x_idx = int((tcp_position[0] - self.x_range[0]) / self.resolution)
+        y_idx = int((tcp_position[1] - self.y_range[0]) / self.resolution)
+        z_idx = int((tcp_position[2] - self.z_range[0]) / self.resolution)
+        print("TCP Position Indices:", x_idx, y_idx, z_idx)
+        return x_idx, y_idx, z_idx
+
+    def embed_tcp_position(self, tcp_position):
+        """Embeds the TCP position in a 3D grid of the same shape as the voxel space."""
+        grid = np.zeros(self.voxel_space.shape, dtype=np.float32)
+        # TCP position to grid index + set to 1
+        x, y, z = self.tcp_position_to_grid_index(tcp_position)
+        grid[x, y, z] = 1
+        #print("TCP Position Grid:", grid)
+        return grid
+
+
 if __name__ == "__main__":
     env = RobotEnvironment()
     env.render(tcp_coords=env.tcp_position)
+
+    state_size = np.prod(env.observation_space.shape)
+    print("action space: ", env.action_space) # action space:  MultiDiscrete([3 3 3 3 3 3])
+    print("obs space:", env.observation_space.shape)  #obs space: (2, 61, 61, 101)
+    action_size = env.action_space.shape[0] #.nvec.prod()   #Action size: (6,)  # tuple
+    print(f"State size: {state_size}, Action size: {action_size}") #State size: 751642
+
+    print("channels: ", env.observation_space.shape[0])  # channels: 2
