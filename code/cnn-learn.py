@@ -52,7 +52,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=64, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.memory = deque(maxlen=buffer_size)
@@ -122,7 +122,7 @@ class DQNAgent:
         #Q_targets_next = self.target_network(next_states).detach().max(1)[0]
         Q_values_next = self.target_network(next_states).detach()
         print("q-values next:", Q_values_next.shape) # q-values next: torch.Size([64, 6, 3])
-        Q_values_flattened = Q_values_next.view(64, -1)
+        Q_values_flattened = Q_values_next.view(self.batch_size, -1)
         Q_targets_next = Q_values_flattened.max(dim=1)[0]# should output a [batch_size] tensor
         print("q-targets next:" , Q_targets_next.shape)
         # if episode was either terminated or truncated, we don't look at the next state's Q-value
