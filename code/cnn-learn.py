@@ -45,7 +45,7 @@ class QNetworkCNN(nn.Module):
         # Pass the dummy input through the convolutional and pooling layers
         with torch.no_grad():
             x = self.pool(F.relu(self.conv1(dummy_input)))
-            x = self.pool(F.relu(self.conv2(x)))
+            x = self.pool(F.relu(self.conv2(x))) 
         # The output's total size is the required number of flat features
         return x.numel() // x.shape[0]  # Divide by batch size (x.shape[0]) to get the size per sample
     
@@ -96,23 +96,40 @@ class DQNAgent:
         states = torch.FloatTensor(np.array(states)).to(device)
         actions = torch.LongTensor(np.array(actions)).to(device)
         rewards = torch.FloatTensor(np.array(rewards)).to(device)
+        rewards = torch.FloatTensor(rewards).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
         terminated = torch.FloatTensor(np.array(terminated)).to(device)
         truncated = torch.FloatTensor(np.array(truncated)).to(device)
 
         # actions tensor must have the correct shape and type
         actions = actions.long()  # long type for indexing
-
+        # Assuming actions is of shape [64], containing the index of the action taken for each batch item
+        actions = actions.view(-1, 1)  # Reshape for gathering: [64, 1]
+        print("actions shape:", actions.shape)
         # using gather to select the action values:
         #  https://pytorch.org/docs/stable/generated/torch.gather.html
         # we need to gather along the last dimension (dimension=2) of the Q-values tensor
-        Q_expected = self.q_network(states).gather(2, actions.unsqueeze(-1)).squeeze(-1)
+        #Q_expected = self.q_network(states).gather(2, actions.unsqueeze(-1)).squeeze(-1)
+        #Q_expected = self.q_network(states).gather(1, actions)  # This selects the Q-values for the taken actions, resulting in shape [64, 1]
+        #Q_expected = Q_expected.squeeze()  # Remove the last dimension to match Q_targets: shape becomes [64]
+        # Forward pass on the current states to get Q values for all actions
+        Q_values = self.q_network(states)
+        print("q-values:", Q_values.shape) # q-values: torch.Size([64, 6, 3])
+        # Select the Q-values for the actions taken
+        Q_expected = Q_values.gather(1, actions).squeeze(1) 
+        print("q-expected:", Q_expected.shape)
         #Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         #Q_targets_next = self.target_network(next_states).detach().max(1)[0]
         Q_values_next = self.target_network(next_states).detach()
-        Q_targets_next = Q_values_next.max(1)[0]  # should output a [batch_size] tensor
+        print("q-values next:", Q_values_next.shape) # q-values next: torch.Size([64, 6, 3])
+        Q_values_flattened = Q_values_next.view(64, -1)
+        Q_targets_next = Q_values_flattened.max(dim=1)[0]# should output a [batch_size] tensor
+        print("q-targets next:" , Q_targets_next.shape)
         # if episode was either terminated or truncated, we don't look at the next state's Q-value
         not_done = 1 - (terminated + truncated)
+        not_done = not_done.to(device).view(-1)  # Ensure shape [batch_size]
+        print("reward shape:", rewards.shape)
+        print("not done shape:", not_done.shape)
         #  calulate without considering future Q-values for either terminated or truncated samples
         Q_targets = rewards + (self.gamma * Q_targets_next * not_done)
 
@@ -132,7 +149,7 @@ class DQNAgent:
 if __name__ == "__main__":
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     register(
         id='RobotEnvironment-v1',
