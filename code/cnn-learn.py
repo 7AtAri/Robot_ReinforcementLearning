@@ -93,16 +93,24 @@ class DQNAgent:
             return
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
-        states = torch.FloatTensor(states).to(device)
-        actions = torch.LongTensor(actions).to(device)
-        rewards = torch.FloatTensor(rewards).to(device)
-        next_states = torch.FloatTensor(next_states).to(device)
-        terminated = torch.FloatTensor(terminated).to(device)
-        truncated = torch.FloatTensor(truncated).to(device)
+        states = torch.FloatTensor(np.array(states)).to(device)
+        actions = torch.LongTensor(np.array(actions)).to(device)
+        rewards = torch.FloatTensor(np.array(rewards)).to(device)
+        next_states = torch.FloatTensor(np.array(next_states)).to(device)
+        terminated = torch.FloatTensor(np.array(terminated)).to(device)
+        truncated = torch.FloatTensor(np.array(truncated)).to(device)
 
-        Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
-        Q_targets_next = self.target_network(next_states).detach().max(1)[0]
+        # actions tensor must have the correct shape and type
+        actions = actions.long()  # long type for indexing
 
+        # using gather to select the action values:
+        #  https://pytorch.org/docs/stable/generated/torch.gather.html
+        # we need to gather along the last dimension (dimension=2) of the Q-values tensor
+        Q_expected = self.q_network(states).gather(2, actions.unsqueeze(-1)).squeeze(-1)
+        #Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
+        #Q_targets_next = self.target_network(next_states).detach().max(1)[0]
+        Q_values_next = self.target_network(next_states).detach()
+        Q_targets_next = Q_values_next.max(1)[0]  # should output a [batch_size] tensor
         # if episode was either terminated or truncated, we don't look at the next state's Q-value
         not_done = 1 - (terminated + truncated)
         #  calulate without considering future Q-values for either terminated or truncated samples
@@ -123,7 +131,8 @@ class DQNAgent:
 
 if __name__ == "__main__":
     # check which device is available
-    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
     register(
         id='RobotEnvironment-v1',
@@ -141,14 +150,14 @@ if __name__ == "__main__":
     episodes = 100
     for episode in range(episodes):
         state, info = env.reset()
-        #state = torch.FloatTensor(state).unsqueeze(0)  # Add batch dimension
+        #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
         terminated = False
         truncated = False
         total_reward = 0
         while not terminated and not truncated:
             action = agent.act(state)
             #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  # Adjust according to your env's step method
+            next_state, reward, terminated, truncated, _ = env.step(action)  
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
             #next_state = np.reshape(next_state, [1, state_size])

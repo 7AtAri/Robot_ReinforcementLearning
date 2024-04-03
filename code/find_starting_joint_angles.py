@@ -1,4 +1,6 @@
-# 
+# find the starting joint angles 
+# for the 6-joint robot to reach the starting position 
+# of the helix in the voxel space
 
 import numpy as np
 from scipy.optimize import minimize
