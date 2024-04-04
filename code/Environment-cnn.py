@@ -35,7 +35,7 @@ class RobotEnvironment(gym.Env):
 
         # voxel space dimensions
         self.x_range = (-self.radius, self.radius)
-        self.y_range = (-self.radius, self.radius)
+        self.y_range =  (-self.radius, self.radius)
         self.z_range = (0, self.height_per_turn*self.turns)
         self.resolution = resolution  # resolution: 1mm = 0.001m
        
@@ -45,7 +45,7 @@ class RobotEnvironment(gym.Env):
         # self.z_range = (self.z_range[0] - 0.005, self.z_range[1] + 0.005)
 
         # dimensions of the voxel grid
-        self.x_size = int((self.x_range[1] - self.x_range[0]) / self.resolution) + 1
+        self.x_size = int((self.x_range[1]*2- self.x_range[0]*2) / self.resolution) + 1
         self.y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
         self.z_size = int((self.z_range[1] - self.z_range[0]) / self.resolution) + 1
 
@@ -207,13 +207,24 @@ class RobotEnvironment(gym.Env):
         # initialize helix
         r = self.radius  # radius 
         h = self.height_per_turn # height per turn 
-        t = np.linspace(0, self.turns, 100)  # parameter t from 0 to 2 for 2 complete turns
+        t = np.linspace(0, self.turns, num=int(self.turns*100) ) # parameter t from 0 to 2 for 2 complete turns
 
-        # + self.initial_tcp_position[0] to set the start of the helix at the initial TCP position (all joint angles = 0)
-        helix_x = r * np.cos(2 * np.pi * t) 
-        helix_y = r * np.sin(2 * np.pi * t) 
-        helix_z = h * t 
+        offset = self.radius
+        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset# 
+        helix_y = r * np.sin(2 * np.pi * t + np.pi)  
+        helix_z = h * t  
 
+        # #Iterate through helix points to populate voxel space
+        # for i in range(len(helix_x)):
+        #     # Convert helix coordinates directly to voxel indices
+        #     x_idx, y_idx, z_idx = self.position_to_voxel_indices([helix_x[i], helix_y[i], helix_z[i]])
+            
+        #     # Check bounds and set voxel space values
+        #     if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
+        #         self.voxel_space[x_idx, y_idx, z_idx] = 0 if i < len(helix_x) - 1 else 1 
+        #     else: 
+        #         print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
+                
         # # Mark the voxels on the helix path
         # for i in range(len(helix_x)):
         #     # Translate helix point to voxel space, if necessary
@@ -237,12 +248,17 @@ class RobotEnvironment(gym.Env):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
-            if i == len(helix_x) - 1:  # last helix point
-                self.voxel_space[x_idx, y_idx, z_idx] = 1
+            
+            # x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
+            # y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
+            # z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
+            if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
+                if i == len(helix_x) - 1:  # last helix point
+                    self.voxel_space[x_idx, y_idx, z_idx] = 1
+                else:
+                    self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
             else:
-                self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
-
-
+                print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
 
     
     def is_on_helix(self, tcp_coords):
