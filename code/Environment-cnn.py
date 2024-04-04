@@ -86,7 +86,7 @@ class RobotEnvironment(gym.Env):
         # Populate the voxel space with a helix
         self.init_helix()
 
-        self.tcp_position = self.initial_tcp_position
+        self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
         # # set the TCP position in the voxel space channel 2
         # self.tcp_position_grid = np.zeros((self.x_size, self.y_size, self.z_size))  # init TCP position grid
         # self.tcp_position_grid[tcp_x, tcp_y, tcp_z] = 1  # mark TCP position on voxel grid
@@ -213,6 +213,24 @@ class RobotEnvironment(gym.Env):
         helix_x = r * np.cos(2 * np.pi * t) 
         helix_y = r * np.sin(2 * np.pi * t) 
         helix_z = h * t 
+
+        # # Mark the voxels on the helix path
+        # for i in range(len(helix_x)):
+        #     # Translate helix point to voxel space, if necessary
+        #     # Note: For static initialization where the helix is already relative to the initial TCP position, this step might be skipped.
+        #     translated_point = np.array([helix_x[i], helix_y[i], helix_z[i]])
+            
+        #     # Use the adjusted function for converting to voxel indices
+        #     x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_point)
+
+        #     # Ensure the indices are within bounds before accessing the array
+        #     if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
+        #         if i == len(helix_x) - 1:  # last helix point
+        #             self.voxel_space[x_idx, y_idx, z_idx] = 1
+        #         else:
+        #             self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
+        #     else:
+        #         print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
 
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
