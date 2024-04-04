@@ -38,8 +38,8 @@ def objective(theta):
     return np.linalg.norm(position - target_position)
 
 # initial guess for theta
-theta_guess = np.zeros(6)
-
+#theta_guess = np.zeros(6)
+theta_guess= [120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ]
 # solve for theta
 result = minimize(objective, theta_guess, bounds=[(-np.pi, np.pi)] * 6)
 
@@ -50,5 +50,8 @@ else:
     print("could not find a solution")
 
 
-## Output:
+
+## 1st Output:
 ## [ 90.00106854   89.99929501  180.   62.13891154 -150.66767822  0.]    --->  [90, 90, 180, 62.14, -150.67 0]
+## 2nd Output:
+ # [  85.06175131   24.65057619  164.57837099  179.33239645 -179.90017193 0.  ]

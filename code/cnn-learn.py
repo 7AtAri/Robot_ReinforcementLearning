@@ -6,10 +6,6 @@ import torch.optim as optim
 from collections import deque # queue for efficiently adding and removing elements from both ends
 import gymnasium as gym
 from gymnasium.envs.registration import register
-import random
-
-import torch
-import torch.nn as nn
 import torch.nn.functional as F
 
 import os
@@ -186,4 +182,3 @@ if __name__ == "__main__":
         agent.replay()
         if episode % 10 == 0:
             agent.update_target_network()
-

@@ -37,7 +37,7 @@ class RobotEnvironment(gym.Env):
         self.x_range = (-self.radius, self.radius)
         self.y_range = (-self.radius, self.radius)
         self.z_range = (0, self.height_per_turn*self.turns)
-        self.resolution = resolution  # resolution: 1mm
+        self.resolution = resolution  # resolution: 1mm = 0.001m
 
         #  extending each range by 5mm on both sides to ensure the robot does not move outside of the voxel-space on the first move
         # self.x_range = (self.x_range[0] - 0.005, self.x_range[1] + 0.005)
@@ -120,6 +120,7 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
+        print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
         self.tcp_position = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
 
@@ -233,9 +234,10 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         # reset the joint angles and TCP position to the start of the helix
-        self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
-        self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
-        
+        #self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
+        #self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
+        self.joint_angles = np.array([ 85.06, 24.65, 164.58, 179.33, -179.90, 0.  ])
+        self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         #print("tcp-obs: ", self.tcp_observation)
         # # set observation space to the initial state
@@ -298,17 +300,17 @@ class RobotEnvironment(gym.Env):
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            #print("Delta Angles:", delta_angles)
+            print("Delta Angles:", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
             
-        #print("joint_angles:", self.joint_angles)
+        print("joint_angles:", self.joint_angles)
         new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        #print("New Joint Angles:", self.joint_angles)
+        print("New Joint Angles:", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
@@ -366,9 +368,9 @@ class RobotEnvironment(gym.Env):
         # Implement conversion from TCP position to grid indices based on your environment's specifics
         # This is a placeholder function; you'll need to adjust it based on how your environment and TCP positions are defined
         #print("TCP Position:", tcp_position)
-        x_idx = int((tcp_position[0] - self.x_range[0]) / self.resolution)
-        y_idx = int((tcp_position[1] - self.y_range[0]) / self.resolution)
-        z_idx = int((tcp_position[2] - self.z_range[0]) / self.resolution)
+        x_idx = int(round((tcp_position[0] - self.x_range[0]) / self.resolution))
+        y_idx = int(round((tcp_position[1] - self.y_range[0]) / self.resolution))
+        z_idx = int(round((tcp_position[2] - self.z_range[0]) / self.resolution))
         print("TCP Position Indices:", x_idx, y_idx, z_idx)
         return x_idx, y_idx, z_idx
 
@@ -387,12 +389,19 @@ class RobotEnvironment(gym.Env):
 
 if __name__ == "__main__":
     env = RobotEnvironment()
-    env.render(tcp_coords=env.tcp_position)
+    #env.render(tcp_coords=env.tcp_position)
+    
+    joint_angles = np.array([85.06, 24.65, 164.58, 179.33, -179.90, 0. ])
+    joint_angles= np.array([ 120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ])
+    #joint_angles = np.array([ 89.99683147,  23.85781021, 164.55283017, 179.55921263 ,180., 180. ])
+    tcp_position = env.forward_kinematics(joint_angles)
+    print("TCP Position env:", tcp_position)
+    x,y,z= env.tcp_position_to_grid_index(tcp_position)
+    #print("TCP Position Indices:", x, y, z)
+    #state_size = np.prod(env.observation_space.shape)
+    # print("action space: ", env.action_space) # action space:  MultiDiscrete([3 3 3 3 3 3])
+    # print("obs space:", env.observation_space.shape)  #obs space: (2, 61, 61, 101)
+    # action_size = env.action_space.shape[0] #.nvec.prod()   #Action size: (6,)  # tuple
+    # print(f"State size: {state_size}, Action size: {action_size}") #State size: 751642
 
-    state_size = np.prod(env.observation_space.shape)
-    print("action space: ", env.action_space) # action space:  MultiDiscrete([3 3 3 3 3 3])
-    print("obs space:", env.observation_space.shape)  #obs space: (2, 61, 61, 101)
-    action_size = env.action_space.shape[0] #.nvec.prod()   #Action size: (6,)  # tuple
-    print(f"State size: {state_size}, Action size: {action_size}") #State size: 751642
-
-    print("channels: ", env.observation_space.shape[0])  # channels: 2
+    # print("channels: ", env.observation_space.shape[0])  # channels: 2
