@@ -34,8 +34,8 @@ class RobotEnvironment(gym.Env):
         self.turns = turns  # number of turns
 
         # voxel space dimensions
-        self.x_range = (-self.radius, self.radius)
-        self.y_range = (-self.radius, self.radius)
+        self.x_range = (-self.radius, self.radius+0.08)
+        self.y_range = (-self.radius, self.radius+0.08)
         self.z_range = (0, self.height_per_turn*self.turns)
         self.resolution = resolution  # resolution: 1mm = 0.001m
 
@@ -165,17 +165,35 @@ class RobotEnvironment(gym.Env):
     
 
     def init_helix(self):
-        # # create a separate matrix to store the helix path
-        #helix_path = np.full_like(self.voxel_space, -1, dtype=np.int8)
+        
+        # Extend the x and y ranges by 80 units
+        x_range_shifted = (-self.radius, self.radius + 0.08)
+        y_range_shifted = (-self.radius, self.radius + 0.08)
 
-        # initialize helix
+        # Recalculation of the x- and y-sizes of the voxel space
+        self.x_size = int((x_range_shifted[1] - x_range_shifted[0]) / self.resolution) + 1
+        self.y_size = int((y_range_shifted[1] - y_range_shifted[0]) / self.resolution) + 1
+
+        # new assign of xy range
+        self.x_range = x_range_shifted
+        self.y_range = y_range_shifted
+
+        # new origin
+        helix_x_origin = 0.08  
+        helix_y_origin = 0.08   
+        helix_z_origin = 0   
+
+        # initialize helix 
         r = 0.03  # radius 
         h = 0.05  # height per turn 
         t = np.linspace(0, 2, 100)  # parameter t from 0 to 2 for 2 complete turns
-        helix_x = r * np.cos(2 * np.pi * t)
-        helix_y = r * np.sin(2 * np.pi * t)
-        helix_z = h * t
-
+        # helix_x = r * np.cos(2 * np.pi * t)
+        # helix_y = r * np.sin(2 * np.pi * t)
+        # helix_z = h * t
+        helix_x = r * np.cos(2 * np.pi * t) + helix_x_origin
+        helix_y = r * np.sin(2 * np.pi * t) + helix_y_origin
+        helix_z = h * t + helix_z_origin
+  
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
@@ -185,8 +203,6 @@ class RobotEnvironment(gym.Env):
                 self.voxel_space[x_idx, y_idx, z_idx] = 1
             else:
                 self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
-
-
     
     def is_on_helix(self, tcp_coords):
         # convert TCP coordinates to voxel indices. Therefore find the relative position of the TCP
@@ -286,6 +302,10 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
+         # Set axis limits to start from 0
+        ax.set_xlim(0, self.x_size)
+        ax.set_ylim(0, self.y_size)
+        ax.set_zlim(0, self.z_size)
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
@@ -395,6 +415,7 @@ if __name__ == "__main__":
     joint_angles= np.array([ 120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ])
     #joint_angles = np.array([ 89.99683147,  23.85781021, 164.55283017, 179.55921263 ,180., 180. ])
     tcp_position = env.forward_kinematics(joint_angles)
+    env.render(tcp_coords=tcp_position)
     print("TCP Position env:", tcp_position)
     x,y,z= env.tcp_position_to_grid_index(tcp_position)
     #print("TCP Position Indices:", x, y, z)
