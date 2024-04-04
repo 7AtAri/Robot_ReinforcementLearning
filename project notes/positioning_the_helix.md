@@ -19,12 +19,37 @@ Strategically position the helix so that the robot's TCP can follow its trajecto
 
 - [reachable vs dexterous workspace of a robot](https://firstyearengineer.com/intro-to-robotics/chapter-2-robot-manipulators/classifications-robot-workspaces/)
 
-## Positioning Strategy
+## Positioning Strategy for the Helix
 
-- Center the Helix in the Robot's Workspace: Assuming the robot's base is at the origin (0,0,0), you should center the helix within the robot's effective reach. This doesn't necessarily mean the geometric center of the workspace but a position where the robot can reach all points of the helix comfortably.
-- Height Adjustment: The helix starts from the ground up. Consider the robot's minimum and maximum reach in the Z-direction to adjust the base height of the helix. The helix should start at a height where the first point is comfortably reachable by the robot's end effector with the joints not too extended or retracted.
-- Orientation Adjustment: Orient the helix so that its axis aligns with one of the robot's primary movement axes. This usually means having the helix's vertical axis align with the robot's vertical axis, simplifying the trajectory following.
-- Initial Robot Configuration: Choose an initial robot configuration (joint angles) that places the TCP at the start of the helix with a favorable orientation for following the helix path. This often means avoiding extreme joint angles or configurations that could lead to singularities as the TCP moves along the helix.
-- Path Planning and Simulation: Before physically executing the trajectory, use path planning algorithms to simulate the robot's movement along the helix. This can help identify any potential issues with joint limits, reachability, or collisions. Adjust the helix's position based on simulation outcomes if necessary.
-- Incremental Adjustments: If the robot struggles to reach any part of the helix, make incremental adjustments to the helix's position or orientation. Small shifts can significantly impact the robot's ability to follow the trajectory smoothly.
-- Joint Angle Monitoring: As the robot follows the helix, continuously monitor the joint angles to ensure they remain within the -180° to 180° range. Implement motion control algorithms that dynamically adjust the robot's configuration to maintain this constraint.
+Given the robot's configuration at the origin (0, 0, 0) with all joint angles set to 0 degrees, the initial position and orientation of the TCP in the robot's base frame need to be determined. This is typically the forward kinematics result with all joints at 0 degrees. Then, you adjust the position of the helix start point relative to this TCP position.
+
+## Steps to Position the Helix
+
+- Calculate TCP's Initial Position: Use forward kinematics with all joint angles set to 0 degrees to find the TCP's initial position in the robot's base frame.
+- Determine Helix Start Position: Based on the helix parameters and the desired start position in the robot's workspace, determine where the start of the helix should be in the robot's base frame to ensure it's reachable by the TCP at the initial configuration.
+- Calculate Translation: The translation vector is the difference between the TCP's initial position (from step 1) and the desired start position of the helix (from step 2). This vector tells you how to translate the helix so its start is at the TCP's initial position.
+- Apply Translation to Helix: Update the helix coordinates by applying this translation vector, effectively moving the helix into the desired position within the robot's workspace.
+- Define Voxel Space Around the Helix: Once the helix is properly positioned, the extents of the helix in the robot's base frame can be used to define the minimal voxel space necessary to contain the helix.
+
+code:
+# Assume tcp_initial as the TCP's position at all joint angles = 0
+tcp_initial = np.array([0.2, 0, 0.2])  # Example TCP position in meters
+
+# Helix start point, assuming it's initially positioned at the origin
+helix_start = np.array([0, 0, 0])
+
+# Calculate translation needed to position the helix start at the TCP initial position
+translation = tcp_initial - helix_start
+
+# Apply translation to helix coordinates
+helix_x_translated = helix_x + translation[0]
+helix_y_translated = helix_y + translation[1]
+helix_z_translated = helix_z + translation[2]
+
+# Defining the Voxel Space
+x_min, x_max = min(helix_x_translated), max(helix_x_translated)
+y_min, y_max = min(helix_y_translated), max(helix_y_translated)
+z_min, z_max = min(helix_z_translated), max(helix_z_translated)
+
+# Define voxel space dimensions (add some margin if necessary)
+voxel_space_dimensions = np.array([[x_min, x_max], [y_min, y_max], [z_min, z_max]])

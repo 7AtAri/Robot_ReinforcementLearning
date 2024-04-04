@@ -16,8 +16,6 @@ def dh_transform(a, d, alpha, theta):
     """
     Calculate the Denavit-Hartenberg transformation matrix.
     """
-    theta_rad = np.radians(theta)
-    alpha_rad = alpha
     return np.array([
             [np.cos(theta), -np.sin(theta) * np.cos(alpha), np.sin(theta) * np.sin(alpha), a * np.cos(theta)],
             [np.sin(theta), np.cos(theta) * np.cos(alpha), -np.cos(theta) * np.sin(alpha), a * np.sin(theta)],
