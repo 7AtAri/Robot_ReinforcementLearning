@@ -21,35 +21,14 @@ Strategically position the helix so that the robot's TCP can follow its trajecto
 
 ## Positioning Strategy for the Helix
 
-Given the robot's configuration at the origin (0, 0, 0) with all joint angles set to 0 degrees, the initial position and orientation of the TCP in the robot's base frame need to be determined. This is typically the forward kinematics result with all joints at 0 degrees. Then, you adjust the position of the helix start point relative to this TCP position.
+Given the robot's configuration at the origin (0, 0, 0) with all joint angles set to 0 degrees, the initial position and orientation of the TCP in the robot's base frame need to be determined. This is the result of the forward kinematics with all joints at 0 degrees. Then, we need to adjust the position of the helix start point relative to this TCP position.
 
 ## Steps to Position the Helix
 
 - Calculate TCP's Initial Position: Use forward kinematics with all joint angles set to 0 degrees to find the TCP's initial position in the robot's base frame.
 - Determine Helix Start Position: Based on the helix parameters and the desired start position in the robot's workspace, determine where the start of the helix should be in the robot's base frame to ensure it's reachable by the TCP at the initial configuration.
-- Calculate Translation: The translation vector is the difference between the TCP's initial position (from step 1) and the desired start position of the helix (from step 2). This vector tells you how to translate the helix so its start is at the TCP's initial position.
-- Apply Translation to Helix: Update the helix coordinates by applying this translation vector, effectively moving the helix into the desired position within the robot's workspace.
-- Define Voxel Space Around the Helix: Once the helix is properly positioned, the extents of the helix in the robot's base frame can be used to define the minimal voxel space necessary to contain the helix.
+- Calculate Translation: The translation vector is the difference between the TCP's initial position (step 1) and the desired start position of the helix (step 2). This vector tells you how to translate the helix so its start is at the TCP's initial position.
+- Define voxel space around the helix and fill it with the helix, so that the helix starts at the origin of the voxel space
+- Use the Translation matrix to translate between the robot's coordinate system and the voxel-space origin, that is set at the TCP for all joints = 0.
 
-code:
-# Assume tcp_initial as the TCP's position at all joint angles = 0
-tcp_initial = np.array([0.2, 0, 0.2])  # Example TCP position in meters
 
-# Helix start point, assuming it's initially positioned at the origin
-helix_start = np.array([0, 0, 0])
-
-# Calculate translation needed to position the helix start at the TCP initial position
-translation = tcp_initial - helix_start
-
-# Apply translation to helix coordinates
-helix_x_translated = helix_x + translation[0]
-helix_y_translated = helix_y + translation[1]
-helix_z_translated = helix_z + translation[2]
-
-# Defining the Voxel Space
-x_min, x_max = min(helix_x_translated), max(helix_x_translated)
-y_min, y_max = min(helix_y_translated), max(helix_y_translated)
-z_min, z_max = min(helix_z_translated), max(helix_z_translated)
-
-# Define voxel space dimensions (add some margin if necessary)
-voxel_space_dimensions = np.array([[x_min, x_max], [y_min, y_max], [z_min, z_max]])

@@ -189,4 +189,5 @@ if __name__ == "__main__":
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
+            env.render()
             agent.update_target_network()
