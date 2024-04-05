@@ -54,19 +54,19 @@ class RobotEnvironment(gym.Env):
         
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
         self.initial_tcp_position, self.init_orientation = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
-        print("Endeffektor-Position:", self.initial_tcp_position)
-        print("Orientierung (Roll, Pitch, Yaw):", self.init_orientation)
+        #print("Initial Robot TCP Position:", self.initial_tcp_position)
+        #print("Orientierung (Roll, Pitch, Yaw):", self.init_orientation)
 
         self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         
         # voxel space origin set to the initial TCP position:
-        print("Initial Robot TCP Position:", self.initial_tcp_position)
+      
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        print("Initial Voxel TCP Position:", self.tcp_position)
+        #print("Initial Voxel TCP Position:", self.tcp_position)
         # # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -109,10 +109,11 @@ class RobotEnvironment(gym.Env):
         #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
         new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
-        print("new_Endeffektor-Position:", new_tcp_position_in_robot_space)
-        print("new Orientierung (Roll, Pitch, Yaw):", tcp_orientation)
+        #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
+        #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
-        print("New Voxel TCP Position in step:", self.tcp_position)
+        #print("New Voxel TCP Position in step:", self.tcp_position)
+
         # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -221,12 +222,12 @@ class RobotEnvironment(gym.Env):
         # self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
         self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         # voxel space origin set to the initial TCP position:
-        print("Initial TCP Position (Reset):", self.initial_tcp_position)
+        #print("Initial TCP Position (Reset):", self.initial_tcp_position)
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        print("Voxel TCP Position (Reset):", self.tcp_position)
+        #print("Voxel TCP Position (Reset):", self.tcp_position)
         # reset the joint angles and TCP position to the start of the helix
     
         self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
