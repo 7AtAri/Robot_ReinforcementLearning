@@ -53,8 +53,10 @@ class RobotEnvironment(gym.Env):
         self.voxel_space = np.full((self.x_size, self.y_size, self.z_size), -1)  # initialize all voxels with -1
         
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
-        self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
-        
+        self.initial_tcp_position, self.init_orientation = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
+        print("Endeffektor-Position:", self.initial_tcp_position)
+        print("Orientierung (Roll, Pitch, Yaw):", self.init_orientation)
+
         self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         
         # voxel space origin set to the initial TCP position:
@@ -106,7 +108,9 @@ class RobotEnvironment(gym.Env):
 
         print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
-        new_tcp_position_in_robot_space = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        print("new_Endeffektor-Position:", new_tcp_position_in_robot_space)
+        print("new Orientierung (Roll, Pitch, Yaw):", tcp_orientation)
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         print("New Voxel TCP Position in step:", self.tcp_position)
         # set the TCP position in the voxel space channel 2
@@ -400,6 +404,12 @@ class RobotEnvironment(gym.Env):
 
         # calculate gamma
         gamma = np.arctan2(rotation_matrix[2, 1] / np.cos(beta), rotation_matrix[2, 2] / np.cos(beta))
+
+        # normalize angles
+        alpha, beta, gamma = alpha % (2*np.pi), beta % (2*np.pi), gamma % (2*np.pi)
+
+        # convert angles to degrees
+        alpha,beta,gamma = np.rad2deg([alpha,beta,gamma])
 
         return position, (alpha, beta, gamma)
 
