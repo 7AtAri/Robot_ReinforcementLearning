@@ -128,8 +128,9 @@ class DQNAgent:
         print("not done shape:", not_done.shape)
         #  calulate without considering future Q-values for either terminated or truncated samples
         Q_targets = rewards + (self.gamma * Q_targets_next * not_done)
-
-        loss = nn.MSELoss()(Q_expected, Q_targets)
+        # Q_expected: expected future rewards (of the network) for the chosen action 
+        # Q_targets: actual future rewards (from the target network) for the chosen action
+        loss = nn.MSELoss()(Q_expected, Q_targets) 
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
