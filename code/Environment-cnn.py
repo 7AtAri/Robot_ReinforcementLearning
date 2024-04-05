@@ -58,12 +58,13 @@ class RobotEnvironment(gym.Env):
         self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         
         # voxel space origin set to the initial TCP position:
-        print("Initial TCP Position:", self.initial_tcp_position)
+        print("Initial Robot TCP Position:", self.initial_tcp_position)
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
+        print("Initial Voxel TCP Position:", self.tcp_position)
         # # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -107,6 +108,7 @@ class RobotEnvironment(gym.Env):
         # update TCP position (based on the new joint angles - not on the delta angles) 
         new_tcp_position_in_robot_space = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
+        print("New Voxel TCP Position in step:", self.tcp_position)
         # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -250,14 +252,14 @@ class RobotEnvironment(gym.Env):
 
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
         # self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
-        
+        self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         # voxel space origin set to the initial TCP position:
-        print("Initial TCP Position:", self.initial_tcp_position)
+        print("Initial TCP Position (Reset):", self.initial_tcp_position)
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        
+        print("Voxel TCP Position (Reset):", self.tcp_position)
         # reset the joint angles and TCP position to the start of the helix
     
         self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
@@ -303,9 +305,9 @@ class RobotEnvironment(gym.Env):
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
          # Set axis limits to start from 0
-        ax.set_xlim(0, self.x_size)
-        ax.set_ylim(0, self.y_size)
-        ax.set_zlim(0, self.z_size)
+        #ax.set_xlim(0, self.x_size)
+        #ax.set_ylim(0, self.y_size)
+        #ax.set_zlim(0, self.z_size)
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
@@ -315,22 +317,21 @@ class RobotEnvironment(gym.Env):
 
 
     def process_action(self, action):
-          
         # Check if action is iterable
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles:", delta_angles)
+            print("Delta Angles (process action):", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
             
-        print("joint_angles:", self.joint_angles)
+        print("joint_angles (process action):", self.joint_angles)
         new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles:", self.joint_angles)
+        print("New Joint Angles (process action):", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
