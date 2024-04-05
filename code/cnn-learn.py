@@ -48,7 +48,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.memory = deque(maxlen=buffer_size)
@@ -182,4 +182,5 @@ if __name__ == "__main__":
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
+            env.render()
             agent.update_target_network()

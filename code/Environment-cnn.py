@@ -103,10 +103,11 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        print("Joint Angles in step:", self.joint_angles)
+        #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
         new_tcp_position_in_robot_space = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
+        print( "New TCP Position:", self.tcp_position)
         # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -302,10 +303,10 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
-         # Set axis limits to start from 0
-        ax.set_xlim(0, self.x_size)
-        ax.set_ylim(0, self.y_size)
-        ax.set_zlim(0, self.z_size)
+        # Set axis limits to start from 0
+        #ax.set_xlim(0, self.x_size)
+        #ax.set_ylim(0, self.y_size)
+        #ax.set_zlim(0, self.z_size)
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
