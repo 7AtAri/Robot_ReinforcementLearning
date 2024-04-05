@@ -9,20 +9,32 @@ The reinforcement learning (RL) environment used in the paper described using ma
 $$
 r_{\text{sm}}(n) = 
 \begin{cases} 
-\frac{1}{1 + e^{(7-sm_{n+1})}} - 0.5 & \text{if } sm_{n+1} < 7 \\
-1 - \frac{1}{1 + e^{(sm_{n+1}-7)}} & \text{otherwise}
+\frac{2}{1 + e^{(7-sm_{n+1})}} - 1 & \text{if } sm_{n+1} \geq 7 \\
+\frac{2}{1 + e^{(7-sm_{n+1})}}-1.5 & \text{if } sm_{n+1} < 7 \\
+-1.5,                              & \text{if } v_{unit} \ne v_{commanded}
 \end{cases}
 $$
 
-
 Where $sm_{n+1}$ is the stability margin of the next state $P(n+1)$.
 This function rewards transitions that lead to a state with a stability margin greater than or equal to 7 cm, and penalizes transitions resulting in lower stability margins.
+
+3.2 **Reward for 5-leg case** 
+
+$$
+r_{\text{sw}}(n) = 
+\begin{cases} 
+1,           & \text{if } P_{n+1} \text{ is quasi-static-stable} \\
+-1.5,         & \text{if } P_{n+1} \text{ is statistically unstable}
+\end{cases}
+$$
 
 4. **Policy (π)**: The policy is a strategy that the learning algorithm uses to decide the actions to take based on the current state. It aims to maximize the cumulative reward. The FGGRL (Free Gait Generation with Reinforcement Learning) dynamically updates the policy based on the observed rewards, utilizing reinforcement learning to favor transitions that have historically led to stable and efficient gaits.
 
 5. **Learning Mechanism**: The learning mechanism updates the utilities (values) of state transitions based on the reinforcement signals received after each action. The utilities are used to inform the selection of actions (state transitions) in future iterations, favoring those that lead to higher rewards. The update rule for the utility $u_{P(n) \rightarrow P(n+1)}$ of transitioning from state $P(n)$ to $P(n+1)$ is influenced by the received reward $r_{sm}(n)$ and a discount factor $\gamma$, emphasizing the importance of recent transitions over older ones. P(n) is initialized to 0.5.
 
-$$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma [r(n) - u_{P(n) \to P(n+1)}] $$
+$$ u_{P(n) \to P(n+1)} := u_{P(n) \to P(n+1)} + \gamma_{i-n} * r_{sm}(n) * [1 - u_{P(n) \to P(n+1)}] $$
+
+$$for \quad i=n-4, n-3,...,n$$
 
 6. **Evaporation Mechanism (Discounting Over Time)**:
    

@@ -18,7 +18,7 @@ of the current reinforcement signal is to blend internal reinforcement signals
 This aims to improve the robot's ability to maintain stability even when facing unexpected challenges, enhancing its overall adaptability and robustness.
 
 
-## Further improvements propesed by us:
+## Further improvements proposed by us:
 
 Improving the simulation by including more complexity of real-world conditions 
 to bridge the gap between theoretical models and practical applications.

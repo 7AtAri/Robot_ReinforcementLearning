@@ -1,7 +1,7 @@
 ### 
 ### Reinforcement Learning - WS 2023/24 
 ### 6-joint robot arm
-### Group: Dennis Huff, Philip, Ari Wahl 
+### Group: Dennis Huff, Philipp Bodemann, Ari Wahl 
 ###
 
 import numpy as np
