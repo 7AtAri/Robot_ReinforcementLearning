@@ -116,7 +116,7 @@ class RobotEnvironment(gym.Env):
         # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
-        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        self.state = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
@@ -132,7 +132,7 @@ class RobotEnvironment(gym.Env):
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
         # return the new observation (state), reward, done flag
-        return self.observation, self.reward, self.terminated, self.truncated, info
+        return self.state, self.reward, self.terminated, self.truncated, info
 
 
     def init_helix(self):
@@ -234,7 +234,7 @@ class RobotEnvironment(gym.Env):
         # # set observation space to the initial state
     
         # Stack to create a two-channel observation
-        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        self.state= np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # reset the reward and Flags
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
@@ -248,7 +248,7 @@ class RobotEnvironment(gym.Env):
             'tcp_position': self.tcp_position.tolist()
         }
 
-        return self.observation, info #  self.joint_angles  # also return the joint angles?
+        return self.state, info #  self.joint_angles  # also return the joint angles?
 
 
     def reward_function(self, tcp_on_helix):

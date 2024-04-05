@@ -9,7 +9,7 @@
 - [ ] reward springt manchmal unerklärbar hoch im Verhältnis zu genommenen steps. why?
 - [ ] Fehlermeldung Tensorshape mismatch ---> remember() checken!
 - [ ] epsilon decay funktioniert nicht. warum?
-- [ ] Ist das QNetwork das richtige? (Ari)
+- [x] Ist das QNetwork das richtige?--> ja (Ari)
 
 ## wenn das lernen richtig funktioniert
 

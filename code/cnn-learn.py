@@ -51,9 +51,10 @@ class DQNAgent:
     def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=8, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
-        self.memory = deque(maxlen=buffer_size)
         self.batch_size = batch_size
         self.gamma = gamma
+        # this ensures that the memory does not grow beyond buffer_size - oldest elements are removed:
+        self.memory = deque(maxlen=buffer_size) 
         
         self.q_network = QNetworkCNN(state_size, actions).to(device)
         self.target_network = QNetworkCNN(state_size, actions).to(device)
@@ -66,11 +67,7 @@ class DQNAgent:
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
-        # This method ensures that the number of data in the memory queue self.memory is always 
-        # a multiple of the batch_size to ensure consistent mini-batch sizes for training, removing 
-        # the oldest elements if the queue length is not a multiple of batch_size.
-        while len(self.memory) > 0 and len(self.memory) % self.batch_size != 0:
-            self.memory.popleft() 
+        
     # def act(self, state):
     #     if np.random.rand() <= self.epsilon:
     #         return random.randrange(self.action_size)
@@ -141,7 +138,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon:", self.epsilon)
+            print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -168,13 +165,14 @@ if __name__ == "__main__":
     # # Training loop
     episodes = 100
     for episode in range(episodes):
-        state, info = env.reset()
+        state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
         terminated = False
         truncated = False
         step_counter = 0
         total_reward = 0
         while not terminated and not truncated:
+            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  
