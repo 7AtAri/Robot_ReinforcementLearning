@@ -39,11 +39,6 @@ class RobotEnvironment(gym.Env):
         self.z_range = (0, self.height_per_turn*self.turns)
         self.resolution = resolution  # resolution: 1mm = 0.001m
        
-        #  extending each range by 5mm on both sides to ensure the robot does not move outside of the voxel-space on the first move
-        # self.x_range = (self.x_range[0] - 0.005, self.x_range[1] + 0.005)
-        # self.y_range = (self.y_range[0] - 0.005, self.y_range[1] + 0.005)
-        # self.z_range = (self.z_range[0] - 0.005, self.z_range[1] + 0.005)
-
         # dimensions of the voxel grid
         self.x_size = int((self.x_range[1]*2- self.x_range[0]*2) / self.resolution) + 1
         self.y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
@@ -53,50 +48,30 @@ class RobotEnvironment(gym.Env):
         num_channels = 2  # For voxel_space and TCP position
         self.observation_space = gym.spaces.Box(low=-1, high=1, shape=(num_channels, self.x_size, self.y_size, self.z_size), dtype=np.float64)
         # observation space defined by dimensions and possible voxel values (-1 to 1)
-        # self.observation_space = gym.spaces.Box(low=-1, high=1, 
-        #                                         shape=(x_size, y_size, z_size), 
-        #                                         dtype=np.int8)
-        #print("Observation Space:", self.observation_space)  #Observation Space: Box(-inf, inf, (2, 61, 61, 101), float32)
-        #print("  - Dimensionen:", self.observation_space.shape)  # - Dimensionen: (2, 61, 61, 101)
-        #print("  - low value:", self.observation_space.low)
-        #print("  - high value:", self.observation_space.high)
-        #print("  - datatype:", self.observation_space.dtype)
-
+      
         # init voxel space 
         self.voxel_space = np.full((self.x_size, self.y_size, self.z_size), -1)  # initialize all voxels with -1
-        #print("Voxel Space Shape:", self.voxel_space.shape) # Voxel Space Shape: (61, 61, 101)
-        #print("Voxel Space Size flattened:", len(self.voxel_space.flatten()) )# Voxel Space Size: 375821
-
-        # Define the initial state of the robot
-        # set initial TCP position at the start of the helix
-        #tcp_x=self.radius
-        #tcp_y=0
-        #tcp_z=0
-        #self.tcp_position = np.array([tcp_x, tcp_y, tcp_z], dtype=np.float64)  # fixed to the starting point of the helix on z=0
-        #self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
-
+        
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
         self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
         
+        self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
+        
         # voxel space origin set to the initial TCP position:
-        #self.voxel_space_origin = self.initial_tcp_position
         print("Initial TCP Position:", self.initial_tcp_position)
         self.init_translation_matrix()
-        #print("observation Space Size flattened:", len(self.observation_space.flatten()) )
         # Populate the voxel space with a helix
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
         # # set the TCP position in the voxel space channel 2
-        # self.tcp_position_grid = np.zeros((self.x_size, self.y_size, self.z_size))  # init TCP position grid
-        # self.tcp_position_grid[tcp_x, tcp_y, tcp_z] = 1  # mark TCP position on voxel grid
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
         self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        
+        print("TCP on Helix:", self.tcp_on_helix)
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
@@ -214,44 +189,12 @@ class RobotEnvironment(gym.Env):
         helix_y = r * np.sin(2 * np.pi * t + np.pi)  
         helix_z = h * t  
 
-        # #Iterate through helix points to populate voxel space
-        # for i in range(len(helix_x)):
-        #     # Convert helix coordinates directly to voxel indices
-        #     x_idx, y_idx, z_idx = self.position_to_voxel_indices([helix_x[i], helix_y[i], helix_z[i]])
-            
-        #     # Check bounds and set voxel space values
-        #     if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
-        #         self.voxel_space[x_idx, y_idx, z_idx] = 0 if i < len(helix_x) - 1 else 1 
-        #     else: 
-        #         print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
-                
-        # # Mark the voxels on the helix path
-        # for i in range(len(helix_x)):
-        #     # Translate helix point to voxel space, if necessary
-        #     # Note: For static initialization where the helix is already relative to the initial TCP position, this step might be skipped.
-        #     translated_point = np.array([helix_x[i], helix_y[i], helix_z[i]])
-            
-        #     # Use the adjusted function for converting to voxel indices
-        #     x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_point)
-
-        #     # Ensure the indices are within bounds before accessing the array
-        #     if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
-        #         if i == len(helix_x) - 1:  # last helix point
-        #             self.voxel_space[x_idx, y_idx, z_idx] = 1
-        #         else:
-        #             self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
-        #     else:
-        #         print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
-
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
-            
-            # x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
-            # y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
-            # z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
+      
             if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
                 if i == len(helix_x) - 1:  # last helix point
                     self.voxel_space[x_idx, y_idx, z_idx] = 1
@@ -304,23 +247,23 @@ class RobotEnvironment(gym.Env):
         print("Resetting the environment...")
         _ = seed  # acknowledging the seed parameter without using it to fit the gymnasium requirements
         self.voxel_space.fill(-1)
+
+        self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
+        # self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
+        
+        # voxel space origin set to the initial TCP position:
+        print("Initial TCP Position:", self.initial_tcp_position)
+        self.init_translation_matrix()
+        # Populate the voxel space with a helix
         self.init_helix()
-
+        self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
+        
         # reset the joint angles and TCP position to the start of the helix
-        #self.tcp_position = np.array([self.radius, 0, 0], dtype=np.float64)  # fixed to the starting point of the helix on z=0
-        #self.joint_angles = np.array([90, 90, 180, 62.14, -150.67 ,0])   # see output of find_starting_joint_angles.py
-        #self.joint_angles = np.array([ 85.06, 24.65, 164.58, 179.33, -179.90, 0.  ])
-        #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
-        self.tcp_observation = self.embed_tcp_position(self.initial_tcp_position)
-        #print("tcp-obs: ", self.tcp_observation)
-        # # set observation space to the initial state
-        # tcp_x=self.tcp_position[0]
-        # tcp_y=self.tcp_position[1]
-        # tcp_z=self.tcp_position[2]
-        # # set the TCP position in the voxel space channel 2
-        # self.tcp_position_grid = np.zeros((self.x_size, self.y_size, self.z_size))  # init TCP position grid
-        # self.tcp_position_grid[tcp_x, tcp_y, tcp_z] = 1  # mark TCP position on voxel grid
+    
+        self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
 
+        # # set observation space to the initial state
+    
         # Stack to create a two-channel observation
         self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
@@ -332,7 +275,7 @@ class RobotEnvironment(gym.Env):
 
         # eventually also return an info dictionary (for debugging)
         info = {
-            'robot_state': self.joint_angles.tolist(),
+            'robot_state': self.initial_joint_angles.tolist(),
             'tcp_position': self.tcp_position.tolist()
         }
 
