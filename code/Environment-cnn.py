@@ -130,52 +130,6 @@ class RobotEnvironment(gym.Env):
         # return the new observation (state), reward, done flag
         return self.observation, self.reward, self.terminated, self.truncated, info
 
-    def init_translation_matrix(self):
-        # self.initial_tcp_position is the initial TCP position
-        # the translation vector is the negative of this position
-        translation_vector = -self.initial_tcp_position
-        # translation matrix:
-        self.translation_matrix = np.array([
-            [1, 0, 0, translation_vector[0]],
-            [0, 1, 0, translation_vector[1]],
-            [0, 0, 1, translation_vector[2]],
-            [0, 0, 0, 1]
-        ])
-
-    def translate_robot_to_voxel_space(self, point):
-        # convert the point to homogeneous coordinates for matrix multiplication
-        homogeneous_point = np.append(point, 1)
-        # apply the translation matrix
-        translated_point_homogeneous = np.dot(self.translation_matrix, homogeneous_point)
-        # convert back to cartesian coordinates
-        translated_point = translated_point_homogeneous[:3]
-        return translated_point
-    
-    def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
-        # translate new TCP position to voxel space
-        translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
-        # convert translated position to voxel indices
-        x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_position)
-        # Update voxel grid as needed
-
-
-    def reward_function(self, tcp_on_helix):
-        """Calculate the reward based on the current state of the environment."""
-        # initialize reward, terminated, and truncated flags
-        if tcp_on_helix:
-            self.reward += 10
-            self.truncated = False
-
-        if self.terminated:
-            self.reward += 1000 # extra reward for reaching the target
-            self.terminated = True
-
-        else:
-            self.truncated = True # terminate the episode if the tcp is not on the helix any more
-            self.reward -=1
-           
-        return self.reward, self.terminated, self.truncated
-    
 
     def init_helix(self):
         # # create a separate matrix to store the helix path
@@ -222,14 +176,22 @@ class RobotEnvironment(gym.Env):
             
             # if the TCP has reached the target (voxel-value = 1):
             if voxel_value == 1:
+                print("TCP reached the target!")
                 self.terminated = True
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
+                print("TCP is on the helix path.")
                 return True # TCP is on the helix path
+            
+            elif voxel_value == -1:
+                print("TCP is outside the helix voxels.")
+                return False
+            
         else:
             self.truncated = True
+            print("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
             return False
 
@@ -284,6 +246,24 @@ class RobotEnvironment(gym.Env):
         return self.observation, info #  self.joint_angles  # also return the joint angles?
 
 
+    def reward_function(self, tcp_on_helix):
+        """Calculate the reward based on the current state of the environment."""
+        # initialize reward, terminated, and truncated flags
+        if tcp_on_helix:
+            self.reward += 10
+            self.truncated = False
+
+        if self.terminated:
+            self.reward += 1000 # extra reward for reaching the target
+            self.terminated = True
+
+        else:
+            self.truncated = True # terminate the episode if the tcp is not on the helix any more
+            self.reward -=1
+           
+        return self.reward, self.terminated, self.truncated
+    
+
     def render(self, tcp_coords=None):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -335,6 +315,33 @@ class RobotEnvironment(gym.Env):
         # Return the delta angles
         return delta_angles
 
+    def init_translation_matrix(self):
+        # self.initial_tcp_position is the initial TCP position
+        # the translation vector is the negative of this position
+        translation_vector = -self.initial_tcp_position
+        # translation matrix:
+        self.translation_matrix = np.array([
+            [1, 0, 0, translation_vector[0]],
+            [0, 1, 0, translation_vector[1]],
+            [0, 0, 1, translation_vector[2]],
+            [0, 0, 0, 1]
+        ])
+
+    def translate_robot_to_voxel_space(self, point):
+        # convert the point to homogeneous coordinates for matrix multiplication
+        homogeneous_point = np.append(point, 1)
+        # apply the translation matrix
+        translated_point_homogeneous = np.dot(self.translation_matrix, homogeneous_point)
+        # convert back to cartesian coordinates
+        translated_point = translated_point_homogeneous[:3]
+        return translated_point
+    
+    def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
+        # translate new TCP position to voxel space
+        translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
+        # convert translated position to voxel indices
+        x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_position)
+        # Update voxel grid as needed
 
     def dh_transform_matrix(self,a, d, alpha, theta):
     

@@ -165,23 +165,27 @@ if __name__ == "__main__":
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 100
+    episodes = 1000
     for episode in range(episodes):
         state, info = env.reset()
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
         terminated = False
         truncated = False
+        step_counter = 0
         total_reward = 0
         while not terminated and not truncated:
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  
+            step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
             #next_state = np.reshape(next_state, [1, state_size])
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
+            print("terminated:", terminated)
+            print("truncated:", truncated)
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
