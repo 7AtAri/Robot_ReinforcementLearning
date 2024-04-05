@@ -38,7 +38,7 @@ Dependencies:
 - pip install numpy
 - pip install mathplotlib
 - pip install gymnasium
-
+- pip install torch
 
 
 ## Paper: 6-legged Robot
@@ -49,7 +49,7 @@ Dependencies:
 ### Presentation of the paper (20 min):
 
 - [x] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
-- [ ] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each
+- [x] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each
 
 Questions:
 
