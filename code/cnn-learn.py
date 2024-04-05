@@ -48,12 +48,13 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=8, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
-        self.memory = deque(maxlen=buffer_size)
         self.batch_size = batch_size
         self.gamma = gamma
+        # this ensures that the memory does not grow beyond buffer_size - oldest elements are removed:
+        self.memory = deque(maxlen=buffer_size) 
         
         self.q_network = QNetworkCNN(state_size, actions).to(device)
         self.target_network = QNetworkCNN(state_size, actions).to(device)
@@ -61,12 +62,12 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.995
+        self.epsilon_decay = 0.9 # 0.995
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
-
+        
     # def act(self, state):
     #     if np.random.rand() <= self.epsilon:
     #         return random.randrange(self.action_size)
@@ -137,6 +138,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
+            print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -163,23 +165,28 @@ if __name__ == "__main__":
     # # Training loop
     episodes = 100
     for episode in range(episodes):
-        state, info = env.reset()
+        state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
         terminated = False
         truncated = False
+        step_counter = 0
         total_reward = 0
         while not terminated and not truncated:
+            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  
+            step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
             #next_state = np.reshape(next_state, [1, state_size])
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
+            print("terminated:", terminated)
+            print("truncated:", truncated)
         if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
+            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
             env.render()

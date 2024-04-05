@@ -53,17 +53,20 @@ class RobotEnvironment(gym.Env):
         self.voxel_space = np.full((self.x_size, self.y_size, self.z_size), -1)  # initialize all voxels with -1
         
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
-        self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
-        
+        self.initial_tcp_position, self.init_orientation = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
+        #print("Initial Robot TCP Position:", self.initial_tcp_position)
+        #print("Orientierung (Roll, Pitch, Yaw):", self.init_orientation)
+
         self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         
         # voxel space origin set to the initial TCP position:
-        print("Initial TCP Position:", self.initial_tcp_position)
+      
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
+        #print("Initial Voxel TCP Position:", self.tcp_position)
         # # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
@@ -105,19 +108,22 @@ class RobotEnvironment(gym.Env):
 
         #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
-        new_tcp_position_in_robot_space = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
+        #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
-        print( "New TCP Position:", self.tcp_position)
+        #print("New Voxel TCP Position in step:", self.tcp_position)
+
         # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
-        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        self.state = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
 
         # update the reward (based on the new state)
-        self.reward, self.terminated, self.truncated = self.reward_function(self.tcp_on_helix)
+        self.reward = self.reward_function(self.tcp_on_helix)
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -127,54 +133,8 @@ class RobotEnvironment(gym.Env):
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
         # return the new observation (state), reward, done flag
-        return self.observation, self.reward, self.terminated, self.truncated, info
+        return self.state, self.reward, self.terminated, self.truncated, info
 
-    def init_translation_matrix(self):
-        # self.initial_tcp_position is the initial TCP position
-        # the translation vector is the negative of this position
-        translation_vector = -self.initial_tcp_position
-        # translation matrix:
-        self.translation_matrix = np.array([
-            [1, 0, 0, translation_vector[0]],
-            [0, 1, 0, translation_vector[1]],
-            [0, 0, 1, translation_vector[2]],
-            [0, 0, 0, 1]
-        ])
-
-    def translate_robot_to_voxel_space(self, point):
-        # convert the point to homogeneous coordinates for matrix multiplication
-        homogeneous_point = np.append(point, 1)
-        # apply the translation matrix
-        translated_point_homogeneous = np.dot(self.translation_matrix, homogeneous_point)
-        # convert back to cartesian coordinates
-        translated_point = translated_point_homogeneous[:3]
-        return translated_point
-    
-    def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
-        # translate new TCP position to voxel space
-        translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
-        # convert translated position to voxel indices
-        x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_position)
-        # Update voxel grid as needed
-
-
-    def reward_function(self, tcp_on_helix):
-        """Calculate the reward based on the current state of the environment."""
-        # initialize reward, terminated, and truncated flags
-        if tcp_on_helix:
-            self.reward += 10
-            self.truncated = False
-
-        if self.terminated:
-            self.reward += 1000 # extra reward for reaching the target
-            self.terminated = True
-
-        else:
-            self.truncated = True # terminate the episode if the tcp is not on the helix any more
-            self.reward -=1
-           
-        return self.reward, self.terminated, self.truncated
-    
 
     def init_helix(self):
         # # create a separate matrix to store the helix path
@@ -221,14 +181,23 @@ class RobotEnvironment(gym.Env):
             
             # if the TCP has reached the target (voxel-value = 1):
             if voxel_value == 1:
+                print("TCP reached the target!")
                 self.terminated = True
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
+                print("TCP is on the helix path.")
                 return True # TCP is on the helix path
+            
+            elif voxel_value == -1:
+                print("TCP is outside the helix voxels.")
+                self.truncated = True
+                return False
+            
         else:
             self.truncated = True
+            print("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
             return False
 
@@ -251,14 +220,14 @@ class RobotEnvironment(gym.Env):
 
         self.initial_joint_angles = np.array([0,0,0,0,0,0.0])  # initial joint angles
         # self.initial_tcp_position = self.forward_kinematics(self.initial_joint_angles)  # initial end-effector position
-        
+        self.joint_angles = self.initial_joint_angles  # set joint angles to initial joint angles
         # voxel space origin set to the initial TCP position:
-        print("Initial TCP Position:", self.initial_tcp_position)
+        #print("Initial TCP Position (Reset):", self.initial_tcp_position)
         self.init_translation_matrix()
         # Populate the voxel space with a helix
         self.init_helix()
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        
+        #print("Voxel TCP Position (Reset):", self.tcp_position)
         # reset the joint angles and TCP position to the start of the helix
     
         self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
@@ -266,7 +235,7 @@ class RobotEnvironment(gym.Env):
         # # set observation space to the initial state
     
         # Stack to create a two-channel observation
-        self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        self.state= np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # reset the reward and Flags
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
@@ -280,8 +249,25 @@ class RobotEnvironment(gym.Env):
             'tcp_position': self.tcp_position.tolist()
         }
 
-        return self.observation, info #  self.joint_angles  # also return the joint angles?
+        return self.state, info #  self.joint_angles  # also return the joint angles?
 
+
+    def reward_function(self, tcp_on_helix):
+        """Calculate the reward based on the current state of the environment."""
+        # initialize reward, terminated, and truncated flags
+        if tcp_on_helix:
+            self.reward += 10
+            self.truncated = False
+
+        if self.terminated:
+            self.reward += 1000 # extra reward for reaching the target
+            
+        if self.truncated:
+             # terminate the episode if the tcp is not on the helix any more
+            self.reward -=1
+           
+        return self.reward
+    
 
     def render(self, tcp_coords=None):
         fig = plt.figure()
@@ -303,7 +289,7 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
-        # Set axis limits to start from 0
+         # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
         #ax.set_zlim(0, self.z_size)
@@ -316,25 +302,51 @@ class RobotEnvironment(gym.Env):
 
 
     def process_action(self, action):
-          
         # Check if action is iterable
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles:", delta_angles)
+            print("Delta Angles (process action):", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
             
-        print("joint_angles:", self.joint_angles)
+        print("joint_angles (process action):", self.joint_angles)
         new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles:", self.joint_angles)
+        print("New Joint Angles (process action):", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
+    def init_translation_matrix(self):
+        # self.initial_tcp_position is the initial TCP position
+        # the translation vector is the negative of this position
+        translation_vector = -self.initial_tcp_position
+        # translation matrix:
+        self.translation_matrix = np.array([
+            [1, 0, 0, translation_vector[0]],
+            [0, 1, 0, translation_vector[1]],
+            [0, 0, 1, translation_vector[2]],
+            [0, 0, 0, 1]
+        ])
+
+    def translate_robot_to_voxel_space(self, point):
+        # convert the point to homogeneous coordinates for matrix multiplication
+        homogeneous_point = np.append(point, 1)
+        # apply the translation matrix
+        translated_point_homogeneous = np.dot(self.translation_matrix, homogeneous_point)
+        # convert back to cartesian coordinates
+        translated_point = translated_point_homogeneous[:3]
+        return translated_point
+    
+    def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
+        # translate new TCP position to voxel space
+        translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
+        # convert translated position to voxel indices
+        x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_position)
+        # Update voxel grid as needed
 
     def dh_transform_matrix(self,a, d, alpha, theta):
     
@@ -382,7 +394,25 @@ class RobotEnvironment(gym.Env):
 
         # extract position from the final transformation matrix
         position = T[:3, 3]
-        return position
+        # extract rotation matrix from devanit-hartenberg matrix
+        rotation_matrix = T[:3, :3]
+        # # https://de.wikipedia.org/wiki/Roll-Nick-Gier-Winkel
+        # calculate beta
+        beta = np.arctan2(-rotation_matrix[2, 0], np.sqrt(rotation_matrix[0, 0]**2 + rotation_matrix[1, 0]**2))
+
+        # calculate alpha
+        alpha = np.arctan2(rotation_matrix[1, 0] / np.cos(beta), rotation_matrix[0, 0] / np.cos(beta))
+
+        # calculate gamma
+        gamma = np.arctan2(rotation_matrix[2, 1] / np.cos(beta), rotation_matrix[2, 2] / np.cos(beta))
+
+        # normalize angles
+        alpha, beta, gamma = alpha % (2*np.pi), beta % (2*np.pi), gamma % (2*np.pi)
+
+        # convert angles to degrees
+        alpha,beta,gamma = np.rad2deg([alpha,beta,gamma])
+
+        return position, (alpha, beta, gamma)
 
     # def tcp_position_to_grid_index(self, tcp_position):
     #     """Converts the TCP position to voxel grid indices."""
