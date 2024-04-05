@@ -389,7 +389,19 @@ class RobotEnvironment(gym.Env):
 
         # extract position from the final transformation matrix
         position = T[:3, 3]
-        return position
+        # extract rotation matrix from devanit-hartenberg matrix
+        rotation_matrix = T[:3, :3]
+        # # https://de.wikipedia.org/wiki/Roll-Nick-Gier-Winkel
+        # calculate beta
+        beta = np.arctan2(-rotation_matrix[2, 0], np.sqrt(rotation_matrix[0, 0]**2 + rotation_matrix[1, 0]**2))
+
+        # calculate alpha
+        alpha = np.arctan2(rotation_matrix[1, 0] / np.cos(beta), rotation_matrix[0, 0] / np.cos(beta))
+
+        # calculate gamma
+        gamma = np.arctan2(rotation_matrix[2, 1] / np.cos(beta), rotation_matrix[2, 2] / np.cos(beta))
+
+        return position, (alpha, beta, gamma)
 
     # def tcp_position_to_grid_index(self, tcp_position):
     #     """Converts the TCP position to voxel grid indices."""
