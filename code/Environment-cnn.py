@@ -104,7 +104,7 @@ class RobotEnvironment(gym.Env):
         # Ensure delta_angles has the same dtype as self.joint_angles
         delta_angles = delta_angles.astype(self.joint_angles.dtype)
 
-        print("Joint Angles in step:", self.joint_angles)
+        #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
         new_tcp_position_in_robot_space = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
@@ -118,7 +118,7 @@ class RobotEnvironment(gym.Env):
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
 
         # update the reward (based on the new state)
-        self.reward, self.terminated, self.truncated = self.reward_function(self.tcp_on_helix)
+        self.reward = self.reward_function(self.tcp_on_helix)
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -187,6 +187,7 @@ class RobotEnvironment(gym.Env):
             
             elif voxel_value == -1:
                 print("TCP is outside the helix voxels.")
+                self.truncated = True
                 return False
             
         else:
@@ -255,13 +256,12 @@ class RobotEnvironment(gym.Env):
 
         if self.terminated:
             self.reward += 1000 # extra reward for reaching the target
-            self.terminated = True
-
-        else:
-            self.truncated = True # terminate the episode if the tcp is not on the helix any more
+            
+        if self.truncated:
+             # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
            
-        return self.reward, self.terminated, self.truncated
+        return self.reward
     
 
     def render(self, tcp_coords=None):

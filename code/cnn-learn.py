@@ -61,7 +61,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.995
+        self.epsilon_decay = 0.9 # 0.995
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -141,6 +141,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
+            print("epsilon:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -165,7 +166,7 @@ if __name__ == "__main__":
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 1000
+    episodes = 100
     for episode in range(episodes):
         state, info = env.reset()
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
@@ -187,7 +188,7 @@ if __name__ == "__main__":
             print("terminated:", terminated)
             print("truncated:", truncated)
         if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Epsilon: {agent.epsilon:.2f}")
+            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
             agent.update_target_network()
