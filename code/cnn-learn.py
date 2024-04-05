@@ -48,7 +48,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=8, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.memory = deque(maxlen=buffer_size)
@@ -66,7 +66,11 @@ class DQNAgent:
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
-
+        # This method ensures that the number of data in the memory queue self.memory is always 
+        # a multiple of the batch_size to ensure consistent mini-batch sizes for training, removing 
+        # the oldest elements if the queue length is not a multiple of batch_size.
+        while len(self.memory) > 0 and len(self.memory) % self.batch_size != 0:
+            self.memory.popleft() 
     # def act(self, state):
     #     if np.random.rand() <= self.epsilon:
     #         return random.randrange(self.action_size)
