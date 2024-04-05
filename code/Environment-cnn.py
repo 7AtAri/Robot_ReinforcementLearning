@@ -302,6 +302,10 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
 
+         # Set axis limits to start from 0
+        ax.set_xlim(0, self.x_size)
+        ax.set_ylim(0, self.y_size)
+        ax.set_zlim(0, self.z_size)
         ax.set_xlabel('X Index')
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
