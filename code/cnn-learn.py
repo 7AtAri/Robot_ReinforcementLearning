@@ -89,7 +89,8 @@ class DQNAgent:
         
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
-        print("action shape:", action.shape)
+        action = action.tolist()
+        print("action shape:", len(action))
         print("-------------------------------")
         return action
 
