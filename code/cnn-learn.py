@@ -192,6 +192,8 @@ if __name__ == "__main__":
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  
+            if step_counter > 1:
+                env.render()
             step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
@@ -202,10 +204,11 @@ if __name__ == "__main__":
             print("total_reward", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
+            
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
             print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         agent.replay()
         if episode % 10 == 0:
-            env.render()
+            #env.render()
             agent.update_target_network()

@@ -173,6 +173,8 @@ class RobotEnvironment(gym.Env):
         y_idx = int(round((tcp_coords[1] - self.y_range[0]) / self.resolution))
         z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
 
+        print(f"TCP coords: {tcp_coords} -> Voxel indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debugging info
+
         # check if these indices are in the voxel space. If not, the TCP is outside the voxel space.
         if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
             # get value of the voxel at the calculated indices. check if voxel
@@ -270,27 +272,31 @@ class RobotEnvironment(gym.Env):
         return self.reward
     
 
-    def render(self, tcp_coords=None):
+    def render(self):
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
         ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
         
         # if TCP coordinates are provided and valid, then visualize TCP position
-        if tcp_coords is not None:
+        if self.tcp_position is not None:
             #print(f"TCP Coordinates: {tcp_coords}")
             #is_on_path = self.is_on_helix(tcp_coords)
             #print(f"Is TCP on Helix Path: {is_on_path}")
 
             # convert real-world coordinates to indices for visualization
-            x_idx = (tcp_coords[0] - self.x_range[0]) / self.resolution
-            y_idx = (tcp_coords[1] - self.y_range[0]) / self.resolution
-            z_idx = (tcp_coords[2] - self.z_range[0]) / self.resolution
+            x_idx = (self.tcp_position[0] - self.x_range[0]) / self.resolution
+            y_idx = (self.tcp_position[1] - self.y_range[0]) / self.resolution
+            z_idx = (self.tcp_position[2] - self.z_range[0]) / self.resolution
             
             # highlight TCP position
+            #x_idx, y_idx, z_idx = self.position_to_voxel_indices(tcp_coords) # translate TCP position to voxel space 
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+            #print(f"TCP Position Indices: {x_idx}, {y_idx}, {z_idx}")
+            print(f"Rendering TCP at indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debug info
 
-         # Set axis limits to start from 0
+
+        # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
         #ax.set_zlim(0, self.z_size)
@@ -347,7 +353,8 @@ class RobotEnvironment(gym.Env):
         translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
         # convert translated position to voxel indices
         x_idx, y_idx, z_idx = self.position_to_voxel_indices(translated_position)
-        # Update voxel grid as needed
+        # update voxel grid as needed
+        return x_idx, y_idx, z_idx
 
     def dh_transform_matrix(self,a, d, alpha, theta):
     
@@ -449,7 +456,7 @@ class RobotEnvironment(gym.Env):
 
 if __name__ == "__main__":
     env = RobotEnvironment()
-    env.render(tcp_coords=env.tcp_position)
+    env.render()
     
     #joint_angles = np.array([85.06, 24.65, 164.58, 179.33, -179.90, 0. ])
     #joint_angles= np.array([ 120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ])
