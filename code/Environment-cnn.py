@@ -79,6 +79,11 @@ class RobotEnvironment(gym.Env):
         self.terminated = False
         self.truncated = False
 
+        # tcp orientation
+        self.constant_orientation = (0, 0, np.pi)  # Roll-, pitch- und yaw in rad
+        self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
+        
+
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -255,6 +260,8 @@ class RobotEnvironment(gym.Env):
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
+        orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
             self.reward += 10
@@ -266,7 +273,19 @@ class RobotEnvironment(gym.Env):
         if self.truncated:
              # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
-           
+
+        # Adjust reward based on orientation deviation
+        orientation_reward = 0
+        if orientation_deviation >= 0:  # If deviation decreased
+            orientation_reward = 0.04
+        else:  # If deviation increased
+            orientation_reward = -0.08
+        
+        # safe last oreintation_devation to check ahead if eviation got better...
+        self.last_orientation_deviation = orientation_deviation
+        # Add orientation reward to total reward
+        self.reward += orientation_reward
+
         return self.reward
     
 
@@ -289,8 +308,8 @@ class RobotEnvironment(gym.Env):
             
             # highlight TCP position
             ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
-
-         # Set axis limits to start from 0
+        
+        # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
         #ax.set_zlim(0, self.z_size)
@@ -416,16 +435,16 @@ class RobotEnvironment(gym.Env):
         return position, (alpha, beta, gamma)
 
 
-    def objective_function_with_orientation(self, theta, target_position, constant_orientation):
+    def objective_function_with_orientation(self, theta, constant_orientation):
         """
         Calculate the combined positional and orientational error for the robot end-effector.
         """
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
-        print("current_pos:", current_position)
+        #print("current_pos:", current_position)
         print("current_orientation:", current_orientation)
         # Calculate the positional error
-        position_error = np.linalg.norm(current_position - target_position)
+        #position_error = np.linalg.norm(current_position - target_position)
 
         # Calculate the orientational error, for example, as the angle between current and desired orientation vectors
         # This is a simplification; in practice, you might use quaternion distances or other measures
@@ -434,7 +453,7 @@ class RobotEnvironment(gym.Env):
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return position_error, orientation_error
+        return orientation_error # position_error
     # def tcp_position_to_grid_index(self, tcp_position):
     #     """Converts the TCP position to voxel grid indices."""
     #     # Implement conversion from TCP position to grid indices based on your environment's specifics
