@@ -254,6 +254,7 @@ class RobotEnvironment(gym.Env):
 
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
+        self.reward = 0
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
             self.reward += 10

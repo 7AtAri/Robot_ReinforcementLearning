@@ -189,6 +189,7 @@ if __name__ == "__main__":
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
+            print("total_reward", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
         if terminated or truncated:
