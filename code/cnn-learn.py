@@ -62,7 +62,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.9 # 0.995
+        self.epsilon_decay = 0.9 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -78,15 +78,20 @@ class DQNAgent:
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             # return random action for each component
+            action = [random.randrange(3) for _ in range(6)]
             print("exploring: random action")
-            return [random.randrange(3) for _ in range(6)] # shape [6] ?
+            print("action shape:", len(action))
+            return action # shape [6] ?
             
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
         q_values = self.q_network(state)
         print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
-        print("-------------------------------")
+        
         # choose action with max Q-value for each component
-        return q_values.detach().cpu().numpy().argmax(axis=2).flatten() # shape [6] ?
+        action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
+        print("action shape:", action.shape)
+        print("-------------------------------")
+        return action
 
 
     def replay(self):
@@ -173,7 +178,7 @@ if __name__ == "__main__":
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 10
+    episodes = 20
     for episode in range(episodes):
         state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
