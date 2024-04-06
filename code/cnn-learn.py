@@ -67,7 +67,8 @@ class DQNAgent:
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
-        
+        while len(self.memory) > 0 and len(self.memory) % self.batch_size != 0:
+            self.memory.popleft()
     # def act(self, state):
     #     if np.random.rand() <= self.epsilon:
     #         return random.randrange(self.action_size)
@@ -183,6 +184,7 @@ if __name__ == "__main__":
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
+            print("total reward:", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
         if terminated or truncated:

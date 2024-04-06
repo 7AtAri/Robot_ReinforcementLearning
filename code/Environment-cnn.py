@@ -254,6 +254,7 @@ class RobotEnvironment(gym.Env):
 
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
+        self.reward = 0
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
             self.reward += 10
@@ -414,6 +415,26 @@ class RobotEnvironment(gym.Env):
 
         return position, (alpha, beta, gamma)
 
+
+    def objective_function_with_orientation(self, theta, target_position, constant_orientation):
+        """
+        Calculate the combined positional and orientational error for the robot end-effector.
+        """
+        # Calculate the current position and orientation from forward kinematics
+        current_position, current_orientation = self.forward_kinematics(theta) # joint angle
+        print("current_pos:", current_position)
+        print("current_orientation:", current_orientation)
+        # Calculate the positional error
+        position_error = np.linalg.norm(current_position - target_position)
+
+        # Calculate the orientational error, for example, as the angle between current and desired orientation vectors
+        # This is a simplification; in practice, you might use quaternion distances or other measures
+        orientation_error = np.linalg.norm(constant_orientation - current_orientation)
+
+        # Combine errors, possibly with weighting factors if needed
+        #total_error = position_error + orientation_error
+
+        return position_error, orientation_error
     # def tcp_position_to_grid_index(self, tcp_position):
     #     """Converts the TCP position to voxel grid indices."""
     #     # Implement conversion from TCP position to grid indices based on your environment's specifics
