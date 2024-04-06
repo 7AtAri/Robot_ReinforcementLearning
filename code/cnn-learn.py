@@ -78,11 +78,15 @@ class DQNAgent:
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             # return random action for each component
-            return [random.randrange(3) for _ in range(6)]
+            print("exploring: random action")
+            return [random.randrange(3) for _ in range(6)] # shape [6] ?
+            
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
         q_values = self.q_network(state)
+        print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
+        print("-------------------------------")
         # choose action with max Q-value for each component
-        return q_values.detach().cpu().numpy().argmax(axis=2).flatten()
+        return q_values.detach().cpu().numpy().argmax(axis=2).flatten() # shape [6] ?
 
 
     def replay(self):
@@ -194,6 +198,7 @@ if __name__ == "__main__":
             print("truncated:", truncated)
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         agent.replay()
         if episode % 10 == 0:
             env.render()
