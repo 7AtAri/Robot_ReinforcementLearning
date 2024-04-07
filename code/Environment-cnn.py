@@ -491,6 +491,31 @@ class RobotEnvironment(gym.Env):
         #total_error = position_error + orientation_error
 
         return orientation_error # position_error
+    
+    def compute_mse(ideal_trajectory, agent_trajectory):
+        """
+        Compute the mean square error (MSE) between the ideal trajectory and the agent's trajectory.
+
+        Args:
+            ideal_trajectory (np.array): The ideal trajectory, represented as an array of positions.
+            agent_trajectory (np.array): The agent's trajectory, represented as an array of positions.
+
+        Returns:
+            mse (float): The mean square error between the two trajectories.
+        """
+        # Ensure both trajectories have the same length
+        if len(ideal_trajectory) != len(agent_trajectory):
+            raise ValueError("Trajectories must have the same length.")
+
+        # Compute the square of the differences between corresponding positions
+        squared_errors = (ideal_trajectory - agent_trajectory) ** 2
+
+        # Compute the mean of the squared errors
+        mse = np.mean(squared_errors)
+
+        return mse
+
+
     # def tcp_position_to_grid_index(self, tcp_position):
     #     """Converts the TCP position to voxel grid indices."""
     #     # Implement conversion from TCP position to grid indices based on your environment's specifics
