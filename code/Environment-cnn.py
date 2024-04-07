@@ -497,6 +497,7 @@ class RobotEnvironment(gym.Env):
         # convert angles to degrees
         alpha,beta,gamma = np.rad2deg([alpha,beta,gamma])
 
+        print("position_tcp: ", position)
         return position, (alpha, beta, gamma)
 
 
@@ -526,13 +527,13 @@ class RobotEnvironment(gym.Env):
         """
         Find the closest point on the helix to the current TCP position.
         """
-        # Berechnen Sie den Abstand zwischen der aktuellen TCP-Position und jedem Punkt auf der Helix
-        distances = np.linalg.norm(helix_points - current_tcp_position, axis=1)
+        # calculate distance between every heliy point and every current tcp position
+        distances = np.abs(helix_points - current_tcp_position)
 
-        # Finden Sie den Index des Punktes mit dem kleinsten Abstand
+        # find index with smallest distance
         closest_index = np.argmin(distances)
 
-        # Rückgabe des am nächsten zur aktuellen TCP-Position liegenden Punktes auf der Helix und des entsprechenden Abstands
+        # Return of the point on the helix closest to the current TCP position and the corresponding distance
         closest_point = helix_points[closest_index]
         closest_distance = distances[closest_index]
 
