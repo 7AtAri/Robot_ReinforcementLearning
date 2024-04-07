@@ -7,8 +7,10 @@ from collections import deque # queue for efficiently adding and removing elemen
 import gymnasium as gym
 from gymnasium.envs.registration import register
 import torch.nn.functional as F
-
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 import os
+
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
@@ -164,6 +166,9 @@ if __name__ == "__main__":
 
     # # Training loop
     episodes = 100
+
+    min_distances = [] # list to save the minum distanz of ech episode
+
     for episode in range(episodes):
         state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
@@ -186,9 +191,19 @@ if __name__ == "__main__":
             print("total reward:", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
+            min_distance_tcp_helix = env.get_closest_distance_tcp_helix()
+        
+        # when episode finsihed append closest_distance between tcp pos and helix voxel
+        min_distances.append(min_distance_tcp_helix) # same size as episode
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
         agent.replay()
         if episode % 10 == 0:
             env.render()
             agent.update_target_network()
+    
+    # calcualte mse for each episode --> first arg is expected distanz --> zero?
+    mse = mean_squared_error(np.zeros(episodes), min_distances)
+    # wenn for beednet wurde
+    # loop draußen dann mse plot
+    

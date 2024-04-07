@@ -91,6 +91,9 @@ class RobotEnvironment(gym.Env):
         # helixpoints
         self.helix_points = 0
 
+        # variable to safe the closest distance in for each episode
+        self.closest_distance_TCP_Helix = 0
+
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
         the reward for taking that actions,
@@ -215,8 +218,8 @@ class RobotEnvironment(gym.Env):
             elif voxel_value == -1:
                 # Check if the distance to the helix is less than or equal to 0.001
                 _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
-                max_distance = np.max(closest_distance)
-                if max_distance <= 0.001:
+                #max_distance = np.max(closest_distance)
+                if closest_distance <= 0.001:
                     print("TCP is close to the helix.")
                     self.truncated = False
                     return True
@@ -286,7 +289,7 @@ class RobotEnvironment(gym.Env):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _,orientation_deviation, closest_distance = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _,orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
         ####################################################
         ## Initialize reward, terminated, and truncated flags
@@ -334,8 +337,6 @@ class RobotEnvironment(gym.Env):
              # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
 
-        
-
         # Adjust reward based on orientation deviation
         orientation_reward = 0
         max_deviation = np.max(orientation_deviation)
@@ -344,19 +345,6 @@ class RobotEnvironment(gym.Env):
             orientation_reward = 5
         else:
             orientation_reward = -1
-        #orientation_reward = 0
-        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        #print("deviation_to_last_orientation_all", deviation_to_last_orientation)
-        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        #print("deviation_to_last_orientation_MAX", deviation_to_last_orientation)
-        #if deviation_to_last_orientation <= self.tolerance:  # If deviation decreased
-        #    orientation_reward = 5  # Moderate reward for maintaining orientation
-        #else:  # If deviation increased
-        #    orientation_reward = -1  # Penalty for deviation from constant orientation
-
-        ## Save last orientation deviation to check ahead if deviation got better
-        #self.last_orientation_deviation = orientation_deviation
-
 
         # Add orientation reward to total reward
         self.reward += orientation_reward
@@ -519,19 +507,19 @@ class RobotEnvironment(gym.Env):
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
 
         # get closest point (closest_target_pos)
-        closest_target_pos, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
+        closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        #print("current_pos:", current_position)
+        print("current_pos:", current_position)
         print("current_orientation:", current_orientation)
         # Calculate the positional error
-        position_error = np.abs(np.array(current_position) - np.array(closest_target_pos))
+        position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
         # Convert orientation tuples to numpy arrays
-        #current_orientation = np.array(current_orientation)
-        #constant_orientation = np.array(constant_orientation)
-        # Calculate the orientational error, for example, as the angle between current and desired orientation vectors
-        # This is a simplification; in practice, you might use quaternion distances or other measures
-        orientation_errors = np.abs(np.array(current_orientation) - np.array(constant_orientation))
+        current_orientation = np.array(current_orientation)
+        constant_orientation = np.array(constant_orientation)
+        
+        # deviation of current and constant orientation
+        orientation_errors = np.abs(current_orientation - constant_orientation)
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
@@ -542,8 +530,8 @@ class RobotEnvironment(gym.Env):
         Find the closest point on the helix to the current TCP position.
         """
         # calculate distance between every heliy point and every current tcp position
-        distances = np.abs(helix_points - current_tcp_position)
-
+        #distances = np.abs(helix_points - current_tcp_position)
+        distances = np.linalg.norm(helix_points - current_tcp_position, axis=1)
         # find index with smallest distance
         closest_index = np.argmin(distances)
 
@@ -551,32 +539,13 @@ class RobotEnvironment(gym.Env):
         closest_point = helix_points[closest_index]
         closest_distance = distances[closest_index]
         print("closest point ", closest_point)
-        print("closest distance ", closest_distance)
+        print("closest distance ", closest_distance) # double
 
+        self.closest_distance_TCP_Helix = closest_distance
         return closest_point, closest_distance
-    
-    def compute_mse(ideal_trajectory, agent_trajectory):
-        """
-        Compute the mean square error (MSE) between the ideal trajectory and the agent's trajectory.
 
-        Args:
-            ideal_trajectory (np.array): The ideal trajectory, represented as an array of positions.
-            agent_trajectory (np.array): The agent's trajectory, represented as an array of positions.
-
-        Returns:
-            mse (float): The mean square error between the two trajectories.
-        """
-        # Ensure both trajectories have the same length
-        if len(ideal_trajectory) != len(agent_trajectory):
-            raise ValueError("Trajectories must have the same length.")
-
-        # Compute the square of the differences between corresponding positions
-        squared_errors = (ideal_trajectory - agent_trajectory) ** 2
-
-        # Compute the mean of the squared errors
-        mse = np.mean(squared_errors)
-
-        return mse
+    def get_closest_distance_tcp_helix(self):
+        return self.closest_distance_TCP_Helix
 
 
     # def tcp_position_to_grid_index(self, tcp_position):

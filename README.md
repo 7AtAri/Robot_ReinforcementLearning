@@ -39,6 +39,7 @@ Dependencies:
 - pip install mathplotlib
 - pip install gymnasium
 - pip install torch
+- pip install scikit-learn
 
 
 ## Paper: 6-legged Robot
