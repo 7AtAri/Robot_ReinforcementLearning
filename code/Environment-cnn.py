@@ -86,7 +86,7 @@ class RobotEnvironment(gym.Env):
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
         
         # tcp pos tolerance
-        self.tolerance_tcp_pos = 0.001 #
+        self.tolerance_tcp_pos = 0.001 # 1 mm tolerance
 
         # helixpoints
         self.helix_points = 0
@@ -213,9 +213,16 @@ class RobotEnvironment(gym.Env):
                 return True # TCP is on the helix path
             
             elif voxel_value == -1:
-                print("TCP is outside the helix voxels.")
-                self.truncated = True
-                return False
+                # Check if the distance to the helix is less than or equal to 0.001
+                _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
+                if closest_distance <= 0.001:
+                    print("TCP is close to the helix.")
+                    self.truncated = False
+                    return True
+                else:
+                    print("TCP is outside the helix voxels.")
+                    self.truncated = True
+                    return False
             
         else:
             self.truncated = True
