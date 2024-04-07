@@ -80,9 +80,10 @@ class RobotEnvironment(gym.Env):
         self.truncated = False
 
         # tcp orientation
+        self.tolerance = 10 # 10 ° tolerance
         self.constant_orientation = (0, 0, np.pi)  # Roll-, pitch- und yaw in rad
         self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
-        
+        ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
 
 
     def step(self, action):
@@ -263,27 +264,56 @@ class RobotEnvironment(gym.Env):
         orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
 
         ####################################################
-        # Initialize reward, terminated, and truncated flags
+        ## Initialize reward, terminated, and truncated flags
+        #if tcp_on_helix:
+        #    if orientation_deviation >= 0:
+        #        self.reward += 10  # Full reward for reaching helix with correct orientation
+        #    else:
+        #        self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
+        #    self.truncated = False
+#
+        #if self.terminated:
+        #    if orientation_deviation >= 0:
+        #        self.reward += 1000  # Extra reward for reaching the target with correct orientation
+        #    else:
+        #        self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
+#
+        #if self.truncated:
+        #    # Terminate the episode if the TCP is not on the helix any more
+        #    self.reward -= 1
+#
+        ## Adjust reward based on orientation deviation
+        #orientation_reward = 0
+        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
+        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
+        #if deviation_to_last_orientation >= self.last_orientation_deviation:  # If deviation decreased
+        #    orientation_reward = 5  # Moderate reward for maintaining orientation
+        #else:  # If deviation increased
+        #    orientation_reward = -1  # Penalty for deviation from constant orientation
+#
+        ## Save last orientation deviation to check ahead if deviation got better
+        #self.last_orientation_deviation = orientation_deviation
+        ## Add orientation reward to total reward
+        #self.reward += orientation_reward
+
+        ####################################################
+
+        # initialize reward, terminated, and truncated flags
         if tcp_on_helix:
-            if orientation_deviation >= 0:
-                self.reward += 10  # Full reward for reaching helix with correct orientation
-            else:
-                self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
+            self.reward += 10
             self.truncated = False
-
         if self.terminated:
-            if orientation_deviation >= 0:
-                self.reward += 1000  # Extra reward for reaching the target with correct orientation
-            else:
-                self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
-
+            self.reward += 1000 # extra reward for reaching the target
+            
         if self.truncated:
-            # Terminate the episode if the TCP is not on the helix any more
-            self.reward -= 1
+             # terminate the episode if the tcp is not on the helix any more
+            self.reward -=1
 
         # Adjust reward based on orientation deviation
         orientation_reward = 0
-        if orientation_deviation >= self.last_orientation_deviation:  # If deviation decreased
+        deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
+        deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
+        if deviation_to_last_orientation <= self.tolerance:  # If deviation decreased
             orientation_reward = 5  # Moderate reward for maintaining orientation
         else:  # If deviation increased
             orientation_reward = -1  # Penalty for deviation from constant orientation
@@ -292,32 +322,6 @@ class RobotEnvironment(gym.Env):
         self.last_orientation_deviation = orientation_deviation
         # Add orientation reward to total reward
         self.reward += orientation_reward
-
-        ####################################################
-
-        ## initialize reward, terminated, and truncated flags
-        #if tcp_on_helix:
-        #    self.reward += 10
-        #    self.truncated = False
-
-        #if self.terminated:
-        #    self.reward += 1000 # extra reward for reaching the target
-        #    
-        #if self.truncated:
-        #     # terminate the episode if the tcp is not on the helix any more
-        #    self.reward -=1
-
-        ## Adjust reward based on orientation deviation
-        #orientation_reward = 0
-        #if orientation_deviation >= 0:  # If deviation decreased
-        #    orientation_reward = 0.04
-        #else:  # If deviation increased
-        #    orientation_reward = -0.08
-        #
-        ## safe last oreintation_devation to check ahead if eviation got better...
-        #self.last_orientation_deviation = orientation_deviation
-        ## Add orientation reward to total reward
-        #self.reward += orientation_reward
 
         return self.reward
     
