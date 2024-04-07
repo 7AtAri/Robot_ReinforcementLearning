@@ -277,7 +277,9 @@ class RobotEnvironment(gym.Env):
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
-        
+        #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
+        _,orientation_deviation, closest_distance = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+       
         ####################################################
         ## Initialize reward, terminated, and truncated flags
         #if tcp_on_helix:
@@ -324,7 +326,7 @@ class RobotEnvironment(gym.Env):
              # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
 
-        _,orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        
 
         # Adjust reward based on orientation deviation
         orientation_reward = 0
@@ -501,16 +503,20 @@ class RobotEnvironment(gym.Env):
         return position, (alpha, beta, gamma)
 
 
-    def objective_function_with_orientation(self, theta, constant_orientation, closes_target_pos):
+    def objective_function_with_orientation(self, theta, constant_orientation): # closes_target_pos
         """
         Calculate the combined positional and orientational error for the robot end-effector.
         """
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
+
+        # get closest point (closest_target_pos)
+        closest_target_pos, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
+
         #print("current_pos:", current_position)
         print("current_orientation:", current_orientation)
         # Calculate the positional error
-        position_error = np.abs(np.array(current_position) - np.array(closes_target_pos))
+        position_error = np.abs(np.array(current_position) - np.array(closest_target_pos))
         
         # Convert orientation tuples to numpy arrays
         #current_orientation = np.array(current_orientation)
@@ -521,9 +527,9 @@ class RobotEnvironment(gym.Env):
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return position_error, orientation_errors
+        return position_error, orientation_errors, closes_distance
     
-    def find_closest_helix_point(current_tcp_position, helix_points):
+    def find_closest_helix_point(self, current_tcp_position, helix_points):
         """
         Find the closest point on the helix to the current TCP position.
         """
@@ -536,6 +542,8 @@ class RobotEnvironment(gym.Env):
         # Return of the point on the helix closest to the current TCP position and the corresponding distance
         closest_point = helix_points[closest_index]
         closest_distance = distances[closest_index]
+        print("closest point ", closest_point)
+        print("closest distance ", closest_distance)
 
         return closest_point, closest_distance
     
