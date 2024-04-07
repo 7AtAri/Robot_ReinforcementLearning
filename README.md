@@ -36,7 +36,7 @@ Questions:
 
 Dependencies:
 - pip install numpy
-- pip install mathplotlib
+- pip install matplotlib
 - pip install gymnasium
 - pip install torch
 

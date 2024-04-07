@@ -10,6 +10,7 @@ import torch.nn.functional as F
 
 import os
 # mute the MKL warning on macOS
+print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
 
