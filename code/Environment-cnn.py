@@ -81,7 +81,7 @@ class RobotEnvironment(gym.Env):
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
-        self.constant_orientation = (0, np.pi/2, 0)  # Roll-, pitch- und yaw in rad
+        self.constant_orientation = (0, 90, 0)  # Roll-, pitch- und yaw in rad
         self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
 
@@ -261,8 +261,7 @@ class RobotEnvironment(gym.Env):
     def reward_function(self, tcp_on_helix):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
-        orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
-
+        
         ####################################################
         ## Initialize reward, terminated, and truncated flags
         #if tcp_on_helix:
@@ -309,17 +308,30 @@ class RobotEnvironment(gym.Env):
              # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
 
+        orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+
         # Adjust reward based on orientation deviation
         orientation_reward = 0
-        deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        if deviation_to_last_orientation <= self.tolerance:  # If deviation decreased
-            orientation_reward = 5  # Moderate reward for maintaining orientation
-        else:  # If deviation increased
-            orientation_reward = -1  # Penalty for deviation from constant orientation
+        max_deviation = np.max(orientation_deviation)
+        print("max_deviation", max_deviation)
+        if max_deviation <= self.tolerance:
+            orientation_reward = 5
+        else:
+            orientation_reward = -1
+        #orientation_reward = 0
+        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
+        #print("deviation_to_last_orientation_all", deviation_to_last_orientation)
+        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
+        #print("deviation_to_last_orientation_MAX", deviation_to_last_orientation)
+        #if deviation_to_last_orientation <= self.tolerance:  # If deviation decreased
+        #    orientation_reward = 5  # Moderate reward for maintaining orientation
+        #else:  # If deviation increased
+        #    orientation_reward = -1  # Penalty for deviation from constant orientation
 
-        # Save last orientation deviation to check ahead if deviation got better
-        self.last_orientation_deviation = orientation_deviation
+        ## Save last orientation deviation to check ahead if deviation got better
+        #self.last_orientation_deviation = orientation_deviation
+
+
         # Add orientation reward to total reward
         self.reward += orientation_reward
 
@@ -483,14 +495,16 @@ class RobotEnvironment(gym.Env):
         # Calculate the positional error
         #position_error = np.linalg.norm(current_position - target_position)
 
+        # Convert orientation tuples to numpy arrays
+        #current_orientation = np.array(current_orientation)
+        #constant_orientation = np.array(constant_orientation)
         # Calculate the orientational error, for example, as the angle between current and desired orientation vectors
         # This is a simplification; in practice, you might use quaternion distances or other measures
-        orientation_error = np.linalg.norm(constant_orientation - current_orientation)
-
+        orientation_errors = np.abs(np.array(current_orientation) - np.array(constant_orientation))
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return orientation_error # position_error
+        return orientation_errors # position_error
     
     def compute_mse(ideal_trajectory, agent_trajectory):
         """
