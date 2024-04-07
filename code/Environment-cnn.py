@@ -83,7 +83,7 @@ class RobotEnvironment(gym.Env):
         self.tolerance = 10 # 10 ° tolerance
         self.constant_orientation = (0, 0, np.pi)  # Roll-, pitch- und yaw in rad
         self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
-        ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
+        #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
 
 
     def step(self, action):
