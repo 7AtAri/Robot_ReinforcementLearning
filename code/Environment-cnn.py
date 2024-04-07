@@ -82,9 +82,14 @@ class RobotEnvironment(gym.Env):
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
         self.constant_orientation = (0, 90, 0)  # Roll-, pitch- und yaw in rad
-        self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
+        #self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
+        
+        # tcp pos tolerance
+        self.tolerance_tcp_pos = 0.001 #
 
+        # helixpoints
+        self.helix_points = 0
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -156,12 +161,16 @@ class RobotEnvironment(gym.Env):
         helix_y = r * np.sin(2 * np.pi * t + np.pi)  
         helix_z = h * t  
 
+        # Initialize an empty list to store the helix points
+        self.helix_points_list = []
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
-      
+            # Append the indices to the helix_points_list
+            self.helix_points_list.append([x_idx, y_idx, z_idx])
+
             if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
                 if i == len(helix_x) - 1:  # last helix point
                     self.voxel_space[x_idx, y_idx, z_idx] = 1
@@ -170,7 +179,14 @@ class RobotEnvironment(gym.Env):
             else:
                 print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
 
-    
+        
+        # Convert the list of indices to a numpy array and store it in self.helix_points
+        self.helix_points = np.array(self.helix_points_list)
+
+        # Print the helix points
+        print("Helix points:")
+        print(self.helix_points)
+
     def is_on_helix(self, tcp_coords):
         # convert TCP coordinates to voxel indices. Therefore find the relative position of the TCP
         # within the bounds  `x_range`, `y_range`, and `z_range` 
@@ -308,7 +324,7 @@ class RobotEnvironment(gym.Env):
              # terminate the episode if the tcp is not on the helix any more
             self.reward -=1
 
-        orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _,orientation_deviation = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
 
         # Adjust reward based on orientation deviation
         orientation_reward = 0
@@ -484,7 +500,7 @@ class RobotEnvironment(gym.Env):
         return position, (alpha, beta, gamma)
 
 
-    def objective_function_with_orientation(self, theta, constant_orientation):
+    def objective_function_with_orientation(self, theta, constant_orientation, closes_target_pos):
         """
         Calculate the combined positional and orientational error for the robot end-effector.
         """
@@ -493,8 +509,8 @@ class RobotEnvironment(gym.Env):
         #print("current_pos:", current_position)
         print("current_orientation:", current_orientation)
         # Calculate the positional error
-        #position_error = np.linalg.norm(current_position - target_position)
-
+        position_error = np.abs(np.array(current_position) - np.array(closes_target_pos))
+        
         # Convert orientation tuples to numpy arrays
         #current_orientation = np.array(current_orientation)
         #constant_orientation = np.array(constant_orientation)
@@ -504,7 +520,23 @@ class RobotEnvironment(gym.Env):
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return orientation_errors # position_error
+        return position_error, orientation_errors
+    
+    def find_closest_helix_point(current_tcp_position, helix_points):
+        """
+        Find the closest point on the helix to the current TCP position.
+        """
+        # Berechnen Sie den Abstand zwischen der aktuellen TCP-Position und jedem Punkt auf der Helix
+        distances = np.linalg.norm(helix_points - current_tcp_position, axis=1)
+
+        # Finden Sie den Index des Punktes mit dem kleinsten Abstand
+        closest_index = np.argmin(distances)
+
+        # Rückgabe des am nächsten zur aktuellen TCP-Position liegenden Punktes auf der Helix und des entsprechenden Abstands
+        closest_point = helix_points[closest_index]
+        closest_distance = distances[closest_index]
+
+        return closest_point, closest_distance
     
     def compute_mse(ideal_trajectory, agent_trajectory):
         """
