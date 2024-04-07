@@ -48,7 +48,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=8, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -62,7 +62,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.9 #0.995  # 0.9 for debugging only
+        self.epsilon_decay = 0.995 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -179,7 +179,7 @@ if __name__ == "__main__":
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 20
+    episodes = 100
     for episode in range(episodes):
         state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
