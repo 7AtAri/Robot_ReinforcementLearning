@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 import os
+from globals import closest_distance_global
 
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -168,7 +169,7 @@ if __name__ == "__main__":
     episodes = 100
 
     min_distances = [] # list to save the minum distanz of ech episode
-
+    min_distance_tcp_helix = None
     for episode in range(episodes):
         state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
@@ -191,7 +192,7 @@ if __name__ == "__main__":
             print("total reward:", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
-            min_distance_tcp_helix = env.get_closest_distance_tcp_helix()
+            min_distance_tcp_helix = closest_distance_global
         
         # when episode finsihed append closest_distance between tcp pos and helix voxel
         min_distances.append(min_distance_tcp_helix) # same size as episode
@@ -206,4 +207,10 @@ if __name__ == "__main__":
     mse = mean_squared_error(np.zeros(episodes), min_distances)
     # wenn for beednet wurde
     # loop draußen dann mse plot
-    
+    # Erstellen des Plots
+    plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+    plt.xlabel('Episode')
+    plt.ylabel('MSE')
+    plt.title('Mean Squared Error (MSE) über Episoden')
+    plt.grid(True)
+    plt.show()
