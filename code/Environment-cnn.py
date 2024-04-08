@@ -17,7 +17,7 @@ from math import cos, sin, pi
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import gymnasium as gym  # original gym is no longer maintained and now called gymnasium
-from globals import closest_distance_global
+
 
 class RobotEnvironment(gym.Env):
     """Custom Environment that follows gym interface"""
@@ -91,6 +91,9 @@ class RobotEnvironment(gym.Env):
         # helixpoints
         self.helix_points = 0
 
+        # closest distance
+        self.closest_distance = None
+
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -140,7 +143,8 @@ class RobotEnvironment(gym.Env):
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.joint_angles.tolist(),
-            'tcp_position': self.tcp_position.tolist()
+            'tcp_position': self.tcp_position.tolist(),
+            'closest_distance': self.closest_distance.tolist()
         }
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
@@ -540,7 +544,7 @@ class RobotEnvironment(gym.Env):
         print("closest point ", closest_point)
         print("closest distance ", closest_distance) # double
 
-        closest_distance_global = closest_distance
+        self.closest_distance = closest_distance
 
         return closest_point, closest_distance
 

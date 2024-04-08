@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 import os
-from globals import closest_distance_global
+
 
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -181,7 +181,8 @@ if __name__ == "__main__":
             # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
             action = agent.act(state)
             #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  
+            next_state, reward, terminated, truncated, info = env.step(action)  
+            print("info",info)
             step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
@@ -192,7 +193,8 @@ if __name__ == "__main__":
             print("total reward:", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
-            min_distance_tcp_helix = closest_distance_global
+            min_distance_tcp_helix = info['closest_distance']
+            #print("min_distance_tcp_helix", min_distance_tcp_helix)
         
         # when episode finsihed append closest_distance between tcp pos and helix voxel
         min_distances.append(min_distance_tcp_helix) # same size as episode
