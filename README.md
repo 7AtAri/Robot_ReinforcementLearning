@@ -24,7 +24,9 @@
 ### Presentation of the project (30 min):
 upload your code + environment two days before the appointment
 
-- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+<font color="red">**nicht gesehen das es hier eine gibt Präsi ins ganz oben in der .md**</font>
+
+- ~~[ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)~~
 
 Questions:
 
