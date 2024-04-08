@@ -34,3 +34,9 @@ episodes: 1000
 batch_size: 32
 epsilon_decay: 0.995
 epsilon_min: 0.2
+
+parametergrid:
+https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html
+
+beispiel usage:
+https://stackoverflow.com/questions/74493645/can-you-iterate-over-hyperparameters-in-scikit
