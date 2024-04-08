@@ -49,11 +49,13 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.state_size = state_size
-        self.actions= actions
+        self.actions = actions
         self.batch_size = batch_size
         self.gamma = gamma
+        self.n_step_buffer = deque(maxlen=n_step)  # temporary buffer for n-step calculation
+        self.n_step = n_step
         # this ensures that the memory does not grow beyond buffer_size - oldest elements are removed:
         self.memory = deque(maxlen=buffer_size) 
         
@@ -63,18 +65,31 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.9995 #0.995  # 0.9 for debugging only
+        self.epsilon_decay = 0.995 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
-    def remember(self, state, action, reward, next_state, terminated, truncated):
-        self.memory.append((state, action, reward, next_state, terminated, truncated))
-        
-    # def act(self, state):
-    #     if np.random.rand() <= self.epsilon:
-    #         return random.randrange(self.action_size)
-    #     state = torch.FloatTensor(state).unsqueeze(0)
-    #     q_values = self.q_network(state)
-    #     return np.argmax(q_values.detach().numpy()) 
+    def add_experience(self, state, action, reward, next_state, done):
+        # keep experience in n-step buffer
+        self.n_step_buffer.append((state, action, reward, next_state, done))
+
+        if len(self.n_step_buffer) == self.n_step or done:
+            n_step_reward, n_step_state, n_step_done = self.calculate_n_step_info()
+            # keep n-step transition in memory
+            self.memory.append((self.n_step_buffer[0][0], self.n_step_buffer[0][1], n_step_reward, n_step_state, n_step_done))
+
+            if done:
+                # Clear the buffer if the episode ended
+                self.n_step_buffer.clear()
+
+    def calculate_n_step_info(self):
+        """Calculate n-step reward, final state, and done status."""
+        n_step_reward = 0
+        for idx, (_, _, reward, _, _) in enumerate(self.n_step_buffer):
+            n_step_reward += (self.gamma ** idx) * reward
+        # The final state and done flag from the last experience
+        _, _, _, n_step_state, n_step_done = self.n_step_buffer[-1]
+        return n_step_reward, n_step_state, n_step_done
+
 
     def act(self, state):
         if np.random.rand() <= self.epsilon:
@@ -99,62 +114,27 @@ class DQNAgent:
     def replay(self):
         if len(self.memory) < self.batch_size:
             return
+
         minibatch = random.sample(self.memory, self.batch_size)
-        states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
-        states = torch.FloatTensor(np.array(states)).to(device)
-        actions = torch.LongTensor(np.array(actions)).to(device)
-        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
-        next_states = torch.FloatTensor(np.array(next_states)).to(device)
-        terminated = torch.FloatTensor(np.array(terminated)).to(device)
-        truncated = torch.FloatTensor(np.array(truncated)).to(device)
-        print("actions:", actions.shape) # actions: torch.Size([batch_size, 6])
-        # actions tensor must have the correct shape and type
-        actions = actions.long()  # long type for indexing
-        # Assuming actions is of shape [batch_size], containing the index of the action taken for each batch item
-        actions = actions.view(-1, 6, 1)  # Reshape for gathering: [batch_size*6, 1]
-        print("actions shape:", actions.shape)
-        # using gather to select the action values:
-        #  https://pytorch.org/docs/stable/generated/torch.gather.html
-        # we need to gather along the last dimension (dimension=2) of the Q-values tensor
-        #Q_expected = self.q_network(states).gather(2, actions.unsqueeze(-1)).squeeze(-1)
-        #Q_expected = self.q_network(states).gather(1, actions)  # This selects the Q-values for the taken actions, resulting in shape [64, 1]
-        #Q_expected = Q_expected.squeeze()  # Remove the last dimension to match Q_targets: shape becomes [64]
-        # Forward pass on the current states to get Q values for all actions
-        Q_values = self.q_network(states)
-        print("q-values:", Q_values.shape) # q-values: torch.Size([batch_size, 6, 3])
-        # Select the Q-values for the actions taken
-        Q_expected = Q_values.gather(2, actions).squeeze(-1)  # --> shape [batch_size, 6]
-        print("q-expected:", Q_expected.shape)
-        #Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
-        #Q_targets_next = self.target_network(next_states).detach().max(1)[0]
-        Q_values_next = self.target_network(next_states).detach()
-        print("q-values next:", Q_values_next.shape) # q-values next: torch.Size([batch_size, 6, 3])
-        Q_targets_next = Q_values_next.max(dim=2)[0]  # max along the last dimension --> shape [batch_size, 6]
-        #Q_values_flattened = Q_values_next.view(self.batch_size, -1)
-        #Q_targets_next = Q_values_flattened.max(dim=1)[0]# should output a [batch_size] tensor
-        print("q-targets next:" , Q_targets_next.shape)
-        # if episode was either terminated or truncated, we don't look at the next state's Q-value
-        not_done = 1 - (terminated + truncated)
-        not_done = not_done.to(device).view(-1)  # Ensure shape [batch_size]
-        print("reward shape:", rewards.shape)
-        print("not done shape:", not_done.shape)
-        # Expand rewards and not_done to enable broadcasting
-        rewards_expanded = rewards.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
-        not_done_expanded = not_done.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
+        for state, action, n_step_reward, n_step_state, n_step_done in minibatch:
+            state = torch.FloatTensor(state).unsqueeze(0).to(device)
+            n_step_state = torch.FloatTensor(n_step_state).unsqueeze(0).to(device)
 
-        # Now compute Q_targets with correctly shaped tensors
-        Q_targets = rewards_expanded + (self.gamma * Q_targets_next * not_done_expanded)
+            Q_expected = self.q_network(state).gather(1, torch.tensor(action).unsqueeze(0).to(device))
 
-        # Q_expected: expected future rewards (of the network) for the chosen action 
-        # Q_targets: actual future rewards (from the target network) for the chosen action
-        loss = nn.MSELoss()(Q_expected, Q_targets) 
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
+            # n-step bootstrap state to calculate the next Q-values:
+            Q_next = self.target_network(n_step_state).max(1)[0].detach()
+            Q_targets = n_step_reward + (self.gamma ** self.n_step) * Q_next * (1 - n_step_done)
 
-        if self.epsilon > self.epsilon_min:
-            self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            # compute loss, perform backpropagation and update weights:
+            loss = F.mse_loss(Q_expected, Q_targets.unsqueeze(1))
+            self.optimizer.zero_grad()
+            loss.backward()
+            self.optimizer.step()
+
+            if self.epsilon > self.epsilon_min:
+                self.epsilon *= self.epsilon_decay
+                print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -175,7 +155,7 @@ if __name__ == "__main__":
     print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    agent = DQNAgent(state_size, actions)
+    agent = DQNAgent(state_size, actions, device=device)
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
@@ -194,21 +174,37 @@ if __name__ == "__main__":
             next_state, reward, terminated, truncated, _ = env.step(action)  
             if step_counter > 1:
                 env.render()
-            step_counter += 1
+            
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
             #next_state = np.reshape(next_state, [1, state_size])
-            agent.remember(state, action, reward, next_state, terminated, truncated)
+            agent.add_experience(state, action, reward, next_state, terminated or truncated)
             state = next_state
             total_reward += reward
+            step_counter += 1
             print("total_reward", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
+        
+        while len(agent.n_step_buffer) > 0:
+            n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
+            first_experience = agent.n_step_buffer.popleft()
+            agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
             
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
             print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         agent.replay()
         if episode % 10 == 0:
-            env.render()
+            #env.render()
             agent.update_target_network()
+
+
+
+
+
+
+
+
+
+
