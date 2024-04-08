@@ -10,6 +10,17 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 import os
+from sklearn import model_selection
+
+# generating parameter grid
+params = {
+    "episodes": [100, 200, 300, 500, 1000],
+    "batch_size": [8, 16, 32, 64],
+    #"gamma": [0.9, 0.95, 0.99],
+    "epsilon_decay": [0.9, 0.95, 0.99],
+    "epsilon_min": [0.01, 0.05, 0.1, 0.2]
+}
+grid = model_selection.ParameterGrid(params)
 
 
 # mute the MKL warning on macOS
