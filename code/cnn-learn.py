@@ -7,8 +7,11 @@ from collections import deque # queue for efficiently adding and removing elemen
 import gymnasium as gym
 from gymnasium.envs.registration import register
 import torch.nn.functional as F
-
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 import os
+
+
 # mute the MKL warning on macOS
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -180,6 +183,9 @@ if __name__ == "__main__":
 
     # # Training loop
     episodes = 100
+
+    min_distances = [] # list to save the minum distanz of ech episode
+    min_distance_tcp_helix = None
     for episode in range(episodes):
         state, info = env.reset()  
         #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
@@ -191,9 +197,8 @@ if __name__ == "__main__":
             # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
             action = agent.act(state)
             #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  
-            if step_counter > 1:
-                env.render()
+            next_state, reward, terminated, truncated, info = env.step(action)  
+            print("info",info)
             step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
@@ -201,10 +206,14 @@ if __name__ == "__main__":
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
-            print("total_reward", total_reward)
+            print("total reward:", total_reward)
             print("terminated:", terminated)
             print("truncated:", truncated)
-            
+            min_distance_tcp_helix = info['closest_distance']
+            #print("min_distance_tcp_helix", min_distance_tcp_helix)
+        
+        # when episode finsihed append closest_distance between tcp pos and helix voxel
+        min_distances.append(min_distance_tcp_helix) # same size as episode
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
             print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
@@ -212,3 +221,15 @@ if __name__ == "__main__":
         if episode % 10 == 0:
             env.render()
             agent.update_target_network()
+    
+    # calcualte mse for each episode --> first arg is expected distanz --> zero?
+    mse = mean_squared_error(np.zeros(episodes), min_distances)
+    # wenn for beednet wurde
+    # loop draußen dann mse plot
+    # Erstellen des Plots
+    plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+    plt.xlabel('Episode')
+    plt.ylabel('MSE')
+    plt.title('Mean Squared Error (MSE) über Episoden')
+    plt.grid(True)
+    plt.show()
