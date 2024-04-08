@@ -238,7 +238,7 @@ if __name__ == "__main__":
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             agent.replay()
             if episode % 10 == 0:
-                env.render()
+                #env.render()
                 agent.update_target_network()
         
         # calcualte mse for each episode --> first arg is expected distanz --> zero?
