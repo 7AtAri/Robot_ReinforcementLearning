@@ -137,8 +137,18 @@ class RobotEnvironment(gym.Env):
 
 
     def init_helix(self):
-        # # create a separate matrix to store the helix path
-        #helix_path = np.full_like(self.voxel_space, -1, dtype=np.int8)
+        """
+        Initialize a helix path in the voxel space.
+
+        This function computes the coordinates of points along a helix path
+        defined by the given radius, height per turn, and number of turns.
+
+        Parameters:
+            self
+
+        Returns:
+            None
+        """
 
         # initialize helix
         r = self.radius  # radius 
@@ -166,6 +176,19 @@ class RobotEnvironment(gym.Env):
 
     
     def is_on_helix(self, tcp_coords):
+        """
+        Check if the TCP (Tool Center Point) coordinates lie on the helix path.
+
+        This function converts the TCP coordinates to voxel indices within the voxel space
+        and determines whether the TCP is on the helix path, at the target/end of the helix, 
+        or outside the helix voxels.
+
+        Parameters:
+            tcp_coords (tuple): The TCP coordinates in the form of (x, y, z).
+
+        Returns:
+            bool: True if TCP is on the helix path or at the target, False otherwise.
+        """
         # convert TCP coordinates to voxel indices. Therefore find the relative position of the TCP
         # within the bounds  `x_range`, `y_range`, and `z_range` 
         # scale this position to the resolution of the voxel grid:
@@ -273,9 +296,17 @@ class RobotEnvironment(gym.Env):
     
 
     def render(self):
+        """
+
+        This function visualizes the voxel space with the helix path and highlights the TCP position
+        if provided and valid.
+            
+        Returns:
+            None
+        """
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
-        ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
+        ax.scatter(*np.where(self.voxel_space == 1), c='orange', s=40, alpha=1)  # helix end points
         ax.scatter(*np.where(self.voxel_space == 0), c='b', s=40, alpha=1)  # helix path points
         
         # if TCP coordinates are provided and valid, then visualize TCP position
@@ -291,7 +322,7 @@ class RobotEnvironment(gym.Env):
             
             # highlight TCP position
             #x_idx, y_idx, z_idx = self.position_to_voxel_indices(tcp_coords) # translate TCP position to voxel space 
-            #ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+            ax.scatter([x_idx], [y_idx], [z_idx], c='r', s=100, alpha= 1, label='TCP Position')
             #print(f"TCP Position Indices: {x_idx}, {y_idx}, {z_idx}")
             print(f"Rendering TCP at indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debug info
 
@@ -309,6 +340,19 @@ class RobotEnvironment(gym.Env):
 
 
     def process_action(self, action):
+        """
+        Process the action provided to generate new joint angles.
+
+        This function calculates the delta angles for each action and updates the joint angles accordingly.
+        The delta angles are calculated based on the action values provided, and the joint angles are limited
+        within the range of -180 to 180 degrees.
+
+        Parameters:
+            action: The action values to be processed.
+
+        Returns:
+            np.ndarray: The delta angles resulting from the action processing.
+        """
         # Check if action is iterable
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
@@ -328,6 +372,15 @@ class RobotEnvironment(gym.Env):
         return delta_angles
 
     def init_translation_matrix(self):
+        """
+        Initialize the translation matrix based on the initial TCP position.
+
+        This function computes the translation vector as the negative of the initial TCP position,
+        and constructs the translation matrix accordingly.
+
+        Returns:
+            None
+        """
         # self.initial_tcp_position is the initial TCP position
         # the translation vector is the negative of this position
         translation_vector = -self.initial_tcp_position
@@ -369,7 +422,16 @@ class RobotEnvironment(gym.Env):
 
     def forward_kinematics(self, theta_degrees):
         """
-        Calculate the end-effector position using the provided joint angles (theta).
+        Calculate the end-effector position and orientation using the provided joint angles.
+
+        This function computes the end-effector position and orientation based on the Denavit-Hartenberg (DH) parameters
+        and the given joint angles.
+
+        Parameters:
+            theta_degrees: Joint angles in degrees.
+
+        Returns:
+            tuple: A tuple containing the end-effector position (x, y, z) and orientation angles (alpha, beta, gamma).
         """
         theta = np.radians(theta_degrees) # convert angles from degree to radians for cos and sin functions
         # DH parameters for each joint: (a, d, alpha, theta)
@@ -434,6 +496,16 @@ class RobotEnvironment(gym.Env):
     #     return x_idx, y_idx, z_idx
     
     def position_to_voxel_indices(self, point_in_voxel_space):
+        """
+        This function converts the coordinates of a point in voxel space to voxel indices,
+        considering the resolution of the voxel grid.
+
+        Parameters:
+            point_in_voxel_space: The coordinates of the point in voxel space.
+
+        Returns:
+            tuple: A tuple containing the voxel indices (x_idx, y_idx, z_idx) of the given point.
+        """
         # point_in_voxel_space already needs to be translated to voxel space
         x_idx = int(round(point_in_voxel_space[0] / self.resolution))
         y_idx = int(round(point_in_voxel_space[1] / self.resolution))

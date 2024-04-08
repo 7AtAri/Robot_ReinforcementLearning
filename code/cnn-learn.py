@@ -63,7 +63,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.995 #0.995  # 0.9 for debugging only
+        self.epsilon_decay = 0.9995 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -211,5 +211,5 @@ if __name__ == "__main__":
             print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         agent.replay()
         if episode % 10 == 0:
-            #env.render()
+            env.render()
             agent.update_target_network()
