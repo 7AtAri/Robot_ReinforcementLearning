@@ -13,6 +13,7 @@ import os
 
 
 # mute the MKL warning on macOS
+print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
 
@@ -51,7 +52,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=8, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -65,7 +66,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.9 # 0.995
+        self.epsilon_decay = 0.9995 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -81,11 +82,21 @@ class DQNAgent:
     def act(self, state):
         if np.random.rand() <= self.epsilon:
             # return random action for each component
-            return [random.randrange(3) for _ in range(6)]
+            action = [random.randrange(3) for _ in range(6)]
+            print("exploring: random action")
+            print("action shape:", len(action))
+            return action # shape [6] ?
+            
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
         q_values = self.q_network(state)
+        print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
+        
         # choose action with max Q-value for each component
-        return q_values.detach().cpu().numpy().argmax(axis=2).flatten()
+        action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
+        action = action.tolist()
+        print("action shape:", len(action))
+        print("-------------------------------")
+        return action
 
 
     def replay(self):
@@ -95,16 +106,15 @@ class DQNAgent:
         states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
         states = torch.FloatTensor(np.array(states)).to(device)
         actions = torch.LongTensor(np.array(actions)).to(device)
-        rewards = torch.FloatTensor(np.array(rewards)).to(device)
-        rewards = torch.FloatTensor(rewards).to(device).view(-1) # shape [batch_size]
+        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
         terminated = torch.FloatTensor(np.array(terminated)).to(device)
         truncated = torch.FloatTensor(np.array(truncated)).to(device)
-
+        print("actions:", actions.shape) # actions: torch.Size([batch_size, 6])
         # actions tensor must have the correct shape and type
         actions = actions.long()  # long type for indexing
-        # Assuming actions is of shape [64], containing the index of the action taken for each batch item
-        actions = actions.view(-1, 1)  # Reshape for gathering: [64, 1]
+        # Assuming actions is of shape [batch_size], containing the index of the action taken for each batch item
+        actions = actions.view(-1, 6, 1)  # Reshape for gathering: [batch_size*6, 1]
         print("actions shape:", actions.shape)
         # using gather to select the action values:
         #  https://pytorch.org/docs/stable/generated/torch.gather.html
@@ -114,24 +124,30 @@ class DQNAgent:
         #Q_expected = Q_expected.squeeze()  # Remove the last dimension to match Q_targets: shape becomes [64]
         # Forward pass on the current states to get Q values for all actions
         Q_values = self.q_network(states)
-        print("q-values:", Q_values.shape) # q-values: torch.Size([64, 6, 3])
+        print("q-values:", Q_values.shape) # q-values: torch.Size([batch_size, 6, 3])
         # Select the Q-values for the actions taken
-        Q_expected = Q_values.gather(1, actions).squeeze(1) 
+        Q_expected = Q_values.gather(2, actions).squeeze(-1)  # --> shape [batch_size, 6]
         print("q-expected:", Q_expected.shape)
         #Q_expected = self.q_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
         #Q_targets_next = self.target_network(next_states).detach().max(1)[0]
         Q_values_next = self.target_network(next_states).detach()
-        print("q-values next:", Q_values_next.shape) # q-values next: torch.Size([64, 6, 3])
-        Q_values_flattened = Q_values_next.view(self.batch_size, -1)
-        Q_targets_next = Q_values_flattened.max(dim=1)[0]# should output a [batch_size] tensor
+        print("q-values next:", Q_values_next.shape) # q-values next: torch.Size([batch_size, 6, 3])
+        Q_targets_next = Q_values_next.max(dim=2)[0]  # max along the last dimension --> shape [batch_size, 6]
+        #Q_values_flattened = Q_values_next.view(self.batch_size, -1)
+        #Q_targets_next = Q_values_flattened.max(dim=1)[0]# should output a [batch_size] tensor
         print("q-targets next:" , Q_targets_next.shape)
         # if episode was either terminated or truncated, we don't look at the next state's Q-value
         not_done = 1 - (terminated + truncated)
         not_done = not_done.to(device).view(-1)  # Ensure shape [batch_size]
         print("reward shape:", rewards.shape)
         print("not done shape:", not_done.shape)
-        #  calulate without considering future Q-values for either terminated or truncated samples
-        Q_targets = rewards + (self.gamma * Q_targets_next * not_done)
+        # Expand rewards and not_done to enable broadcasting
+        rewards_expanded = rewards.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
+        not_done_expanded = not_done.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
+
+        # Now compute Q_targets with correctly shaped tensors
+        Q_targets = rewards_expanded + (self.gamma * Q_targets_next * not_done_expanded)
+
         # Q_expected: expected future rewards (of the network) for the chosen action 
         # Q_targets: actual future rewards (from the target network) for the chosen action
         loss = nn.MSELoss()(Q_expected, Q_targets) 
@@ -200,6 +216,7 @@ if __name__ == "__main__":
         min_distances.append(min_distance_tcp_helix) # same size as episode
         if terminated or truncated:
             print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         agent.replay()
         if episode % 10 == 0:
             env.render()

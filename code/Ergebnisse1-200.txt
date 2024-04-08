@@ -1,0 +1,4480 @@
+GPU erkannt: False
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.   
+TCP on Helix: True
+obs space: (2, 121, 61, 101)
+State size: (2, 121, 61, 101), Action size: 6
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1 -0.1  0.1  0.   0. ]
+TCP coords: [ 0.00024287 -0.0007971   0.00116941] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 1/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.  0.  0.1 0.1 0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.1 0.  0.  0.1 0.1 0.1]
+TCP coords: [ 3.78384746e-04 -7.96719139e-04 -1.50556908e-07] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 2/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.   0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.   0.1 -0.1 -0.1]
+TCP coords: [ 7.05917215e-05  7.96857139e-04 -7.96097646e-04] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 3/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.   0.1 -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.   0.1 -0.1  0. ]
+TCP coords: [ 6.99873252e-04 -7.96158036e-04  4.10547810e-07] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 4/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.   0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.   0.  -0.1  0. ]
+TCP coords: [-0.00022803  0.00079738  0.        ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 5/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.   0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.   0.1 -0.1  0.1]
+TCP coords: [ 7.05917215e-05  7.96857139e-04 -7.96097646e-04] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 6/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.1  0.1  0.   0.1]
+TCP coords: [ 5.97843100e-05  7.96735725e-04 -1.16811165e-03] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 7/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.1 -0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1 -0.1  0.1 -0.1  0.   0.1]
+TCP coords: [-0.00053737  0.00079778  0.0004252 ] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 8/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1  0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1  0.1 -0.1  0.1]
+TCP coords: [-0.0002277   0.00079738  0.0003721 ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 9/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.1 0.  0.1 0.1 0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.1 0.1 0.  0.1 0.1 0. ]
+TCP coords: [ 0.00052804 -0.00079646 -0.00079722] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 10/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.1 -0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1  0.1 -0.1  0.   0. ]
+TCP coords: [ 0.00015063  0.         -0.00116915] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 11/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0. ]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.   0.1 -0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0. ]
+New Joint Angles (process action): [ 0.1  0.   0.1  0.1 -0.2 -0.1]
+TCP coords: [ 0.0010099  -0.0007952  -0.00037046] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 12/300, Total Reward: 9, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1 -0.1  0.  -0.1  0.1]
+TCP coords: [-1.35513500e-04  1.40276286e-07  1.16924048e-03] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 13/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.   0.   0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1  0.   0.   0.   0.1]
+TCP coords: [-0.00014827  0.          0.00079731] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 14/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0.1]
+TCP coords: [-3.76993406e-04  7.97638323e-04 -1.50556908e-07] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 15/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.995
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.   0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1  0.   0.1  0.1 -0.1]
+TCP coords: [ 0.00052804 -0.00079646 -0.00079722] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 16/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.99
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.990025
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1 -0.1  0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1 -0.1 -0.1  0.1  0.   0.1]
+TCP coords: [-0.00053607  0.00079778  0.00116941] -> Voxel indices: x:29, y:31, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 17/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.99
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.985074875
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1  0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1 -0.1  0.   0.1  0. ]
+TCP coords: [-4.57001026e-04  1.40276286e-07  1.17036269e-03] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 18/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.99
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9801495006250001
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.  -0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.  -0.1  0.  -0.1]
+TCP coords: [ 2.41202146e-04 -7.97098845e-04  1.29995451e-07] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 19/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.98
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9752487531218751
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1  0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1 -0.1  0.   0.1  0. ]
+TCP coords: [-0.00054915  0.00079794 -0.00042507] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 20/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.98
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9703725093562657
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.   0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.   0.1  0.  -0.1]
+TCP coords: [ 5.39129244e-04 -7.96578864e-04  1.29995451e-07] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 21/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.97
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9655206468094844
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1  0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1  0.1  0.   0. ]
+TCP coords: [-0.00038845  0.00079752  0.0003721 ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 22/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.97
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.960693043575437
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.  -0.1  0.  -0.1  0.1]
+TCP coords: [1.21054437e-05 1.40276286e-07 3.71953451e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.1  0.1 -0.1]
+joint_angles (process action): [ 0.   0.  -0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.1 -0.2  0.1  0.   0. ]
+TCP coords: [ 3.90861364e-04 -7.96837640e-04 -5.29707159e-05] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 23/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.96
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9558895783575597
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1  0.1  0.  -0.1 -0.1]
+TCP coords: [1.61115690e-04 1.40276286e-07 4.25074724e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.1 -0.1 -0.1]
+joint_angles (process action): [ 0.  -0.1  0.1  0.  -0.1 -0.1]
+New Joint Angles (process action): [-0.1  0.   0.2  0.1 -0.2 -0.2]
+TCP coords: [ 0.0003809   0.00079674 -0.00074135] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 24/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.96
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9511101304657719
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.1  0.   0.1  0. ]
+TCP coords: [-0.00024992  0.00079742 -0.00116932] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 25/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.95
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.946354579813443
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.1 -0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.1 -0.1  0.  -0.1]
+TCP coords: [-0.00038845  0.00079752 -0.0003721 ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 26/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.95
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9416228069143757
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.  -0.1  0.  -0.1 -0.1]
+TCP coords: [ 0.00040227 -0.00079668  0.00037195] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 27/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.94
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9369146928798039
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.1 -0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1  0.1 -0.1  0.  -0.1]
+TCP coords: [ 0.0005408  -0.00079658 -0.00116915] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 28/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.94
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9322301194154049
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.1 -0.1  0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1  0.1 -0.1  0.1  0. ]
+TCP coords: [ 0.00038005 -0.00079672 -0.00116943] -> Voxel indices: x:30, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 29/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.93
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9275689688183278
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1  0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.1  0.1  0.  -0.1]
+TCP coords: [ 0.00068842 -0.00079632 -0.00037158] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 30/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.93
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9229311239742362
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.  -0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.  -0.1  0.1 -0.1]
+TCP coords: [ 8.04576479e-05 -7.97239121e-04  4.10547810e-07] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 31/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.92
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.918316468354365
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.   0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.   0.1  0. ]
+TCP coords: [ 8.11533167e-05 -7.97237907e-04  7.97589279e-04] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 32/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.92
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9137248860125932
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.  0.1 0.1 0.1 0.1 0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.  0.1 0.1 0.1 0.1 0.1]
+TCP coords: [ 2.87816809e-04  1.40276286e-07 -1.16895330e-03] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 33/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.91
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9091562615825302
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.1  0.  -0.1  0.1]
+TCP coords: [ 0.00055128 -0.00079642  0.00042507] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 34/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.91
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9046104802746175
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1 -0.1  0.  -0.1  0. ]
+TCP coords: [ 0.00055128 -0.00079642 -0.00042507] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 35/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.90
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.9000874278732445
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1 -0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1 -0.1  0.1 -0.1]
+TCP coords: [-0.00084712  0.00079846  0.00037319] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 36/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.90
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8955869907338783
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1  0.1  0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1 -0.1  0.1  0.1  0. ]
+TCP coords: [-0.00040018  0.00079768 -0.00042523] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 37/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.90
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8911090557802088
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.1  0.  -0.1  0.1]
+TCP coords: [ 0.00055128 -0.00079642  0.00042507] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 38/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.89
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8866535105013078
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1  0.   0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.1  0.   0.  -0.1]
+TCP coords: [ 0.00053945 -0.00079658 -0.00037197] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 39/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.89
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8822202429488013
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.   0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.   0.1  0. ]
+TCP coords: [ 8.11533167e-05 -7.97237907e-04  7.97589279e-04] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 40/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.88
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8778091417340573
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1 -0.1  0.1 -0.1  0.1]
+TCP coords: [ 0.00040362 -0.00079668  0.00116913] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 41/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.88
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8734200960253871
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.  -0.1 -0.1  0.1  0. ]
+TCP coords: [-6.81799914e-05 -7.97498543e-04  3.73185093e-04] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 42/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.87
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8690529955452602
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1 -0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.  -0.1 -0.1  0.1 -0.1]
+TCP coords: [-4.58346139e-04  1.40276286e-07  3.73185093e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.  -0.1  0. ]
+joint_angles (process action): [ 0.   0.  -0.1 -0.1  0.1 -0.1]
+New Joint Angles (process action): [ 0.1  0.1 -0.2 -0.1  0.  -0.1]
+TCP coords: [ 9.29347190e-05 -7.97357621e-04 -5.24507345e-05] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 43/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.87
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8647077305675338
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1 -0.1  0.  -0.1 -0.1]
+TCP coords: [ 0.00025465 -0.00079694  0.00116924] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 44/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.86
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8603841919146962
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.   0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1 -0.1  0.   0.  -0.1]
+TCP coords: [ 9.39088828e-05 -7.97355921e-04  1.16980159e-03] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 45/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.86
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8560822709551227
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.   0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.1  0.   0.   0.1]
+TCP coords: [-8.91778779e-05  7.96995713e-04 -1.16876162e-03] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 46/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.86
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.851801859600347
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0. ]
+TCP coords: [-3.76993406e-04  7.97638323e-04 -1.50556908e-07] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 47/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.85
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8475428503023453
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.1 0.  0.1 0.  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.1 0.1 0.  0.1 0.  0. ]
+TCP coords: [ 0.00068879 -0.00079632 -0.00079666] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 48/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.85
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8433051360508336
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1  0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1  0.1  0.   0. ]
+TCP coords: [-0.00038845  0.00079752  0.0003721 ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 49/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.84
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8390886103705794
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1 -0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.1 -0.1  0.1 -0.1]
+TCP coords: [ 0.00022975 -0.00079698 -0.0003721 ] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 50/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.84
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8348931673187264
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.   0.   0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.   0.1 -0.1]
+TCP coords: [ 8.11533167e-05 -7.97237907e-04  7.97589279e-04] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 51/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.83
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8307187014821328
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.1 -0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.1 -0.1  0.   0.1]
+TCP coords: [ 0.00024157 -0.0007971   0.0004252 ] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 52/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.83
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8265651079747222
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.   0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.   0.  -0.1  0. ]
+TCP coords: [1.60744742e-04 1.40276286e-07 0.00000000e+00] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.   0.1 -0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.   0.  -0.1  0. ]
+New Joint Angles (process action): [ 0.   0.1  0.   0.1 -0.2 -0.1]
+TCP coords: [ 6.20109805e-04  5.61104718e-07 -7.95536544e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 53/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.83
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8224322824348486
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1 -0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1 -0.1 -0.1 -0.1  0.1]
+TCP coords: [ 1.21516694e-05  1.40276286e-07 -4.25225280e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1  0.   0.1  0.1]
+joint_angles (process action): [ 0.   0.1 -0.1 -0.1 -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.1 -0.2 -0.1  0.   0.2]
+TCP coords: [-2.97231428e-04  0.00000000e+00 -5.24507345e-05] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.  -0.1  0.1 -0.1]
+joint_angles (process action): [ 0.   0.1 -0.2 -0.1  0.   0.2]
+New Joint Angles (process action): [ 0.   0.2 -0.2 -0.2  0.1  0.1]
+TCP coords: [-4.57187072e-04  1.40276286e-07 -8.49067067e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+Rendering TCP at indices: x:29.542812928468525, y:30.000140276286196, z:-0.8490670669072525
+total_reward 19
+terminated: False
+truncated: True
+Episode: 54/300, Total Reward: 19, Total Steps: 3, Epsilon: 0.82
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8183201210226743
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.  -0.1  0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+New Joint Angles (process action): [ 0.  -0.1  0.1 -0.1  0.   0. ]
+TCP coords: [-0.00014859  0.          0.0004252 ] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1 -0.1 -0.1  0. ]
+joint_angles (process action): [ 0.  -0.1  0.1 -0.1  0.   0. ]
+New Joint Angles (process action): [ 0.1 -0.1  0.  -0.2 -0.1  0. ]
+TCP coords: [ 0.00010471 -0.0007972   0.00079751] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+Rendering TCP at indices: x:30.10471458053923, y:29.202803215490206, z:0.7975070341483537
+total_reward 19
+terminated: False
+truncated: True
+Episode: 55/300, Total Reward: 19, Total Steps: 3, Epsilon: 0.82
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8142285204175609
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.1 0.  0.  0.  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.1 0.1 0.  0.  0.  0. ]
+TCP coords: [ 0.00053982 -0.00079658 -0.00079705] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 56/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.81
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.810157377815473
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.  0.1 0.1 0.  0.  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [0.  0.1 0.1 0.  0.  0.1]
+TCP coords: [ 0.0002996   0.         -0.00116876] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 57/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.81
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8061065909263957
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.1  0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1 -0.1]
+New Joint Angles (process action): [-0.1  0.1  0.2  0.1  0.  -0.1]
+TCP coords: [ 0.00021037  0.00079647 -0.0015393 ] -> Voxel indices: x:30, y:31, z:-2
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 58/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.81
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.8020760579717637
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1 -0.1 -0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.1  0.  -0.1 -0.2  0. ]
+TCP coords: [ 0.00071235 -0.00079572 -0.00079718] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 59/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.80
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.798065677681905
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1  0.1  0.   0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.  -0.1  0.   0.1 -0.1  0.1]
+TCP coords: [1.61440412e-04 1.40276286e-07 7.97178731e-04] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 60/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.80
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7940753492934954
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.  -0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.1 -0.2  0.1]
+TCP coords: [ 3.21813717e-04  5.61104718e-07 -3.72104008e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.1  0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1 -0.1 -0.2  0.1]
+New Joint Angles (process action): [-0.1 -0.1  0.2  0.  -0.3  0.1]
+TCP coords: [2.43117866e-04 7.97678233e-04 5.39423650e-05] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+Rendering TCP at indices: x:30.243117866307482, y:30.797678232761, z:0.053942365013728844
+total_reward 19
+terminated: False
+truncated: True
+Episode: 61/300, Total Reward: 19, Total Steps: 3, Epsilon: 0.79
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7901049725470279
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.1  0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.1  0.   0.1 -0.1  0.2]
+TCP coords: [ 0.00084953 -0.0007959  -0.0007961 ] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 62/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.79
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7861544476842928
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.1  0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.1  0.1 -0.1  0.1]
+TCP coords: [ 7.02207743e-05  7.96857786e-04 -3.71022922e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 63/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.79
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7822236754458713
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1 -0.1  0.   0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.   0.2 -0.1 -0.1  0.1]
+TCP coords: [ 0.00070117 -0.00079616 -0.0007438 ] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 64/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.78
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.778312557068642
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.   0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.   0.1  0.   0.1]
+TCP coords: [-2.39810806e-04  7.97258617e-04  1.29995451e-07] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 65/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.78
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7744209942832988
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.1  0.   0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1  0.1  0.   0.   0. ]
+TCP coords: [3.70947769e-07 0.00000000e+00 4.25074724e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.1  0.1  0.1  0. ]
+joint_angles (process action): [ 0.  -0.1  0.1  0.   0.   0. ]
+New Joint Angles (process action): [ 0.  -0.2  0.2  0.1  0.1  0. ]
+TCP coords: [-1.02969317e-05  1.40276286e-07  8.49997595e-04] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 66/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.77
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7705488893118823
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.1  0.   0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.1  0.   0.1  0. ]
+TCP coords: [-0.00040023  0.00079768 -0.00037225] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 67/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.77
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7666961448653229
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1 -0.1  0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.1  0.  -0.1 -0.1  0.2]
+TCP coords: [-0.00022733  0.00079738 -0.00079718] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 68/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.77
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7628626641409962
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1  0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.  -0.1  0.  -0.1  0. ]
+TCP coords: [ 0.00040227 -0.00079668  0.00037195] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 69/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.76
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7590483508202912
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.   0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1  0.   0.1 -0.1 -0.1]
+TCP coords: [ 4.59366531e-04  1.40276286e-07 -7.96097646e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 70/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.76
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7552531090661897
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.   0.  -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1 -0.1  0.1  0.  -0.2  0.1]
+TCP coords: [-6.69139228e-05  7.97517960e-04  4.25074724e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 71/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.76
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7514768435208588
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 72/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.75
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7477194593032545
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.   0.1 -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.1  0.1  0.1 -0.2  0.2]
+TCP coords: [ 0.00038127  0.00079674 -0.00116643] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 73/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.75
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7439808620067382
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.1  0.   0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1 -0.1  0.2  0.   0.   0.2]
+TCP coords: [-2.39115137e-04  7.97257403e-04  5.31007114e-05] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 74/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.74
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.7402609576967045
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1  0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1 -0.1  0.1  0.1 -0.1]
+TCP coords: [-3.08038439e-04  1.40276286e-07  1.16969215e-03] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 75/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.74
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.6149486215357263
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1 -0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1 -0.1 -0.1  0.   0.1]
+TCP coords: [-0.00014859  0.         -0.00042494] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1  0.   0. ]
+joint_angles (process action): [ 0.   0.1 -0.1 -0.1  0.   0.1]
+New Joint Angles (process action): [-0.1  0.1 -0.1 -0.2  0.   0.1]
+TCP coords: [-0.00068633  0.00079804 -0.00042455] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 112/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.61
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.6118738784280476
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 113/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.61
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.6088145090359074
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 114/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.61
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.6057704364907278
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.   0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.  -0.1  0.2]
+TCP coords: [ 0.00040264 -0.00079668  0.00079703] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 115/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.61
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.6027415843082742
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.   0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1 -0.1  0.   0.   0.1]
+TCP coords: [ 0.00039054 -0.00079684 -0.00042507] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 116/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.60
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5997278763867329
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.   0.1  0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.   0.1  0.   0.1]
+TCP coords: [-9.01520417e-05  7.96997413e-04 -7.96658750e-04] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 117/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.60
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5967292370047992
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1  0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.   0.1 -0.1  0.   0.1]
+TCP coords: [-0.00038845  0.00079752 -0.0003721 ] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 118/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.60
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5937455908197752
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.   0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1  0.   0.  -0.1  0. ]
+TCP coords: [ 0.00070057 -0.00079616 -0.00079677] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 119/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.59
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5907768628656763
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1  0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.  -0.1  0.1  0.  -0.1]
+TCP coords: [ 0.00039049 -0.00079684  0.0003721 ] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 120/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.59
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5878229785513479
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.   0.1  0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.   0.1  0.1 -0.1  0.2]
+TCP coords: [ 7.02207743e-05  7.96857786e-04 -3.71022922e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 121/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.59
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5848838636585911
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 122/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.58
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5819594443402982
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1  0.  -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.1  0.  -0.1 -0.1]
+TCP coords: [ 0.0007002  -0.00079616 -0.00037169] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 123/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.58
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5790496471185967
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1  0.1 -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1 -0.1  0.1 -0.1  0. ]
+TCP coords: [-7.86953610e-05  7.97117694e-04 -4.24664176e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 124/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.58
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5761543988830038
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1  0.1  0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1 -0.1  0.1  0.1  0.1]
+TCP coords: [-1.14097739e-05  1.40276286e-07 -4.25225280e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.1 -0.1  0.1  0.1  0.1]
+New Joint Angles (process action): [0.  0.1 0.  0.1 0.  0.2]
+TCP coords: [ 0.00029862  0.         -0.00079666] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 125/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.58
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5732736268885887
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.   0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.  -0.1  0.1]
+TCP coords: [ 0.00040264 -0.00079668  0.00079703] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 126/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.57
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5704072587541458
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.   0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1  0.   0.1 -0.1 -0.1]
+TCP coords: [ 4.59366531e-04  1.40276286e-07 -7.96097646e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 127/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.57
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.567555222460375
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1 -0.1  0.   0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1 -0.1 -0.1  0.   0.   0.1]
+TCP coords: [-0.00068503  0.00079804  0.0011698 ] -> Voxel indices: x:29, y:31, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 128/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.57
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5647174463480732
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 129/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.56
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5618938591163328
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 130/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.56
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5590843898207511
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 131/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.56
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5562889678716474
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.   0.1 -0.1 -0.2  0.1]
+TCP coords: [-6.69601484e-05  7.97518041e-04 -3.72104008e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 132/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.56
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5535075230322891
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1  0.   0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1 -0.1  0.   0.  -0.1]
+TCP coords: [-0.0003884   0.00079752 -0.00042507] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 133/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.55
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5507399854171277
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.   0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.1  0.   0.   0. ]
+TCP coords: [-8.91778779e-05  7.96995713e-04 -1.16876162e-03] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 134/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.55
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.547986285490042
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.  -0.1  0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.1  0.1 -0.1 -0.1  0.2]
+TCP coords: [-7.73964756e-05  7.97115427e-04 -1.16887106e-03] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 135/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.55
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5452463540625918
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.  -0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.  -0.1  0.   0. ]
+TCP coords: [-1.48963776e-04  0.00000000e+00  1.29995451e-07] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.  -0.1  0.   0. ]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.1 -0.1  0.1]
+TCP coords: [ 1.61069465e-04  1.40276286e-07 -3.72104008e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.1  0.  -0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.1 -0.1 -0.1  0.1]
+New Joint Angles (process action): [-0.1 -0.1  0.2 -0.1 -0.2  0. ]
+TCP coords: [-6.65892012e-05  7.97517394e-04  5.29707159e-05] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+Rendering TCP at indices: x:29.93341079880038, y:30.797517393751555, z:0.05297071590501523
+total_reward 19
+terminated: False
+truncated: True
+Episode: 136/300, Total Reward: 19, Total Steps: 3, Epsilon: 0.55
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5425201222922789
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 0.00101088 -0.00079519 -0.00074256] -> Voxel indices: x:31, y:29, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 137/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.54
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5398075216808175
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.  0.  0.1 0.1 0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [0.1 0.  0.1 0.1 0.  0.1]
+TCP coords: [ 0.00068842 -0.00079632 -0.00037158] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 138/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.54
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5371084840724134
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.1  0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1 -0.1  0.1  0.1  0.1 -0.1]
+TCP coords: [-0.00040018  0.00079768  0.00042492] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 139/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.54
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5344229416520513
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 140/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.53
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.531750826943791
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.   0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1  0.   0.1 -0.1  0.1]
+TCP coords: [ 4.59366531e-04  1.40276286e-07 -7.96097646e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 141/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.53
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5290920728090721
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1 -0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1 -0.1  0.  -0.1]
+TCP coords: [-0.00068638  0.00079804  0.00037262] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 142/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.53
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5264466124450268
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1  0.1  0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.1  0.2  0.1  0.   0. ]
+TCP coords: [ 0.00021037  0.00079647 -0.0015393 ] -> Voxel indices: x:30, y:31, z:-2
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 143/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.53
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5238143793828016
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.1 -0.1  0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.1  0.1 -0.1]
+TCP coords: [-1.60420020e-04  1.40276286e-07 -3.72104008e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1 -0.1  0.1 -0.1]
+New Joint Angles (process action): [ 0.   0.   0.2 -0.1  0.   0. ]
+TCP coords: [ 0.00015026  0.         -0.00074408] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 144/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.52
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5211953074858876
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.   0.   0.   0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1 -0.1  0.1  0.  -0.1  0.1]
+TCP coords: [ 0.00055128 -0.00079642  0.00042507] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 145/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.52
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5185893309484582
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.   0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1 -0.1  0.1  0.  -0.2  0.2]
+TCP coords: [-6.69139228e-05  7.97517960e-04  4.25074724e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 146/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.52
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5159963842937159
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1  0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1 -0.1  0.1 -0.1 -0.1]
+TCP coords: [ 3.10079221e-04  1.40276286e-07 -4.24664176e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.1 -0.1  0.1 -0.1 -0.1]
+New Joint Angles (process action): [ 0.   0.1  0.   0.1 -0.2  0. ]
+TCP coords: [ 6.20109805e-04  5.61104718e-07 -7.95536544e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 147/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.52
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5134164023722473
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.   0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1  0.   0.  -0.1  0. ]
+TCP coords: [1.24763915e-05 1.40276286e-07 7.97028174e-04] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 148/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.51
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.510849320360386
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 149/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.51
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5082950737585841
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.  -0.1 -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.1 -0.2  0.2]
+TCP coords: [ 3.21813717e-04  5.61104718e-07 -3.72104008e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.  -0.1  0.  -0.1]
+joint_angles (process action): [ 0.   0.   0.1 -0.1 -0.2  0.2]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.2 -0.2  0.1]
+TCP coords: [ 1.72849452e-04  5.61104718e-07 -3.72535116e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+Rendering TCP at indices: x:30.172849451744117, y:30.00056110471752, z:-0.37253511602150513
+total_reward 30
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1 -0.2 -0.2  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2 -0.2 -0.3  0.2]
+TCP coords: [ 4.83531156e-04  1.26248401e-06 -7.44206882e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+Rendering TCP at indices: x:30.48353115623284, y:30.001262484012, z:-0.7442068817256897
+total_reward 29
+terminated: False
+truncated: True
+Episode: 150/300, Total Reward: 29, Total Steps: 4, Epsilon: 0.51
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5057535983897912
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.1  0.   0.   0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.   0.1  0.   0.   0.1]
+TCP coords: [-0.00023949  0.00079726 -0.00037197] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 151/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.51
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.5032248303978422
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.   0.  -0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.   0.  -0.1  0. ]
+TCP coords: [ 0.00055091 -0.00079642  0.        ] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 152/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.50
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.500708706245853
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1 -0.1  0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1 -0.1  0.1  0.1]
+TCP coords: [-0.00084712  0.00079846  0.00037319] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 153/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.50
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4982051627146237
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1 -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1 -0.1 -0.1  0.1  0. ]
+TCP coords: [-0.00069811  0.0007982  -0.00042466] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 154/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.50
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.49571413690105054
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 155/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.50
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4932355662165453
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1  0.1  0.   0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.   0.1 -0.1  0.2]
+TCP coords: [3.09708274e-04 1.40276286e-07 4.10547810e-07] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 20
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1  0.1 -0.1 -0.1]
+joint_angles (process action): [ 0.   0.   0.   0.1 -0.1  0.2]
+New Joint Angles (process action): [ 0.   0.  -0.1  0.2 -0.2  0.1]
+TCP coords: [4.70777004e-04 5.61104718e-07 3.72795107e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+Rendering TCP at indices: x:30.470777003802933, y:30.00056110471752, z:0.37279510692329876
+total_reward 30
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.1 -0.1  0.   0. ]
+joint_angles (process action): [ 0.   0.  -0.1  0.2 -0.2  0.1]
+New Joint Angles (process action): [-0.1  0.1  0.   0.1 -0.2  0.1]
+TCP coords: [ 0.00023134  0.000797   -0.00079554] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+Rendering TCP at indices: x:30.231335484702942, y:30.796997416554394, z:-0.7955365436998763
+total_reward 29
+terminated: False
+truncated: True
+Episode: 156/300, Total Reward: 29, Total Steps: 4, Epsilon: 0.49
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4907693883854626
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 157/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.49
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4883155414435353
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.1  0.   0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1 -0.1  0.1  0.   0.1 -0.1]
+TCP coords: [ 0.00022979 -0.00079698  0.00042507] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 158/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.49
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4858739637363176
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.  -0.1  0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.  -0.1  0.  -0.1]
+TCP coords: [ 2.41202146e-04 -7.97098845e-04  1.29995451e-07] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 159/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.49
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.483444593917636
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.1 -0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.1 -0.1  0.   0. ]
+TCP coords: [ 0.00039049 -0.00079684 -0.0003721 ] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 160/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.48
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4810273709480478
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1 -0.1 -0.1  0.1  0. ]
+TCP coords: [-6.05962217e-04  1.40276286e-07  1.17129322e-03] -> Voxel indices: x:29, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 161/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.48
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1 -0.1  0.   0.   0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1 -0.1  0.   0.   0.1 -0.1]
+TCP coords: [-0.00069779  0.0007982   0.00079759] -> Voxel indices: x:29, y:31, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 172/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.46
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4529463432347434
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 173/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.45
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4506816115185697
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1 -0.1  0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.1 -0.1  0.1  0.   0. ]
+TCP coords: [ 0.0005395  -0.00079658 -0.00042494] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 174/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.45
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4484282034609769
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.  -0.1  0.   0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.  -0.1  0.   0.1  0.1]
+TCP coords: [-3.09383552e-04  1.40276286e-07  3.72514555e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1  0.1 -0.1  0.1]
+joint_angles (process action): [ 0.   0.  -0.1  0.   0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.  -0.2  0.1  0.   0.2]
+TCP coords: [ 0.0002425  -0.0007971   0.00074434] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 175/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.45
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.446186062443672
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 176/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.45
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4439551321314536
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 177/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.44
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4417353564707963
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.1 -0.1  0.  -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.1  0.2 -0.1 -0.1  0. ]
+TCP coords: [ 0.00085213 -0.00079589 -0.0015403 ] -> Voxel indices: x:31, y:29, z:-2
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 178/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.44
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.43952667968844233
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1 -0.1  0.  -0.1  0.   0.1]
+TCP coords: [ 9.29347190e-05 -7.97357621e-04  7.97698713e-04] -> Voxel indices: x:30, y:29, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 179/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.44
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.43732904629000013
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 180/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.44
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4351424010585501
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.  -0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.1  0.  -0.1 -0.1 -0.1]
+TCP coords: [ 1.61440412e-04  1.40276286e-07 -7.97178731e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 181/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.44
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.43296668905325736
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.  -0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.1  0.  -0.1 -0.1  0.1]
+TCP coords: [-0.00022733  0.00079738 -0.00079718] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 182/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.43
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.43080185560799106
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.   0.1 -0.1  0.   0. ]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1 -0.1  0.   0. ]
+TCP coords: [ 3.24722087e-07  0.00000000e+00 -3.72104008e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.1  0.   0.   0.  -0.1]
+joint_angles (process action): [ 0.   0.   0.1 -0.1  0.   0. ]
+New Joint Angles (process action): [-0.1  0.1  0.1 -0.1  0.  -0.1]
+TCP coords: [-0.00023814  0.00079726 -0.00116915] -> Voxel indices: x:30, y:31, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 183/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.43
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4286478463299511
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.   0.   0.  -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.   0.   0.  -0.1]
+TCP coords: [ 0.00039017 -0.00079684  0.        ] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 184/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.43
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.42650460709830135
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.   0.  -0.1 -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.   0.  -0.1 -0.1  0.1]
+TCP coords: [ 4.01946154e-04 -7.96678017e-04 -1.50556908e-07] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 185/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.43
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.42437208406280985
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1 -0.1 -0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.  -0.1  0.  -0.1 -0.2  0.1]
+TCP coords: [2.42556083e-05 5.61104718e-07 7.96576507e-04] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 186/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.42
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4222502236424958
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [0.1 0.  0.  0.1 0.1 0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [0.1 0.  0.1 0.1 0.  0.1]
+TCP coords: [ 0.00068842 -0.00079632 -0.00037158] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 187/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.42
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.42013897252428334
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 188/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.42
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4180382776616619
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 189/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.42
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4159480862733536
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.1  0.  -0.1  0.   0.1]
+TCP coords: [ 6.95669856e-07  0.00000000e+00 -7.97178731e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 190/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.42
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.41386834584198684
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.  -0.1  0.1  0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [-0.1  0.  -0.1  0.1  0.1  0.1]
+TCP coords: [-0.00054919  0.00079794  0.0003721 ] -> Voxel indices: x:29, y:31, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 191/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.41
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4117990041127769
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 192/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.41
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.40974000909221303
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.1  0.1  0.   0.  -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1  0.1  0.2  0.  -0.1  0. ]
+TCP coords: [ 0.00100109 -0.00079563 -0.00153937] -> Voxel indices: x:31, y:29, z:-2
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 193/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.41
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.40769130904675194
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1 -0.1  0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.1  0.  -0.1  0.   0.1]
+TCP coords: [ 6.95669856e-07  0.00000000e+00 -7.97178731e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 194/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.41
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.40565285250151817
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1 -0.1  0.1  0.   0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1 -0.1  0.   0.1 -0.1  0.1]
+TCP coords: [ 0.00055161 -0.00079642  0.00079718] -> Voxel indices: x:31, y:29, z:1
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 195/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.41
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4036245882390106
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1  0.  -0.1 -0.1  0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.1  0.  -0.1 -0.1  0.1  0.1]
+TCP coords: [-6.81799914e-05 -7.97498543e-04  3.73185093e-04] -> Voxel indices: x:30, y:29, z:0
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 196/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.40
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.4016064652978155
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1 -0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.1  0.   0.  -0.2  0.2]
+TCP coords: [ 4.71147952e-04  5.61104718e-07 -7.96487632e-04] -> Voxel indices: x:30, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 197/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.40
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.3995984329713264
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 198/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.40
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.3976004408064698
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [-0.1  0.   0.  -0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [-0.1  0.   0.1 -0.1 -0.2  0.1]
+TCP coords: [-6.69601484e-05  7.97518041e-04 -3.72104008e-04] -> Voxel indices: x:30, y:31, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 199/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.40
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.39561243860243744
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.   0.1  0.   0.1 -0.1  0. ]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.1  0.1  0.1 -0.2  0.1]
+TCP coords: [ 7.70043937e-04  5.61104718e-07 -1.16642834e-03] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 200/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.40
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.3936343764094253
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.1 -0.1  0.1 -0.1  0.  -0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.1 -0.1  0.2 -0.1 -0.1  0. ]
+TCP coords: [ 5.51605616e-04 -7.96416812e-04  5.29707159e-05] -> Voxel indices: x:31, y:29, z:0
+TCP is outside the helix voxels.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 201/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.39
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.39166620452737816
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+TCP coords: [ 3.10032996e-04  1.40276286e-07 -3.71693460e-04] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+total_reward 10
+terminated: False
+truncated: False
+exploiting: q-values predicted from network
+action shape: 6
+-------------------------------
+Delta Angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+joint_angles (process action): [ 0.   0.   0.1  0.  -0.1  0.1]
+New Joint Angles (process action): [ 0.   0.   0.2  0.  -0.2  0.2]
+TCP coords: [ 6.20713022e-04  5.61104718e-07 -7.42564694e-04] -> Voxel indices: x:31, y:30, z:-1
+TCP is outside the voxel space.
+total_reward 9
+terminated: False
+truncated: True
+Episode: 202/300, Total Reward: 9, Total Steps: 2, Epsilon: 0.39
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions: torch.Size([16, 6])
+actions shape: torch.Size([16, 6, 1])
+q-values: torch.Size([16, 6, 3])
+q-expected: torch.Size([16, 6])
+q-values next: torch.Size([16, 6, 3])
+q-targets next: torch.Size([16, 6])
+reward shape: torch.Size([16])
+not done shape: torch.Size([16])
+epsilon reduced: 0.3897078735047413
+Resetting the environment...
+TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
+TCP is on the helix path.
+exploring: random action
+action shape: 6
+Delta Angles (process action): [ 0.  -0.1  0.   0.1 -0.1 -0.1]
+joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+New Joint Angles (process action): [ 0.  -0.1  0.   0.1 -0.1 -0.1]
+TCP coords: [1.61440412e-04 1.40276286e-07 7.97178731e-04] -> Voxel indices: x:30, y:30, z:1
+TCP is outside the helix voxels.
+total_reward -1
+terminated: False
+truncated: True
+Episode: 203/300, Total Reward: -1, Total Steps: 1, Epsilon: 0.39
