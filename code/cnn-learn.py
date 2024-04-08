@@ -241,8 +241,10 @@ if __name__ == "__main__":
                 #env.render()
                 agent.update_target_network()
         
+        
         # calcualte mse for each episode --> first arg is expected distanz --> zero?
         mse = mean_squared_error(np.zeros(episodes), min_distances)
+        print(f"--------------------Hyperparameters: {params}, MSE:{mse}---------------------------------")
         # wenn for beednet wurde
         # loop draußen dann mse plot
         # Erstellen des Plots
