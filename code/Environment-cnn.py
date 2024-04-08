@@ -291,7 +291,7 @@ class RobotEnvironment(gym.Env):
             
             # highlight TCP position
             #x_idx, y_idx, z_idx = self.position_to_voxel_indices(tcp_coords) # translate TCP position to voxel space 
-            ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
+            #ax.scatter([x_idx], [y_idx], [z_idx], c='lightgreen', s=100, alpha= 1, label='TCP Position')
             #print(f"TCP Position Indices: {x_idx}, {y_idx}, {z_idx}")
             print(f"Rendering TCP at indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debug info
 
