@@ -178,58 +178,66 @@ if __name__ == "__main__":
     #print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    agent = DQNAgent(state_size, actions)
     #print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 100
+    episodes = 0
+    epsilon_decay = 0
+    epsilon_min = 0
 
-    min_distances = [] # list to save the minum distanz of ech episode
-    min_distance_tcp_helix = None
-    for episode in range(episodes):
-        state, info = env.reset()  
-        #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
-        terminated = False
-        truncated = False
-        step_counter = 0
-        total_reward = 0
-        while not terminated and not truncated:
-            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-            action = agent.act(state)
-            #print("action:", action)
-            next_state, reward, terminated, truncated, info = env.step(action)  
-            #print("info",info)
-            step_counter += 1
-            #print("next_state:", next_state)
-            #print("next_state shape:", next_state.shape)
-            #next_state = np.reshape(next_state, [1, state_size])
-            agent.remember(state, action, reward, next_state, terminated, truncated)
-            state = next_state
-            total_reward += reward
-            #print("total reward:", total_reward)
-            #print("terminated:", terminated)
-            #print("truncated:", truncated)
-            min_distance_tcp_helix = info['closest_distance']
-            #print("min_distance_tcp_helix", min_distance_tcp_helix)
+    for i in range(10):
+        index = random.randint(0, len(grid)-1)
+        params = grid[index]
+        for key, val in params.items():
+            exec(key + '=val')   # assign the values to the hyperparameters
+        # initialize the agent
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+        min_distances = [] # list to save the minum distanz of ech episode
+        min_distance_tcp_helix = None
+        for episode in range(episodes):
+            state, info = env.reset()  
+            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            terminated = False
+            truncated = False
+            step_counter = 0
+            total_reward = 0
+            while not terminated and not truncated:
+                # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
+                action = agent.act(state)
+                #print("action:", action)
+                next_state, reward, terminated, truncated, info = env.step(action)  
+                #print("info",info)
+                step_counter += 1
+                #print("next_state:", next_state)
+                #print("next_state shape:", next_state.shape)
+                #next_state = np.reshape(next_state, [1, state_size])
+                agent.remember(state, action, reward, next_state, terminated, truncated)
+                state = next_state
+                total_reward += reward
+                #print("total reward:", total_reward)
+                #print("terminated:", terminated)
+                #print("truncated:", truncated)
+                min_distance_tcp_helix = info['closest_distance']
+                #print("min_distance_tcp_helix", min_distance_tcp_helix)
+            
+            # when episode finsihed append closest_distance between tcp pos and helix voxel
+            min_distances.append(min_distance_tcp_helix) # same size as episode
+            if terminated or truncated:
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            agent.replay()
+            if episode % 10 == 0:
+                env.render()
+                agent.update_target_network()
         
-        # when episode finsihed append closest_distance between tcp pos and helix voxel
-        min_distances.append(min_distance_tcp_helix) # same size as episode
-        if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        agent.replay()
-        if episode % 10 == 0:
-            env.render()
-            agent.update_target_network()
-    
-    # calcualte mse for each episode --> first arg is expected distanz --> zero?
-    mse = mean_squared_error(np.zeros(episodes), min_distances)
-    # wenn for beednet wurde
-    # loop draußen dann mse plot
-    # Erstellen des Plots
-    plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
-    plt.xlabel('Episode')
-    plt.ylabel('MSE')
-    plt.title('Mean Squared Error (MSE) über Episoden')
-    plt.grid(True)
-    plt.show()
+        # calcualte mse for each episode --> first arg is expected distanz --> zero?
+        mse = mean_squared_error(np.zeros(episodes), min_distances)
+        # wenn for beednet wurde
+        # loop draußen dann mse plot
+        # Erstellen des Plots
+        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+        plt.xlabel('Episode')
+        plt.ylabel('MSE')
+        plt.title('Mean Squared Error (MSE) über Episoden')
+        plt.grid(True)
+        plt.show()
