@@ -84,7 +84,7 @@ class DQNAgent:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
             print("exploring: random action")
-            print("action shape:", len(action))
+            #print("action shape:", len(action))
             return action # shape [6] ?
             
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
@@ -94,7 +94,7 @@ class DQNAgent:
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
-        print("action shape:", len(action))
+        #print("action shape:", len(action))
         print("-------------------------------")
         return action
 
@@ -157,7 +157,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -175,11 +175,11 @@ if __name__ == "__main__":
     )
 
     env = gym.make('RobotEnvironment-v1')
-    print("obs space:", env.observation_space.shape)
+    #print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
     agent = DQNAgent(state_size, actions)
-    print(f"State size: {state_size}, Action size: {actions}")
+    #print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
     episodes = 100
@@ -198,7 +198,7 @@ if __name__ == "__main__":
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, info = env.step(action)  
-            print("info",info)
+            #print("info",info)
             step_counter += 1
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
@@ -206,9 +206,9 @@ if __name__ == "__main__":
             agent.remember(state, action, reward, next_state, terminated, truncated)
             state = next_state
             total_reward += reward
-            print("total reward:", total_reward)
-            print("terminated:", terminated)
-            print("truncated:", truncated)
+            #print("total reward:", total_reward)
+            #print("terminated:", terminated)
+            #print("truncated:", truncated)
             min_distance_tcp_helix = info['closest_distance']
             #print("min_distance_tcp_helix", min_distance_tcp_helix)
         

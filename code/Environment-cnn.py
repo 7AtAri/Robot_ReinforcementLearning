@@ -110,7 +110,7 @@ class RobotEnvironment(gym.Env):
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
-            info (dict): A dictionary containing other diagnostic information from the environment
+            info (dict): A dictionary containing other information from the environment
         """
         # convert action to delta angles and apply them
         delta_angles = self.process_action(action)
@@ -199,8 +199,8 @@ class RobotEnvironment(gym.Env):
         self.helix_points = np.array(self.helix_points_list)
 
         # Print the helix points
-        print("Helix points:")
-        print(self.helix_points)
+        #print("Helix points:")
+        #print(self.helix_points)
 
     def is_on_helix(self, tcp_coords):
         """
@@ -443,7 +443,7 @@ class RobotEnvironment(gym.Env):
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
             
-        print("joint_angles (process action):", self.joint_angles)
+        #print("joint_angles (process action):", self.joint_angles)
         new_angles = self.joint_angles + delta_angles
 
         # Limit the new joint angles within the range of -180 to 180 degrees
@@ -563,7 +563,7 @@ class RobotEnvironment(gym.Env):
         # convert angles to degrees
         alpha,beta,gamma = np.rad2deg([alpha,beta,gamma])
 
-        print("position_tcp: ", position)
+        #print("position_tcp: ", position)
         return position, (alpha, beta, gamma)
 
 
@@ -577,7 +577,7 @@ class RobotEnvironment(gym.Env):
         # get closest point (closest_target_pos)
         closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        print("current_pos:", current_position)
+        #print("current_pos:", current_position)
         print("current_orientation:", current_orientation)
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
