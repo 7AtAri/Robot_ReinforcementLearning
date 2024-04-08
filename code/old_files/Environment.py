@@ -311,8 +311,8 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        plt.legend()
-        plt.show()
+#        plt.legend()
+#        plt.show()
 
 
     def process_action(self, action):

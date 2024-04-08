@@ -49,7 +49,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -63,7 +63,7 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.995 #0.995  # 0.9 for debugging only
+        self.epsilon_decay = 0.99 #0.995  # 0.9 for debugging only
         self.epsilon_min = 0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
@@ -103,8 +103,8 @@ class DQNAgent:
         states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
         states = torch.FloatTensor(np.array(states)).to(device)
         actions = torch.LongTensor(np.array(actions)).to(device)
-        rewards = torch.FloatTensor(np.array(rewards)).to(device)
-        rewards = torch.FloatTensor(rewards).to(device).view(-1) # shape [batch_size]
+        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1)# shape [batch_size]
+        #rewards = torch.FloatTensor(rewards).to(device).view(-1) 
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
         terminated = torch.FloatTensor(np.array(terminated)).to(device)
         truncated = torch.FloatTensor(np.array(truncated)).to(device)
