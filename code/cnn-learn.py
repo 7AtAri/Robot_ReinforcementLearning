@@ -66,8 +66,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.9995 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.95 #0.995  # 0.9 for debugging only
+        self.epsilon_min = 0.1
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))

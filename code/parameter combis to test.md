@@ -28,12 +28,12 @@ epsilon_min: 0.3
 episodes: 500
 batch_size: 16
 epsilon_decay: 0.99
-epsilon_min:  0.1
+epsilon_min:  0.05
 
 episodes: 1000
 batch_size: 32
 epsilon_decay: 0.995
-epsilon_min: 0.2
+epsilon_min: 0.1
 
 parametergrid:
 https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html

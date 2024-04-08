@@ -573,10 +573,11 @@ class RobotEnvironment(gym.Env):
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)
+        print("current_tcp_pos_in_voxel_space (objective func):", current_position)
         closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        #print("current_pos:", current_position)
-        print("current_orientation:", current_orientation)
+        
+        print("current_orientation:", np.round(current_orientation, 2))
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
@@ -605,7 +606,7 @@ class RobotEnvironment(gym.Env):
         closest_point = helix_points[closest_index]
         closest_distance = distances[closest_index]
         print("closest point ", closest_point)
-        print("closest distance ", closest_distance) # double
+        print("closest distance ", np.round(closest_distance,2)) # double
 
         self.closest_distance = closest_distance
 
