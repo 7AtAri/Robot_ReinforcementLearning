@@ -395,8 +395,6 @@ class RobotEnvironment(gym.Env):
         
         # if TCP coordinates are provided and valid, then visualize TCP position
         if self.tcp_position is not None:
-            #print(f"TCP Coordinates: {tcp_coords}")
-            #is_on_path = self.is_on_helix(tcp_coords)
             #print(f"Is TCP on Helix Path: {is_on_path}")
 
             # convert real-world coordinates to indices for visualization
@@ -573,7 +571,7 @@ class RobotEnvironment(gym.Env):
         """
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
-
+        current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)
         closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
