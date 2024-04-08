@@ -21,5 +21,5 @@
 
 # nach abgabe am Mittwoch
 - [ ] helix_point_list evtl von realen werten [Dennis]
-- liste mit allen geringsten distanzen wegen mse pro episode 
-- liste mit allen mse über alle episoden on das ploten mit episdoe auf x achse und mse auf y achse
+- [ ] liste mit allen geringsten distanzen wegen mse pro episode 
+- [x] liste mit allen mse über alle episoden on das ploten mit episdoe auf x achse und mse auf y achse
