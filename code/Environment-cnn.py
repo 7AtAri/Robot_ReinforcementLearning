@@ -311,6 +311,9 @@ class RobotEnvironment(gym.Env):
         self.terminated= False
         self.truncated = False
 
+        # counter for figures names
+        self.figure_count = 1
+
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.initial_joint_angles.tolist(),
