@@ -323,41 +323,6 @@ class RobotEnvironment(gym.Env):
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
         _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
-        ####################################################
-        ## Initialize reward, terminated, and truncated flags
-        #if tcp_on_helix:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 10  # Full reward for reaching helix with correct orientation
-        #    else:
-        #        self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
-        #    self.truncated = False
-#
-        #if self.terminated:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 1000  # Extra reward for reaching the target with correct orientation
-        #    else:
-        #        self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
-#
-        #if self.truncated:
-        #    # Terminate the episode if the TCP is not on the helix any more
-        #    self.reward -= 1
-#
-        ## Adjust reward based on orientation deviation
-        #orientation_reward = 0
-        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        #if deviation_to_last_orientation >= self.last_orientation_deviation:  # If deviation decreased
-        #    orientation_reward = 5  # Moderate reward for maintaining orientation
-        #else:  # If deviation increased
-        #    orientation_reward = -1  # Penalty for deviation from constant orientation
-#
-        ## Save last orientation deviation to check ahead if deviation got better
-        #self.last_orientation_deviation = orientation_deviation
-        ## Add orientation reward to total reward
-        #self.reward += orientation_reward
-
-        ####################################################
-
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
