@@ -20,8 +20,16 @@ params = {
     "epsilon_decay": [0.9, 0.95, 0.99],
     "epsilon_min": [0.01, 0.05, 0.1, 0.2]
 }
-grid = model_selection.ParameterGrid(params)
-
+#grid = model_selection.ParameterGrid(params)
+grid = [{'batch_size': 16, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+ {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
+ {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
+ {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
+ {'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+ {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
+ {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
+ {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
+ {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
 
 
 # mute the MKL warning on macOS
@@ -64,7 +72,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, device, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -197,13 +205,12 @@ if __name__ == "__main__":
     epsilon_decay = 0
     epsilon_min = 0
 
-    for i in range(10):
-        index = random.randint(0, len(grid)-1)
-        params = grid[index]
+    for i in range(len(grid)):
+        params = grid[i]
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
-        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
         for episode in range(episodes):

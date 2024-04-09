@@ -66,10 +66,7 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        #for reward fct 
-        self.old_tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        print(self.old_tcp_position)
-        print(self.tcp_position)
+        self.old_tcp_position = self.tcp_position
         #print("Initial Voxel TCP Position:", self.tcp_position)
         # # set the TCP position in the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
@@ -132,6 +129,7 @@ class RobotEnvironment(gym.Env):
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.old_tcp_position = self.tcp_position
+        self.old_tcp_position = self.tcp_position
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         #print("New Voxel TCP Position in step:", self.tcp_position)
 
@@ -179,7 +177,7 @@ class RobotEnvironment(gym.Env):
         t = np.linspace(0, self.turns, num=int(self.turns*helix_resolution) ) # parameter t from 0 to 2 for 2 complete turns
 
         offset = self.radius
-        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset# 
+        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset  
         helix_y = r * np.sin(2 * np.pi * t + np.pi)  
         helix_z = h * t  
 
@@ -362,6 +360,7 @@ class RobotEnvironment(gym.Env):
 
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
+        if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
             self.truncated = False
         if self.terminated:
@@ -421,8 +420,8 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-#        plt.legend()
-#        plt.show()
+        #.legend()
+        #plt.show()
 
 
     def process_action(self, action):

@@ -7,11 +7,16 @@ from collections import deque # queue for efficiently adding and removing elemen
 import gymnasium as gym
 from gymnasium.envs.registration import register
 import torch.nn.functional as F
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
 import os
-# mute the MKL warning on macOS
+
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
-os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
+# mute the MKL warning on macOS
+#os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
+
+torch.set_default_dtype(torch.float)
 
 
 class QNetworkCNN(nn.Module):
@@ -23,7 +28,7 @@ class QNetworkCNN(nn.Module):
         self.conv2 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
         
         # Use a dummy input to calculate flat features
-        self.flat_features = self.calculate_flat_features(torch.zeros(1, state_size[0], state_size[1], state_size[2], state_size[3]))
+        self.flat_features = self.calculate_flat_features(torch.zeros(1, state_size[0], state_size[1], state_size[2], state_size[3]).float())
         
         # Initialize fully connected layers using the calculated flat_features
         self.fc1 = nn.Linear(self.flat_features, 256)
@@ -49,7 +54,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min,device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.state_size = state_size
         self.actions = actions
         self.batch_size = batch_size
@@ -65,8 +70,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.95 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.25
+        self.epsilon_decay = epsilon_decay#0.995  # 0.9 for debugging only
+        self.epsilon_min = epsilon_min
 
     def add_experience(self, state, action, reward, next_state, done):
         # keep experience in n-step buffer
@@ -117,7 +122,7 @@ class DQNAgent:
 
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
-        states = torch.FloatTensor(np.array(states)).to(device)
+        states = torch.FloatTensor(np.array(states))
         actions = torch.LongTensor(np.array(actions)).to(device)
         rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
@@ -126,7 +131,7 @@ class DQNAgent:
         actions = actions.long()
         # actions is of shape [batch_size], containing the index of the action taken for each batch item
         actions = actions.view(-1, 6, 1)  # reshape for gathering: [batch_size*6, 1]
-
+        states = states.float().to(device)  # Ensure states is a FloatTensor 
         # get the q-values from the q-network for the current states
         Q_values = self.q_network(states) # this returns Q(s,a) for all actions a
         # get the q-values for the actions taken
@@ -163,6 +168,15 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
+    grid = [{'batch_size': 16, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
+                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
+                {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
+                {'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
+                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
+                {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
+                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -176,49 +190,76 @@ if __name__ == "__main__":
     print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    agent = DQNAgent(state_size, actions, device=device)
-    print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 100
-    for episode in range(episodes):
-        state, info = env.reset()  
-        #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
-        terminated = False
-        truncated = False
-        step_counter = 0
-        total_reward = 0
-        while not terminated and not truncated:
-            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-            action = agent.act(state)
-            #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  
-            # if step_counter > 1:
-            #     env.render()
+    episodes = 0
+    epsilon_decay = 0
+    epsilon_min = 0
+
+    for i in range(len(grid)):
+        params = grid[i]
+        for key, val in params.items():
+            exec(key + '=val')   # assign the values to the hyperparameters
+        # initialize the agent
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
+
+        #agent = DQNAgent(state_size, actions, device=device)
+        print(f"State size: {state_size}, Action size: {actions}")
+
+        min_distances = [] # list to save the minum distanz of ech episode
+        min_distance_tcp_helix = None
+   
+        for episode in range(episodes):
+            state, info = env.reset()  
+            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            terminated = False
+            truncated = False
+            step_counter = 0
+            total_reward = 0
+            while not terminated and not truncated:
+                # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
+                action = agent.act(state)
+                #print("action:", action)
+                next_state, reward, terminated, truncated, info = env.step(action)  
+                # if step_counter > 1:
+                #     env.render()
+                min_distance_tcp_helix = info['closest_distance']
+                #print("next_state:", next_state)
+                #print("next_state shape:", next_state.shape)
+                #next_state = np.reshape(next_state, [1, state_size])
+                agent.add_experience(state, action, reward, next_state, terminated or truncated)
+                state = next_state
+                total_reward += reward
+                step_counter += 1
+                print("total_reward", total_reward)
+                print("terminated:", terminated)
+                print("truncated:", truncated)
             
-            #print("next_state:", next_state)
-            #print("next_state shape:", next_state.shape)
-            #next_state = np.reshape(next_state, [1, state_size])
-            agent.add_experience(state, action, reward, next_state, terminated or truncated)
-            state = next_state
-            total_reward += reward
-            step_counter += 1
-            print("total_reward", total_reward)
-            print("terminated:", terminated)
-            print("truncated:", truncated)
-        
-        while len(agent.n_step_buffer) > 0:
-            n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
-            first_experience = agent.n_step_buffer.popleft()
-            agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
-            
-        if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        agent.replay()
-        if episode % 10 == 0:
-            #env.render()
-            agent.update_target_network()
+            while len(agent.n_step_buffer) > 0:
+                n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
+                first_experience = agent.n_step_buffer.popleft()
+                agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
+                
+            min_distances.append(min_distance_tcp_helix) # same size as episode
+            if terminated or truncated:
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            agent.replay()
+            if episode % 10 == 0:
+                #env.render()
+                agent.update_target_network()
+
+        # calcualte mse for each episode --> first arg is expected distanz --> zero?
+        mse = mean_squared_error(np.zeros(episodes), min_distances)
+        # wenn for beednet wurde
+        # loop draußen dann mse plot
+        # Erstellen des Plots
+        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+        plt.xlabel('Episode')
+        plt.ylabel('MSE')
+        plt.title('Mean Squared Error (MSE) über Episoden')
+        plt.grid(True)
+        plt.show()
 
 
 
