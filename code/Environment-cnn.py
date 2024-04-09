@@ -75,8 +75,8 @@ class RobotEnvironment(gym.Env):
 
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        print("TCP on Helix:", self.tcp_on_helix)
-        self.tcp_orientation= None
+        #print("TCP on Helix:", self.tcp_on_helix)
+        self.tcp_orientation= self.init_orientation
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
@@ -419,8 +419,8 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        #.legend()
-        #plt.show()
+        plt.legend()
+        plt.show()
 
 
     def process_action(self, action):
