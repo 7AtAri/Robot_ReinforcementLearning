@@ -2,10 +2,10 @@
 
 ## gif von tcp auf helix (Dennis)
 
-- [ ] render() speichen alle 5-10 steps
-- [ ] in Ordner mit eigenem episode name
-- [ ] lange episoden ordner behalten, kurze löschen (zähle elemente in Ordner)
-- [ ] MSE plot speichern in selben Ordner statt show()
+- [x] render() speichen alle 5-10 steps
+- [x] in Ordner mit eigenem episode name
+- [x] lange episoden ordner behalten, kurze löschen (zähle elemente in Ordner)
+- [x] MSE plot speichern in selben Ordner statt show()
 
 ## wenn das lernen prinzipiell funktioniert
 
