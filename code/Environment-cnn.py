@@ -97,6 +97,9 @@ class RobotEnvironment(gym.Env):
         self.closest_distance = None
         self.closest_point = None
 
+        # counter for figures names 
+        self.figure_count = 1
+
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -308,6 +311,9 @@ class RobotEnvironment(gym.Env):
         self.reward = 0
         self.terminated= False
         self.truncated = False
+        
+        # counter for figures names
+        self.figure_count = 1
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -385,8 +391,33 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        plt.legend()
-        plt.show()
+        #plt.legend()
+        #plt.show()
+
+        if not os.path.exists('Episode1'):
+            os.makedirs('Episode1')
+        # Create directory if not exists
+        if not os.path.exists('Episode2'):
+            os.makedirs('Episode2')
+        if not os.listdir("Episode1"): # ordner is empty
+            # Save the figure
+            plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
+            # gucekn wie viele elemente im ordner sind    
+        else:   # is not empty
+            if not os.listdir("Episode2"): # ordner is empty
+                # Save the figure
+                plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))          
+            else: # ordner empty
+            # compare both folders and save in the folder which has less files
+                num_files_in_Episode1 = len(os.listdir("Episode1"))
+                num_files_in_Episode2 = len(os.listdir("Episode2"))
+
+                if num_files_in_Episode1 >= num_files_in_Episode2:
+                    plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))
+                else:
+                    plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
+        
+        self.figure_count += 1
 
 
     def process_action(self, action):
