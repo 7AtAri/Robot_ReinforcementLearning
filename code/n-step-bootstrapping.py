@@ -11,10 +11,12 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 import os
-# mute the MKL warning on macOS
-print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
-os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
+print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
+# mute the MKL warning on macOS
+#os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
+
+torch.set_default_dtype(torch.float)
 
 class QNetworkCNN(nn.Module):
     def __init__(self, state_size, actions):
@@ -25,7 +27,7 @@ class QNetworkCNN(nn.Module):
         self.conv2 = nn.Conv3d(64, 128, kernel_size=3, stride=1, padding=1)
         
         # Use a dummy input to calculate flat features
-        self.flat_features = self.calculate_flat_features(torch.zeros(1, state_size[0], state_size[1], state_size[2], state_size[3]))
+        self.flat_features = self.calculate_flat_features(torch.zeros(1, state_size[0], state_size[1], state_size[2], state_size[3]).float())
         
         # Initialize fully connected layers using the calculated flat_features
         self.fc1 = nn.Linear(self.flat_features, 256)
@@ -51,7 +53,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min,device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.state_size = state_size
         self.actions = actions
         self.batch_size = batch_size
@@ -67,8 +69,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.95 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.25
+        self.epsilon_decay = epsilon_decay#0.995  # 0.9 for debugging only
+        self.epsilon_min = epsilon_min
 
     def add_experience(self, state, action, reward, next_state, done):
         # keep experience in n-step buffer
@@ -119,7 +121,7 @@ class DQNAgent:
 
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, next_states, dones = zip(*minibatch)
-        states = torch.FloatTensor(np.array(states)).to(device)
+        states = torch.FloatTensor(np.array(states))
         actions = torch.LongTensor(np.array(actions)).to(device)
         rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
@@ -128,7 +130,7 @@ class DQNAgent:
         actions = actions.long()
         # actions is of shape [batch_size], containing the index of the action taken for each batch item
         actions = actions.view(-1, 6, 1)  # reshape for gathering: [batch_size*6, 1]
-
+        states = states.float().to(device)  # Ensure states is a FloatTensor 
         # get the q-values from the q-network for the current states
         Q_values = self.q_network(states) # this returns Q(s,a) for all actions a
         # get the q-values for the actions taken
@@ -198,7 +200,7 @@ if __name__ == "__main__":
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
-        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
 
         #agent = DQNAgent(state_size, actions, device=device)
         print(f"State size: {state_size}, Action size: {actions}")

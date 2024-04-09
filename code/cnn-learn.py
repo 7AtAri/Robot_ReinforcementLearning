@@ -72,7 +72,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, device, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -210,7 +210,7 @@ if __name__ == "__main__":
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
-        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
         for episode in range(episodes):

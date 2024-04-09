@@ -174,7 +174,7 @@ class RobotEnvironment(gym.Env):
         t = np.linspace(0, self.turns, num=int(self.turns*helix_resolution) ) # parameter t from 0 to 2 for 2 complete turns
 
         offset = self.radius
-        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset# 
+        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset  
         helix_y = r * np.sin(2 * np.pi * t + np.pi)  
         helix_z = h * t  
 
