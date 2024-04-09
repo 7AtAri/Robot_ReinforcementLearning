@@ -7,8 +7,23 @@ from collections import deque # queue for efficiently adding and removing elemen
 import gymnasium as gym
 from gymnasium.envs.registration import register
 import torch.nn.functional as F
-
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 import os
+from sklearn import model_selection
+
+# generating parameter grid
+params = {
+    "episodes": [100, 200, 300, 500, 1000],
+    "batch_size": [8, 16, 32, 64],
+    #"gamma": [0.9, 0.95, 0.99],
+    "epsilon_decay": [0.9, 0.95, 0.99],
+    "epsilon_min": [0.01, 0.05, 0.1, 0.2]
+}
+grid = model_selection.ParameterGrid(params)
+
+
+
 # mute the MKL warning on macOS
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -49,7 +64,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -63,8 +78,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.99 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.01
+        self.epsilon_decay = epsilon_decay #0.9995 #0.995  # 0.9 for debugging only
+        self.epsilon_min = epsilon_min #0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
@@ -81,7 +96,7 @@ class DQNAgent:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
             print("exploring: random action")
-            print("action shape:", len(action))
+            #print("action shape:", len(action))
             return action # shape [6] ?
             
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
@@ -91,7 +106,7 @@ class DQNAgent:
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
-        print("action shape:", len(action))
+        #print("action shape:", len(action))
         print("-------------------------------")
         return action
 
@@ -103,8 +118,7 @@ class DQNAgent:
         states, actions, rewards, next_states, terminated, truncated = zip(*minibatch)
         states = torch.FloatTensor(np.array(states)).to(device)
         actions = torch.LongTensor(np.array(actions)).to(device)
-        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1)# shape [batch_size]
-        #rewards = torch.FloatTensor(rewards).to(device).view(-1) 
+        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
         terminated = torch.FloatTensor(np.array(terminated)).to(device)
         truncated = torch.FloatTensor(np.array(truncated)).to(device)
@@ -155,7 +169,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -173,43 +187,69 @@ if __name__ == "__main__":
     )
 
     env = gym.make('RobotEnvironment-v1')
-    print("obs space:", env.observation_space.shape)
+    #print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    agent = DQNAgent(state_size, actions)
     print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 100
-    for episode in range(episodes):
-        state, info = env.reset()  
-        #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
-        terminated = False
-        truncated = False
-        step_counter = 0
-        total_reward = 0
-        while not terminated and not truncated:
-            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-            action = agent.act(state)
-            #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  
-            if step_counter > 1:
-                env.render()
-            step_counter += 1
-            #print("next_state:", next_state)
-            #print("next_state shape:", next_state.shape)
-            #next_state = np.reshape(next_state, [1, state_size])
-            agent.remember(state, action, reward, next_state, terminated, truncated)
-            state = next_state
-            total_reward += reward
-            print("total_reward", total_reward)
-            print("terminated:", terminated)
-            print("truncated:", truncated)
+    episodes = 0
+    epsilon_decay = 0
+    epsilon_min = 0
+
+    for i in range(10):
+        index = random.randint(0, len(grid)-1)
+        params = grid[index]
+        for key, val in params.items():
+            exec(key + '=val')   # assign the values to the hyperparameters
+        # initialize the agent
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+        min_distances = [] # list to save the minum distanz of ech episode
+        min_distance_tcp_helix = None
+        for episode in range(episodes):
+            state, info = env.reset()  
+            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            terminated = False
+            truncated = False
+            step_counter = 0
+            total_reward = 0
+            while not terminated and not truncated:
+                # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
+                action = agent.act(state)
+                #print("action:", action)
+                next_state, reward, terminated, truncated, info = env.step(action)  
+                #print("info",info)
+                step_counter += 1
+                #print("next_state:", next_state)
+                #print("next_state shape:", next_state.shape)
+                #next_state = np.reshape(next_state, [1, state_size])
+                agent.remember(state, action, reward, next_state, terminated, truncated)
+                state = next_state
+                total_reward += reward
+                print("total reward:", total_reward)
+                #print("terminated:", terminated)
+                #print("truncated:", truncated)
+                min_distance_tcp_helix = info['closest_distance']
+                #print("min_distance_tcp_helix", min_distance_tcp_helix)
             
-        if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        agent.replay()
-        if episode % 10 == 0:
-            #env.render()
-            agent.update_target_network()
+            # when episode finsihed append closest_distance between tcp pos and helix voxel
+            min_distances.append(min_distance_tcp_helix) # same size as episode
+            if terminated or truncated:
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            agent.replay()
+            if episode % 10 == 0:
+                #env.render()
+                agent.update_target_network()
+        
+        # calcualte mse for each episode --> first arg is expected distanz --> zero?
+        mse = mean_squared_error(np.zeros(episodes), min_distances)
+        # wenn for beednet wurde
+        # loop draußen dann mse plot
+        # Erstellen des Plots
+        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+        plt.xlabel('Episode')
+        plt.ylabel('MSE')
+        plt.title('Mean Squared Error (MSE) über Episoden')
+        plt.grid(True)
+        plt.show()
