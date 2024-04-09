@@ -7,6 +7,8 @@ from collections import deque # queue for efficiently adding and removing elemen
 import gymnasium as gym
 from gymnasium.envs.registration import register
 import torch.nn.functional as F
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
 import os
 # mute the MKL warning on macOS
@@ -163,6 +165,15 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
+    grid = [{'batch_size': 16, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
+                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
+                {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
+                {'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
+                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
+                {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
+                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -176,49 +187,77 @@ if __name__ == "__main__":
     print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    agent = DQNAgent(state_size, actions, device=device)
-    print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
-    episodes = 100
-    for episode in range(episodes):
-        state, info = env.reset()  
-        #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
-        terminated = False
-        truncated = False
-        step_counter = 0
-        total_reward = 0
-        while not terminated and not truncated:
-            # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-            action = agent.act(state)
-            #print("action:", action)
-            next_state, reward, terminated, truncated, _ = env.step(action)  
-            # if step_counter > 1:
-            #     env.render()
+    episodes = 0
+    epsilon_decay = 0
+    epsilon_min = 0
+
+    for i in range(10):
+        index = random.randint(0, len(grid)-1)
+        params = grid[index]
+        for key, val in params.items():
+            exec(key + '=val')   # assign the values to the hyperparameters
+        # initialize the agent
+        agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min)
+
+        #agent = DQNAgent(state_size, actions, device=device)
+        print(f"State size: {state_size}, Action size: {actions}")
+
+        min_distances = [] # list to save the minum distanz of ech episode
+        min_distance_tcp_helix = None
+   
+        for episode in range(episodes):
+            state, info = env.reset()  
+            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            terminated = False
+            truncated = False
+            step_counter = 0
+            total_reward = 0
+            while not terminated and not truncated:
+                # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
+                action = agent.act(state)
+                #print("action:", action)
+                next_state, reward, terminated, truncated, info = env.step(action)  
+                # if step_counter > 1:
+                #     env.render()
+                min_distance_tcp_helix = info['closest_distance']
+                #print("next_state:", next_state)
+                #print("next_state shape:", next_state.shape)
+                #next_state = np.reshape(next_state, [1, state_size])
+                agent.add_experience(state, action, reward, next_state, terminated or truncated)
+                state = next_state
+                total_reward += reward
+                step_counter += 1
+                print("total_reward", total_reward)
+                print("terminated:", terminated)
+                print("truncated:", truncated)
             
-            #print("next_state:", next_state)
-            #print("next_state shape:", next_state.shape)
-            #next_state = np.reshape(next_state, [1, state_size])
-            agent.add_experience(state, action, reward, next_state, terminated or truncated)
-            state = next_state
-            total_reward += reward
-            step_counter += 1
-            print("total_reward", total_reward)
-            print("terminated:", terminated)
-            print("truncated:", truncated)
-        
-        while len(agent.n_step_buffer) > 0:
-            n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
-            first_experience = agent.n_step_buffer.popleft()
-            agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
-            
-        if terminated or truncated:
-            print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        agent.replay()
-        if episode % 10 == 0:
-            #env.render()
-            agent.update_target_network()
+            while len(agent.n_step_buffer) > 0:
+                n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
+                first_experience = agent.n_step_buffer.popleft()
+                agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
+                
+            min_distances.append(min_distance_tcp_helix) # same size as episode
+            if terminated or truncated:
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            agent.replay()
+            if episode % 10 == 0:
+                #env.render()
+                agent.update_target_network()
+
+        # calcualte mse for each episode --> first arg is expected distanz --> zero?
+        mse = mean_squared_error(np.zeros(episodes), min_distances)
+        # wenn for beednet wurde
+        # loop draußen dann mse plot
+        # Erstellen des Plots
+        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+        plt.xlabel('Episode')
+        plt.ylabel('MSE')
+        plt.title('Mean Squared Error (MSE) über Episoden')
+        plt.grid(True)
+        plt.show()
 
 
 
