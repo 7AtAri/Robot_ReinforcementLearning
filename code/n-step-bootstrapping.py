@@ -253,13 +253,16 @@ if __name__ == "__main__":
         mse = mean_squared_error(np.zeros(episodes), min_distances)
         # wenn for beednet wurde
         # loop draußen dann mse plot
+        
         # Erstellen des Plots
         plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
-        plt.show()
+        # Save the figure
+        plt.savefig(os.path.join('Figure_1', 'MSE.png'))
+        #plt.show()
 
 
 
