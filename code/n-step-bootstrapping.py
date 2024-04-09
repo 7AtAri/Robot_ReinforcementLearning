@@ -234,7 +234,7 @@ if __name__ == "__main__":
                 print("total_reward", total_reward)
                 print("terminated:", terminated)
                 print("truncated:", truncated)
-            
+
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
