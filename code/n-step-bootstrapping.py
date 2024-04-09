@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+
 import os
 
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
@@ -18,7 +19,17 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 
 torch.set_default_dtype(torch.float)
 
+class LogStore():
+    def __init__(self):
+        self.filename = ""
 
+    def setfilename(self,name):
+        self.filename = name
+
+    def write_to_log(self, input):
+            with open("code/" +self.filename + ".txt", 'a') as log:
+                log.write(input + "\n")
+    
 class QNetworkCNN(nn.Module):
     def __init__(self, state_size, actions):
         super(QNetworkCNN, self).__init__()
@@ -100,19 +111,19 @@ class DQNAgent:
         if np.random.rand() <= self.epsilon:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
-            print("exploring: random action")
-            print("action shape:", len(action))
+            log.write_to_log("exploring: random action")
+            log.write_to_log( "action shape: " + str(len(action)))
             return action # shape [6] ?
             
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
         q_values = self.q_network(state)
-        print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
+        log.write_to_log("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
         
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
-        print("action shape:", len(action))
-        print("-------------------------------")
+        log.write_to_log("action shape:" + str(len(action)))
+        log.write_to_log("-------------------------------")
         return action
 
 
@@ -160,7 +171,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            log.write_to_log("epsilon reduced: " + str(self.epsilon))
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -168,26 +179,28 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 16, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    grid = [{'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
-                {'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
-                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
+                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+                {'batch_size': 64, 'episodes': 200, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
                 {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
                 {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
                 {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+    #creates logclass
+    log = LogStore()
+    log.setfilename("Setup")
     register(
         id='RobotEnvironment-v1',
         entry_point='Environment-cnn:RobotEnvironment',
     )
 
     env = gym.make('RobotEnvironment-v1')
-    print("obs space:", env.observation_space.shape)
+    log.write_to_log("obs space: " + str(env.observation_space.shape))
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
 
@@ -198,13 +211,14 @@ if __name__ == "__main__":
 
     for i in range(len(grid)):
         params = grid[i]
+        log.setfilename("Grid_" + str(i))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
         agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
 
         #agent = DQNAgent(state_size, actions, device=device)
-        print(f"State size: {state_size}, Action size: {actions}")
+        log.write_to_log(f"State size: {state_size}, Action size: {actions}")
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
@@ -231,9 +245,9 @@ if __name__ == "__main__":
                 state = next_state
                 total_reward += reward
                 step_counter += 1
-                print("total_reward", total_reward)
-                print("terminated:", terminated)
-                print("truncated:", truncated)
+                log.write_to_log("total_reward " + str(total_reward))
+                log.write_to_log("terminated:" + str(terminated))
+                log.write_to_log("truncated:" + str(truncated))
             
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
@@ -242,8 +256,8 @@ if __name__ == "__main__":
                 
             min_distances.append(min_distance_tcp_helix) # same size as episode
             if terminated or truncated:
-                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             agent.replay()
             if episode % 10 == 0:
                 #env.render()
