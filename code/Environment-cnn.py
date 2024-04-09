@@ -87,7 +87,7 @@ class RobotEnvironment(gym.Env):
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
         
         # tcp pos tolerance
-        self.tolerance_tcp_pos = 0.001 # 1 mm tolerance
+        self.tolerance_tcp_pos = 0.00142 # in stead of 1 mm tolerance diagonale vom Voxel
 
         # helixpoints
         self.helix_points = 0
@@ -170,7 +170,8 @@ class RobotEnvironment(gym.Env):
         # initialize helix
         r = self.radius  # radius 
         h = self.height_per_turn # height per turn 
-        t = np.linspace(0, self.turns, num=int(self.turns*100) ) # parameter t from 0 to 2 for 2 complete turns
+        helix_resolution = 200
+        t = np.linspace(0, self.turns, num=int(self.turns*helix_resolution) ) # parameter t from 0 to 2 for 2 complete turns
 
         offset = self.radius
         helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset# 
@@ -178,17 +179,15 @@ class RobotEnvironment(gym.Env):
         helix_z = h * t  
 
         # Initialize an empty list to store the helix points
+        self.helix_points_list = []
         self.helix_points_list = [helix_x, helix_y, helix_z]
-        # Append the helix coordinates to the helix_points_list
-        #self.helix_points_list.append([helix_x, helix_y, helix_z])
+
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
-            # Append the indices to the helix_points_list
             #self.helix_points_list.append([x_idx, y_idx, z_idx])
-
             if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
                 if i == len(helix_x) - 1:  # last helix point
                     self.voxel_space[x_idx, y_idx, z_idx] = 1
@@ -202,8 +201,8 @@ class RobotEnvironment(gym.Env):
         self.helix_points = np.array(self.helix_points_list)
 
         # Print the helix points
-        print("Helix points:")
-        print(self.helix_points)
+        #print("Helix points:")
+        #print(self.helix_points)
 
     def is_on_helix(self, tcp_coords):
         """
@@ -249,7 +248,7 @@ class RobotEnvironment(gym.Env):
                 # Check if the distance to the helix is less than or equal to 0.001
                 _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
                 #max_distance = np.max(closest_distance)
-                if closest_distance <= 0.001:
+                if closest_distance <= self.tolerance_tcp_pos:
                     print("TCP is close to the helix.")
                     self.truncated = False
                     return True
@@ -636,7 +635,7 @@ class RobotEnvironment(gym.Env):
         closest_distance = distances[closest_index]
 
         print("closest point ", closest_point)
-        print("closest distance ", np.round(closest_distance,2)) # double
+        print("closest distance ", np.round(closest_distance,4)) # double
         #x_idx = int(round(closest_point[0] / self.resolution))
         x_idx = (closest_point[0] - self.x_range[0]) / self.resolution
         y_idx = (closest_point[1] - self.y_range[0]) / self.resolution
