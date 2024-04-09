@@ -217,7 +217,8 @@ if __name__ == "__main__":
             step_counter = 0
             total_reward = 0
 
-            prev_episode_steps = 0 # counter for max steps per episode
+            #prev_episode_steps = 0 # counter for max steps per episode
+            #episode_with_more_steps = False
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action = agent.act(state)
@@ -237,11 +238,12 @@ if __name__ == "__main__":
                 print("terminated:", terminated)
                 print("truncated:", truncated)
 
-                if step_counter > prev_episode_steps:  # Check if the number of steps in the current episode is greater than the previous episode
-                    if step_counter % 2 == 0:  # Check if the current step is a multiple of 5
-                        env.render()
-                        prev_episode_steps = step_counter  # Update the number of steps in the previous episode
-
+                #if step_counter > prev_episode_steps:
+                #    episode_with_more_steps = True
+                #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+                if step_counter % 4 == 0:  # Check if the number of steps in the current episode is greater than the previous episode
+                    env.render()
+                    
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()

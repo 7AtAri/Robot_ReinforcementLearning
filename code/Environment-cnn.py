@@ -99,7 +99,6 @@ class RobotEnvironment(gym.Env):
         # counter variable for saving the figures with different names
         self.figure_count = 1
 
-
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
         the reward for taking that actions,
@@ -428,15 +427,35 @@ class RobotEnvironment(gym.Env):
         #.legend()
         #plt.show()
 
+        # wenn order leer in epsiode 1
+        # wenn was drin dann epsidoe 2 ordner speicher 
+        # verglecih im else welcher mehr elemente hat der kleinere wird neu geschirebn
         # Create directory if not exists
-        if not os.path.exists('Figure_1'):
-            os.makedirs('Figure_1')
+        if not os.path.exists('Episode1'):
+            os.makedirs('Episode1')
+        # Create directory if not exists
+        if not os.path.exists('Episode2'):
+            os.makedirs('Episode2')
+        if not os.listdir("Episode1"): # ordner is empty
+            # Save the figure
+            plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
+            # gucekn wie viele elemente im ordner sind    
+        else:   # is not empty
+            if not os.listdir("Episode2"): # ordner is empty
+                # Save the figure
+                plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))          
+            else: # ordner empty
+            # compare both folders and save in the folder which has less files
+                num_files_in_Episode1 = len(os.listdir("Epdisode1"))
+                num_files_in_Episode2 = len(os.listdir("Epdisode2"))
 
-        # Save the figure
-        plt.savefig(os.path.join('Figure_1', f'Figure_{self.figure_count}.png'))
+                if num_files_in_Episode1 > num_files_in_Episode2:
+                    plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))
+                else:
+                    plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
+        
         self.figure_count += 1
-
-
+        
     def process_action(self, action):
         """
         Process the action provided to generate new joint angles.
