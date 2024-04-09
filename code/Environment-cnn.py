@@ -75,6 +75,7 @@ class RobotEnvironment(gym.Env):
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
         print("TCP on Helix:", self.tcp_on_helix)
+        self.tcp_orientation= None
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
@@ -177,14 +178,16 @@ class RobotEnvironment(gym.Env):
         helix_z = h * t  
 
         # Initialize an empty list to store the helix points
-        self.helix_points_list = []
+        self.helix_points_list = [helix_x, helix_y, helix_z]
+        # Append the helix coordinates to the helix_points_list
+        #self.helix_points_list.append([helix_x, helix_y, helix_z])
         # mark the voxels on the helix path:
         for i in range(len(helix_x)):
             x_idx = int(round((helix_x[i] - self.x_range[0]) / self.resolution))
             y_idx = int(round((helix_y[i] - self.y_range[0]) / self.resolution))
             z_idx = int(round((helix_z[i] - self.z_range[0]) / self.resolution))
             # Append the indices to the helix_points_list
-            self.helix_points_list.append([x_idx, y_idx, z_idx])
+            #self.helix_points_list.append([x_idx, y_idx, z_idx])
 
             if 0 <= x_idx < self.x_size and 0 <= y_idx < self.y_size and 0 <= z_idx < self.z_size:
                 if i == len(helix_x) - 1:  # last helix point
@@ -199,8 +202,8 @@ class RobotEnvironment(gym.Env):
         self.helix_points = np.array(self.helix_points_list)
 
         # Print the helix points
-        #print("Helix points:")
-        #print(self.helix_points)
+        print("Helix points:")
+        print(self.helix_points)
 
     def is_on_helix(self, tcp_coords):
         """
@@ -405,7 +408,7 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
         ax.scatter([x_idx], [y_idx], [z_idx], c='orange', s=100, alpha= 1, label='TCP Position')
         # Erstellen Sie den Pfeil für die Orientierung
-        ax.quiver(x_idx, y_idx, z_idx, self.constant_orientation[0], self.constant_orientation[1], self.constant_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
+        ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
         # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
@@ -561,6 +564,7 @@ class RobotEnvironment(gym.Env):
         # convert angles to degrees
         alpha,beta,gamma = np.rad2deg([alpha,beta,gamma])
 
+        self.tcp_orientation = (alpha, beta, gamma)
         #print("position_tcp: ", position)
         return position, (alpha, beta, gamma)
 
@@ -591,25 +595,58 @@ class RobotEnvironment(gym.Env):
 
         return position_error, orientation_errors, closes_distance
     
+    #def find_closest_helix_point(self, current_tcp_position, helix_points):
+    #    """
+    #    Find the closest point on the helix to the current TCP position.
+    #    """
+    #    # calculate distance between every helix point and every current tcp position
+    #    distances_x = np.linalg.norm(helix_points[0] - current_tcp_position[0])
+    #    distances_y = np.linalg.norm(helix_points[1] - current_tcp_position[1])
+    #    distances_z = np.linalg.norm(helix_points[2] - current_tcp_position[2])
+    #    distances = [distances_x, distances_y, distances_z]
+    #    # find index with smallest distance
+    #    closest_index_x = np.argmin(distances_x)
+    #    closest_index_y = np.argmin(distances_y)
+    #    closest_index_z = np.argmin(distances_z)
+    #    closest_index = [closest_index_x, closest_index_y, closest_index_z]
+    #    # Return of the point on the helix closest to the current TCP position and the corresponding distance
+    #    closest_point = helix_points[closest_index]
+    #    closest_distance = distances[closest_index]
+    #    print("closest point ", closest_point)
+    #    print("closest distance ", closest_distance) # double
+#
+    #    self.closest_distance = closest_distance
+#
+    #    return closest_point, closest_distance
+
     def find_closest_helix_point(self, current_tcp_position, helix_points):
         """
         Find the closest point on the helix to the current TCP position.
         """
-        # calculate distance between every heliy point and every current tcp position
-        #distances = np.abs(helix_points - current_tcp_position)
-        distances = np.linalg.norm(helix_points - current_tcp_position, axis=1)
+        # calculate distance between every helix point and every current tcp position
+        differences = helix_points - current_tcp_position.reshape(3, 1)
+        distances = np.linalg.norm(differences, axis=0)
+
         # find index with smallest distance
         closest_index = np.argmin(distances)
 
         # Return of the point on the helix closest to the current TCP position and the corresponding distance
-        closest_point = helix_points[closest_index]
+        closest_point = helix_points[:, closest_index]
         closest_distance = distances[closest_index]
+
         print("closest point ", closest_point)
         print("closest distance ", closest_distance) # double
-
+        #x_idx = int(round(closest_point[0] / self.resolution))
+        x_idx = (closest_point[0] - self.x_range[0]) / self.resolution
+        y_idx = (closest_point[1] - self.y_range[0]) / self.resolution
+        z_idx = (closest_point[2] - self.z_range[0]) / self.resolution
+        test = [ x_idx,  y_idx,  z_idx]
+        print("closest_point invoxel_space", test)
         self.closest_distance = closest_distance
 
         return closest_point, closest_distance
+
+
 
     # def get_closest_distance_tcp_helix(self):
     #     return self.closest_distance_TCP_Helix
