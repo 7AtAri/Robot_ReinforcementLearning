@@ -17,10 +17,11 @@ params = {
     "episodes": [100, 200, 300, 500, 1000],
     "batch_size": [8, 16, 32, 64],
     #"gamma": [0.9, 0.95, 0.99],
-    "epsilon_decay": [0.9, 0.95, 0.995],
+    "epsilon_decay": [0.9, 0.95, 0.99],
     "epsilon_min": [0.01, 0.05, 0.1, 0.2]
 }
 grid = model_selection.ParameterGrid(params)
+
 
 
 # mute the MKL warning on macOS
@@ -63,7 +64,7 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
-    def __init__(self, state_size, actions, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
+    def __init__(self, state_size, actions, epsilon_decay, epsilon_min, lr=5e-4, gamma=0.99, batch_size=16, buffer_size=10000):
         self.state_size = state_size
         self.actions= actions
         self.batch_size = batch_size
@@ -77,8 +78,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.95 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.1
+        self.epsilon_decay = epsilon_decay #0.9995 #0.995  # 0.9 for debugging only
+        self.epsilon_min = epsilon_min #0.01
 
     def remember(self, state, action, reward, next_state, terminated, truncated):
         self.memory.append((state, action, reward, next_state, terminated, truncated))
@@ -189,7 +190,7 @@ if __name__ == "__main__":
     #print("obs space:", env.observation_space.shape)
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
-    #print(f"State size: {state_size}, Action size: {actions}")
+    print(f"State size: {state_size}, Action size: {actions}")
 
     # # Training loop
     episodes = 0
@@ -225,7 +226,7 @@ if __name__ == "__main__":
                 agent.remember(state, action, reward, next_state, terminated, truncated)
                 state = next_state
                 total_reward += reward
-                #print("total reward:", total_reward)
+                print("total reward:", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
                 min_distance_tcp_helix = info['closest_distance']
@@ -241,10 +242,8 @@ if __name__ == "__main__":
                 #env.render()
                 agent.update_target_network()
         
-        
         # calcualte mse for each episode --> first arg is expected distanz --> zero?
         mse = mean_squared_error(np.zeros(episodes), min_distances)
-        print(f"--------------------Hyperparameters: {params}, MSE:{mse}---------------------------------")
         # wenn for beednet wurde
         # loop draußen dann mse plot
         # Erstellen des Plots
