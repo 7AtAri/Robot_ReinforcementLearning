@@ -75,15 +75,15 @@ class RobotEnvironment(gym.Env):
 
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        print("TCP on Helix:", self.tcp_on_helix)
-        self.tcp_orientation= None
+        #print("TCP on Helix:", self.tcp_on_helix)
+        self.tcp_orientation= self.init_orientation
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
-        self.constant_orientation = (0, 0, -180)  # Roll-, pitch- und yaw in rad
+        self.constant_orientation = (0, 0, 180)  # Roll-, pitch- und yaw in rad
         #self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
         
@@ -96,8 +96,6 @@ class RobotEnvironment(gym.Env):
         # closest distance
         self.closest_distance = None
 
-        # counter variable for saving the figures with different names
-        self.figure_count = 1
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -310,9 +308,6 @@ class RobotEnvironment(gym.Env):
         self.terminated= False
         self.truncated = False
 
-        # counter for figures names
-        self.figure_count = 1
-
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.initial_joint_angles.tolist(),
@@ -424,38 +419,10 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        #.legend()
-        #plt.show()
+        plt.legend()
+        plt.show()
 
-        # wenn order leer in epsiode 1
-        # wenn was drin dann epsidoe 2 ordner speicher 
-        # verglecih im else welcher mehr elemente hat der kleinere wird neu geschirebn
-        # Create directory if not exists
-        if not os.path.exists('Episode1'):
-            os.makedirs('Episode1')
-        # Create directory if not exists
-        if not os.path.exists('Episode2'):
-            os.makedirs('Episode2')
-        if not os.listdir("Episode1"): # ordner is empty
-            # Save the figure
-            plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
-            # gucekn wie viele elemente im ordner sind    
-        else:   # is not empty
-            if not os.listdir("Episode2"): # ordner is empty
-                # Save the figure
-                plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))          
-            else: # ordner empty
-            # compare both folders and save in the folder which has less files
-                num_files_in_Episode1 = len(os.listdir("Episode1"))
-                num_files_in_Episode2 = len(os.listdir("Episode2"))
 
-                if num_files_in_Episode1 >= num_files_in_Episode2:
-                    plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))
-                else:
-                    plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
-        
-        self.figure_count += 1
-        
     def process_action(self, action):
         """
         Process the action provided to generate new joint angles.
