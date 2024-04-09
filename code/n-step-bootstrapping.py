@@ -78,7 +78,6 @@ class DQNAgent:
 
     def add_experience(self, spatial_data, tcp_data, action, reward, next_spatial_data, next_tcp_data,done):
         # keep experience in n-step buffer
-        print("spatial_data shape:", spatial_data.shape)
         experience = ((spatial_data, tcp_data), action, reward, (next_spatial_data, next_tcp_data), done)
         self.n_step_buffer.append(experience)
 
@@ -211,16 +210,17 @@ if __name__ == "__main__":
     spatial_data_shape = env.observation_space[0].shape   # (2, 61, 61, 101)
     tcp_data_shape = env.observation_space[1].shape  # (6,)
 
-    print("Spatial Data Shape:", spatial_data_shape)
-    print("TCP Data Shape:", tcp_data_shape)
+    #print("Spatial Data Shape:", spatial_data_shape)
+    #print("TCP Data Shape:", tcp_data_shape)
 
     actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
     
-    # # Training loop
+    # hyperparameters initialization
     episodes = 0
     epsilon_decay = 0
     epsilon_min = 0
 
+     # # Training loop
     for i in range(len(grid)):
         params = grid[i]
         for key, val in params.items():
@@ -256,7 +256,7 @@ if __name__ == "__main__":
                 state = next_state # update to the current state
                 total_reward += reward
                 step_counter += 1
-                #print("total_reward", total_reward)
+                print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
             

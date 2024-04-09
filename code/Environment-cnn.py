@@ -89,7 +89,7 @@ class RobotEnvironment(gym.Env):
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
-        self.constant_orientation = (0, 0, -180)  # Roll-, pitch- und yaw in rad
+        self.constant_orientation = (0, 0, 180)  # Roll-, pitch- und yaw in rad
         #self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
         
@@ -436,7 +436,8 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
         ax.scatter([x_idx], [y_idx], [z_idx], c='orange', s=100, alpha= 1, label='TCP Position')
         # Erstellen Sie den Pfeil für die Orientierung
-        ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
+        #ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
+        ax.quiver(x_idx, y_idx, z_idx, self.constant_orientation[0], self.constant_orientation[1], self.constant_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
         # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
