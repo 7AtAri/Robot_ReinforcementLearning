@@ -1,0 +1,254 @@
+State size: (2, 121, 61, 101), Action size: 6
+exploring: random action
+action shape: 6
+Episode: 1/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 2/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 3/100, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 4/100, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 5/100, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 6/100, Total Reward: 33, Total Steps: 6, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 7/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 8/100, Total Reward: 16, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 9/100, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 10/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 11/100, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 12/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 13/100, Total Reward: 16, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 14/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 15/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 16/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 17/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 18/100, Total Reward: 24, Total Steps: 5, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+State size: (2, 121, 61, 101), Action size: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 1/100, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 2/100, Total Reward: 16, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 3/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 4/100, Total Reward: 32, Total Steps: 7, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 5/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 6/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 7/100, Total Reward: 22, Total Steps: 7, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 8/100, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 9/100, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 10/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 11/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 12/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 13/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 14/100, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 15/100, Total Reward: 41, Total Steps: 8, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 16/100, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 17/100, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+Episode: 18/100, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+action shape: 6
+exploring: random action
+action shape: 6
+Episode: 19/100, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

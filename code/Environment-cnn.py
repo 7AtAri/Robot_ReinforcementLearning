@@ -446,10 +446,10 @@ class RobotEnvironment(gym.Env):
                 plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))          
             else: # ordner empty
             # compare both folders and save in the folder which has less files
-                num_files_in_Episode1 = len(os.listdir("Epdisode1"))
-                num_files_in_Episode2 = len(os.listdir("Epdisode2"))
+                num_files_in_Episode1 = len(os.listdir("Episode1"))
+                num_files_in_Episode2 = len(os.listdir("Episode2"))
 
-                if num_files_in_Episode1 > num_files_in_Episode2:
+                if num_files_in_Episode1 >= num_files_in_Episode2:
                     plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))
                 else:
                     plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
