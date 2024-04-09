@@ -65,8 +65,8 @@ class DQNAgent:
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
         self.epsilon = 1.0
-        self.epsilon_decay = 0.995 #0.995  # 0.9 for debugging only
-        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.95 #0.995  # 0.9 for debugging only
+        self.epsilon_min = 0.25
 
     def add_experience(self, state, action, reward, next_state, done):
         # keep experience in n-step buffer
@@ -116,25 +116,46 @@ class DQNAgent:
             return
 
         minibatch = random.sample(self.memory, self.batch_size)
-        for state, action, n_step_reward, n_step_state, n_step_done in minibatch:
-            state = torch.FloatTensor(state).unsqueeze(0).to(device)
-            n_step_state = torch.FloatTensor(n_step_state).unsqueeze(0).to(device)
+        states, actions, rewards, next_states, dones = zip(*minibatch)
+        states = torch.FloatTensor(np.array(states)).to(device)
+        actions = torch.LongTensor(np.array(actions)).to(device)
+        rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
+        next_states = torch.FloatTensor(np.array(next_states)).to(device)
+        dones = torch.FloatTensor(np.array(dones)).to(device) # dones is terminated or truncated states
+        # convert actions to long tensor for indexing
+        actions = actions.long()
+        # actions is of shape [batch_size], containing the index of the action taken for each batch item
+        actions = actions.view(-1, 6, 1)  # reshape for gathering: [batch_size*6, 1]
 
-            Q_expected = self.q_network(state).gather(1, torch.tensor(action).unsqueeze(0).to(device))
+        # get the q-values from the q-network for the current states
+        Q_values = self.q_network(states) # this returns Q(s,a) for all actions a
+        # get the q-values for the actions taken
+        Q_expected = Q_values.gather(2, actions).squeeze(-1)  # --> shape [batch_size, 6]
+            
+        # get the q-values from the target network for the next states
+        Q_values_next = self.target_network(next_states).detach()
+        Q_targets_next = Q_values_next.max(dim=2)[0]  # max along the last dimension --> shape [batch_size, 6]
+        
+        # not terminated or truncated states:
+        not_done = 1 - (dones)
+        not_done = not_done.to(device).view(-1)  # Ensure shape [batch_size]
 
-            # n-step bootstrap state to calculate the next Q-values:
-            Q_next = self.target_network(n_step_state).max(1)[0].detach()
-            Q_targets = n_step_reward + (self.gamma ** self.n_step) * Q_next * (1 - n_step_done)
+        # shape rewards and not_done to [batch_size, 6]
+        rewards_expanded = rewards.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
+        not_done_expanded = not_done.unsqueeze(1).expand_as(Q_targets_next)  # Expands to [batch_size, 6]
 
-            # compute loss, perform backpropagation and update weights:
-            loss = F.mse_loss(Q_expected, Q_targets.unsqueeze(1))
-            self.optimizer.zero_grad()
-            loss.backward()
-            self.optimizer.step()
+        ## n-step bootstrap state to calculate the next Q-values:
+        Q_targets = rewards_expanded + (self.gamma**self.n_step * Q_targets_next * not_done_expanded)
+            
+        # compute loss, perform backpropagation and update weights:
+        loss = F.mse_loss(Q_expected, Q_targets)
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
 
-            if self.epsilon > self.epsilon_min:
-                self.epsilon *= self.epsilon_decay
-                print("epsilon reduced:", self.epsilon)
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
+            print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -172,8 +193,8 @@ if __name__ == "__main__":
             action = agent.act(state)
             #print("action:", action)
             next_state, reward, terminated, truncated, _ = env.step(action)  
-            if step_counter > 1:
-                env.render()
+            # if step_counter > 1:
+            #     env.render()
             
             #print("next_state:", next_state)
             #print("next_state shape:", next_state.shape)
