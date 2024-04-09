@@ -319,7 +319,7 @@ class RobotEnvironment(gym.Env):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _,orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
         ####################################################
         ## Initialize reward, terminated, and truncated flags
@@ -370,7 +370,7 @@ class RobotEnvironment(gym.Env):
         # Adjust reward based on orientation deviation
         orientation_reward = 0
         max_deviation = np.max(orientation_deviation)
-        print("max_deviation", max_deviation)
+        print("max_deviation (in reward)", np.round(max_deviation,2))
         if max_deviation <= self.tolerance:
             orientation_reward = 5
         else:
@@ -576,11 +576,12 @@ class RobotEnvironment(gym.Env):
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
-        # get closest point (closest_target_pos)
+        # get closest point (closest_target_pos)xxx
+        print("current_tcp_pos_in_voxel_space (objective func):", current_position)
         closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        #print("current_pos:", current_position)
-        print("current_orientation:", current_orientation)
+        
+        print("current_orientation:", np.round(current_orientation, 2))
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
@@ -635,7 +636,7 @@ class RobotEnvironment(gym.Env):
         closest_distance = distances[closest_index]
 
         print("closest point ", closest_point)
-        print("closest distance ", closest_distance) # double
+        print("closest distance ", np.round(closest_distance,2)) # double
         #x_idx = int(round(closest_point[0] / self.resolution))
         x_idx = (closest_point[0] - self.x_range[0]) / self.resolution
         y_idx = (closest_point[1] - self.y_range[0]) / self.resolution
