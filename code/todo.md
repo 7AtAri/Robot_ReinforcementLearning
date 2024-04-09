@@ -1,8 +1,11 @@
 # todo
 
-## hauptsächlich environment bezogen
+## gif von tcp auf helix (Dennis)
 
-- [ ] check if new tcp position outside of
+- [x] render() speichen alle 5-10 steps
+- [x] in Ordner mit eigenem episode name
+- [x] lange episoden ordner behalten, kurze löschen (zähle elemente in Ordner)
+- [x] MSE plot speichern in selben Ordner statt show()
 
 ## wenn das lernen prinzipiell funktioniert
 
@@ -14,9 +17,7 @@
 2) Implementierung abschließen:
 
     - [ ] schauen ob wirklich was gelernt wird, wenn wir mal 1000 episoden laufen lassen
-    - [ ] MSE berechnen zwischen idealem und tatsächlichem trajectory
-    (wir berechnen bereits den MSE zw. den rewards die das netzwerk erwartet und die die tatsächlich erhalten werden, sowie den im nächsten schritt erwarteten reward --> ist das das selbe?)
-    - [?] Orientation verstehen, fixieren und einbinden (Euler Angles) --> see TCP.ipynb  
+    - [ ] Orientation in Network einbinden (Ari)
 
 ## allgemeines
 

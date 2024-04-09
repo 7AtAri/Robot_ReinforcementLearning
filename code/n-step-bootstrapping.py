@@ -230,6 +230,8 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
+
+            prev_episode_steps = 0 # counter for max steps per episode
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action = agent.act(state)
@@ -245,10 +247,15 @@ if __name__ == "__main__":
                 state = next_state
                 total_reward += reward
                 step_counter += 1
-                log.write_to_log("total_reward " + str(total_reward))
-                log.write_to_log("terminated:" + str(terminated))
-                log.write_to_log("truncated:" + str(truncated))
-            
+                print("total_reward", total_reward)
+                print("terminated:", terminated)
+                print("truncated:", truncated)
+
+                if step_counter > prev_episode_steps:  # Check if the number of steps in the current episode is greater than the previous episode
+                    if step_counter % 2 == 0:  # Check if the current step is a multiple of 5
+                        env.render()
+                        prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
@@ -267,13 +274,16 @@ if __name__ == "__main__":
         mse = mean_squared_error(np.zeros(episodes), min_distances)
         # wenn for beednet wurde
         # loop draußen dann mse plot
+        
         # Erstellen des Plots
         plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
-        plt.show()
+        # Save the figure
+        plt.savefig(os.path.join('Figure_1', 'MSE.png'))
+        #plt.show()
 
 
 

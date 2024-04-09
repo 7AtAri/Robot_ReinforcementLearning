@@ -19,19 +19,23 @@ terminated: False
 truncated: True
 Episode: 1/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 Resetting the environment...
 TCP coords: [0. 0. 0.] -> Voxel indices: x:30, y:30, z:0
 TCP is on the helix path.
 exploring: random action
-action shape: 6
+-action shape: 6
 Delta Angles (process action): [0.1 0.  0.  0.1 0.1 0.1]
-joint_angles (process action): [0. 0. 0. 0. 0. 0.]
+-joint_angles (process action): [0. 0. 0. 0. 0. 0.]
 New Joint Angles (process action): [0.1 0.  0.  0.1 0.1 0.1]
 TCP coords: [ 3.78384746e-04 -7.96719139e-04 -1.50556908e-07] -> Voxel indices: x:30, y:29, z:0
 TCP is outside the helix voxels.
-total_reward -1
-terminated: False
-truncated: True
+-total_reward -1
+-terminated: False
+-truncated: True
+
+
 Episode: 2/300, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Resetting the environment...

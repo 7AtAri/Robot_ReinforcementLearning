@@ -96,6 +96,9 @@ class RobotEnvironment(gym.Env):
         # closest distance
         self.closest_distance = None
 
+        # counter variable for saving the figures with different names
+        self.figure_count = 1
+
 
     def step(self, action):
         """Updates an environment with actions returning the next agent observation, 
@@ -128,6 +131,7 @@ class RobotEnvironment(gym.Env):
         new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
+        self.old_tcp_position = self.tcp_position
         self.old_tcp_position = self.tcp_position
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         #print("New Voxel TCP Position in step:", self.tcp_position)
@@ -307,6 +311,9 @@ class RobotEnvironment(gym.Env):
         self.terminated= False
         self.truncated = False
 
+        # counter for figures names
+        self.figure_count = 1
+
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.initial_joint_angles.tolist(),
@@ -420,6 +427,14 @@ class RobotEnvironment(gym.Env):
         ax.set_title('3D Plot of the Voxel Space')
         #.legend()
         #plt.show()
+
+        # Create directory if not exists
+        if not os.path.exists('Figure_1'):
+            os.makedirs('Figure_1')
+
+        # Save the figure
+        plt.savefig(os.path.join('Figure_1', f'Figure_{self.figure_count}.png'))
+        self.figure_count += 1
 
 
     def process_action(self, action):
