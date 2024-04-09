@@ -18,6 +18,7 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 
 torch.set_default_dtype(torch.float)
 
+
 class QNetworkCNN(nn.Module):
     def __init__(self, state_size, actions):
         super(QNetworkCNN, self).__init__()
