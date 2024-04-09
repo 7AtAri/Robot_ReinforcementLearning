@@ -193,9 +193,8 @@ if __name__ == "__main__":
     epsilon_decay = 0
     epsilon_min = 0
 
-    for i in range(10):
-        index = random.randint(0, len(grid)-1)
-        params = grid[index]
+    for i in range(len(grid)):
+        params = grid[i]
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
