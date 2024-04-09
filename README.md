@@ -2,7 +2,7 @@
 
 ## Project: 6-joint Robot Arm
 
-- [ ] presentation [slides](https://docs.google.com/presentation/d/1iGImbkl8Not4Z9-GkAs32dncCGfMc--StngshL4tsVA/edit?usp=sharing)
+- [ ] presentation [slides](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
 - [x] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
 - [x] [notes on the task](https://docs.google.com/document/d/1-oN-ch47fVDCPkOF1WOgRCZygJi9Pc00SBXlcemRMhU/edit?usp=sharing) 
 

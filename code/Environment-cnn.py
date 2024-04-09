@@ -129,6 +129,7 @@ class RobotEnvironment(gym.Env):
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.old_tcp_position = self.tcp_position
+        self.old_tcp_position = self.tcp_position
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         #print("New Voxel TCP Position in step:", self.tcp_position)
 
@@ -358,6 +359,7 @@ class RobotEnvironment(gym.Env):
         ####################################################
 
         # initialize reward, terminated, and truncated flags
+        if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
             self.truncated = False

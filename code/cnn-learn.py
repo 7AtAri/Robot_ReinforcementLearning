@@ -242,8 +242,9 @@ if __name__ == "__main__":
             # when episode finsihed append closest_distance between tcp pos and helix voxel
             min_distances.append(min_distance_tcp_helix) # same size as episode
             if terminated or truncated:
-                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                
             agent.replay()
             if episode % 10 == 0:
                 #env.render()
