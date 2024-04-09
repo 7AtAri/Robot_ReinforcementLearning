@@ -1,0 +1,2419 @@
+exploring: random action
+total reward:-2
+Episode: 0.01Total Reward: -2Total Steps: 1Epsilon: 1.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+total reward:9
+exploring: random action
+total reward:18
+exploring: random action
+total reward:16
+Episode: 1.01Total Reward: 16Total Steps: 3Epsilon: 1.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+total reward:9
+exploring: random action
+total reward:8
+exploring: random action
+total reward:7
+exploring: random action
+total reward:16
+exploring: random action
+total reward:15
+exploring: random action
+total reward:24
+exploring: random action
+total reward:33
+exploring: random action
+total reward:32
+exploring: random action
+total reward:41
+exploring: random action
+total reward:40
+exploring: random action
+total reward:38
+Episode: 2.01Total Reward: 38Total Steps: 11Epsilon: 1.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+total reward:-1
+exploring: random action
+total reward:8
+exploring: random action
+total reward:6
+Episode: 3.01Total Reward: 6Total Steps: 3Epsilon: 1.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:18
+exploring: random action
+total reward:17
+exploring: random action
+total reward:26
+exploring: random action
+total reward:35
+exploring: random action
+total reward:34
+exploring: random action
+total reward:33
+exploring: random action
+total reward:42
+exploring: random action
+total reward:41
+exploring: random action
+total reward:39
+Episode: 4.01Total Reward: 39Total Steps: 10Epsilon: 0.95
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-1
+exploring: random action
+total reward:-3
+Episode: 5.01Total Reward: -3Total Steps: 2Epsilon: 0.9025
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:7
+Episode: 6.01Total Reward: 7Total Steps: 2Epsilon: 0.8573749999999999
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:18
+exploring: random action
+total reward:17
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploring: random action
+total reward:33
+Episode: 7.01Total Reward: 33Total Steps: 6Epsilon: 0.8145062499999999
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:16
+Episode: 8.01Total Reward: 16Total Steps: 3Epsilon: 0.7737809374999999
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:7
+Episode: 9.01Total Reward: 7Total Steps: 2Epsilon: 0.7350918906249998
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:8
+exploring: random action
+total reward:17
+exploring: random action
+total reward:26
+exploring: random action
+total reward:35
+exploring: random action
+total reward:34
+exploring: random action
+total reward:33
+exploring: random action
+total reward:32
+exploring: random action
+total reward:31
+exploring: random action
+total reward:29
+Episode: 10.01Total Reward: 29Total Steps: 10Epsilon: 0.6983372960937497
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:8
+exploring: random action
+total reward:6
+Episode: 11.01Total Reward: 6Total Steps: 3Epsilon: 0.6634204312890623
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploring: random action
+total reward:16
+Episode: 12.01Total Reward: 16Total Steps: 3Epsilon: 0.6302494097246091
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-2
+Episode: 13.01Total Reward: -2Total Steps: 1Epsilon: 0.5987369392383786
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:25
+Episode: 14.01Total Reward: 25Total Steps: 4Epsilon: 0.5688000922764596
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:8
+exploring: random action
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploring: random action
+total reward:35
+exploring: random action
+total reward:34
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+exploring: random action
+total reward:52
+exploring: random action
+total reward:50
+Episode: 15.01Total Reward: 50Total Steps: 9Epsilon: 0.5403600876626365
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:27
+exploring: random action
+total reward:26
+exploring: random action
+total reward:24
+Episode: 16.01Total Reward: 24Total Steps: 5Epsilon: 0.5133420832795047
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:44
+exploring: random action
+total reward:53
+exploiting: q-values predicted from network
+-------------------------------
+total reward:62
+exploiting: q-values predicted from network
+-------------------------------
+total reward:71
+exploring: random action
+total reward:70
+exploiting: q-values predicted from network
+-------------------------------
+total reward:79
+exploring: random action
+total reward:77
+Episode: 17.01Total Reward: 77Total Steps: 12Epsilon: 0.48767497911552943
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:43
+Episode: 18.01Total Reward: 43Total Steps: 6Epsilon: 0.46329123015975293
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:7
+Episode: 19.01Total Reward: 7Total Steps: 2Epsilon: 0.44012666865176525
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:53
+exploring: random action
+total reward:51
+Episode: 20.01Total Reward: 51Total Steps: 8Epsilon: 0.41812033521917696
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploring: random action
+total reward:33
+Episode: 21.01Total Reward: 33Total Steps: 6Epsilon: 0.3972143184582181
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploring: random action
+total reward:16
+Episode: 22.01Total Reward: 16Total Steps: 3Epsilon: 0.37735360253530714
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 23.01Total Reward: 43Total Steps: 6Epsilon: 0.35848592240854177
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:25
+Episode: 24.01Total Reward: 25Total Steps: 4Epsilon: 0.34056162628811465
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:8
+exploring: random action
+total reward:17
+exploring: random action
+total reward:15
+Episode: 25.01Total Reward: 15Total Steps: 4Epsilon: 0.3235335449737089
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:8
+exploiting: q-values predicted from network
+-------------------------------
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploring: random action
+total reward:35
+exploring: random action
+total reward:33
+Episode: 26.01Total Reward: 33Total Steps: 6Epsilon: 0.30735686772502346
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:53
+exploring: random action
+total reward:51
+Episode: 27.01Total Reward: 51Total Steps: 8Epsilon: 0.2919890243387723
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:8
+exploring: random action
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploring: random action
+total reward:42
+Episode: 28.01Total Reward: 42Total Steps: 7Epsilon: 0.27738957312183365
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:7
+Episode: 29.01Total Reward: 7Total Steps: 2Epsilon: 0.263520094465742
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:25
+Episode: 30.01Total Reward: 25Total Steps: 4Epsilon: 0.25034408974245487
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 31.01Total Reward: 43Total Steps: 6Epsilon: 0.2378268852553321
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 32.01Total Reward: 43Total Steps: 6Epsilon: 0.2259355409925655
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:36
+exploring: random action
+total reward:34
+Episode: 33.01Total Reward: 34Total Steps: 5Epsilon: 0.2146387639429372
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploring: random action
+total reward:33
+Episode: 34.01Total Reward: 33Total Steps: 6Epsilon: 0.20390682574579033
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:53
+exploiting: q-values predicted from network
+-------------------------------
+total reward:51
+Episode: 35.01Total Reward: 51Total Steps: 8Epsilon: 0.1937114844585008
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 36.01Total Reward: 43Total Steps: 6Epsilon: 0.18402591023557577
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 37.01Total Reward: 43Total Steps: 6Epsilon: 0.17482461472379698
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:43
+Episode: 38.01Total Reward: 43Total Steps: 6Epsilon: 0.16608338398760714
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 39.01Total Reward: 43Total Steps: 6Epsilon: 0.15777921478822676
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 40.01Total Reward: 43Total Steps: 6Epsilon: 0.14989025404881542
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploring: random action
+total reward:52
+Episode: 41.01Total Reward: 52Total Steps: 7Epsilon: 0.14239574134637464
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:53
+exploiting: q-values predicted from network
+-------------------------------
+total reward:51
+Episode: 42.01Total Reward: 51Total Steps: 8Epsilon: 0.1352759542790559
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 43.01Total Reward: 43Total Steps: 6Epsilon: 0.1285121565651031
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:42
+Episode: 44.01Total Reward: 42Total Steps: 7Epsilon: 0.12208654873684793
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:25
+Episode: 45.01Total Reward: 25Total Steps: 4Epsilon: 0.11598222130000553
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 46.01Total Reward: 43Total Steps: 6Epsilon: 0.11018311023500525
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 47.01Total Reward: 43Total Steps: 6Epsilon: 0.10467395472325498
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 48.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 49.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 50.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:16
+Episode: 51.01Total Reward: 16Total Steps: 3Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 52.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 53.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 54.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 55.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 56.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:7
+Episode: 57.01Total Reward: 7Total Steps: 2Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:8
+exploiting: q-values predicted from network
+-------------------------------
+total reward:6
+Episode: 58.01Total Reward: 6Total Steps: 3Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:25
+Episode: 59.01Total Reward: 25Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:25
+Episode: 60.01Total Reward: 25Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-2
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-3
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-5
+Episode: 61.01Total Reward: -5Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-2
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-3
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-5
+Episode: 62.01Total Reward: -5Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-2
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-3
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-5
+Episode: 63.01Total Reward: -5Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:16
+exploiting: q-values predicted from network
+-------------------------------
+total reward:14
+Episode: 64.01Total Reward: 14Total Steps: 5Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-2
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-3
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-5
+Episode: 65.01Total Reward: -5Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-2
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-3
+exploiting: q-values predicted from network
+-------------------------------
+total reward:-5
+Episode: 66.01Total Reward: -5Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:25
+Episode: 67.01Total Reward: 25Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 68.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 69.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:34
+Episode: 70.01Total Reward: 34Total Steps: 5Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 71.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploring: random action
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 72.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 73.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:34
+Episode: 74.01Total Reward: 34Total Steps: 5Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploring: random action
+total reward:8
+exploiting: q-values predicted from network
+-------------------------------
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploring: random action
+total reward:34
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+exploiting: q-values predicted from network
+-------------------------------
+total reward:50
+Episode: 75.01Total Reward: 50Total Steps: 9Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 76.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 77.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 78.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 79.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploring: random action
+total reward:43
+Episode: 80.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 81.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:25
+Episode: 82.01Total Reward: 25Total Steps: 4Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 83.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 84.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:8
+exploiting: q-values predicted from network
+-------------------------------
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:33
+Episode: 85.01Total Reward: 33Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:43
+Episode: 86.01Total Reward: 43Total Steps: 6Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploring: random action
+total reward:53
+exploiting: q-values predicted from network
+-------------------------------
+total reward:62
+exploiting: q-values predicted from network
+-------------------------------
+total reward:71
+exploiting: q-values predicted from network
+-------------------------------
+total reward:80
+exploiting: q-values predicted from network
+-------------------------------
+total reward:89
+exploiting: q-values predicted from network
+-------------------------------
+total reward:98
+exploiting: q-values predicted from network
+-------------------------------
+total reward:107
+exploiting: q-values predicted from network
+-------------------------------
+total reward:105
+Episode: 87.01Total Reward: 105Total Steps: 14Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+Episode: 88.01Total Reward: 52Total Steps: 7Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+Episode: 89.01Total Reward: 52Total Steps: 7Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+Episode: 90.01Total Reward: 52Total Steps: 7Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-1
+exploiting: q-values predicted from network
+-------------------------------
+total reward:8
+exploiting: q-values predicted from network
+-------------------------------
+total reward:17
+exploiting: q-values predicted from network
+-------------------------------
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploring: random action
+total reward:43
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+exploring: random action
+total reward:61
+exploiting: q-values predicted from network
+-------------------------------
+total reward:70
+exploiting: q-values predicted from network
+-------------------------------
+total reward:79
+exploiting: q-values predicted from network
+-------------------------------
+total reward:88
+exploiting: q-values predicted from network
+-------------------------------
+total reward:86
+Episode: 91.01Total Reward: 86Total Steps: 13Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploiting: q-values predicted from network
+-------------------------------
+total reward:52
+Episode: 92.01Total Reward: 52Total Steps: 7Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:42
+Episode: 93.01Total Reward: 42Total Steps: 7Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:34
+Episode: 94.01Total Reward: 34Total Steps: 5Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploiting: q-values predicted from network
+-------------------------------
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:34
+Episode: 95.01Total Reward: 34Total Steps: 5Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploring: random action
+total reward:16
+Episode: 96.01Total Reward: 16Total Steps: 3Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:26
+exploiting: q-values predicted from network
+-------------------------------
+total reward:35
+exploiting: q-values predicted from network
+-------------------------------
+total reward:44
+exploiting: q-values predicted from network
+-------------------------------
+total reward:53
+exploiting: q-values predicted from network
+-------------------------------
+total reward:62
+exploiting: q-values predicted from network
+-------------------------------
+total reward:71
+exploring: random action
+total reward:69
+Episode: 97.01Total Reward: 69Total Steps: 10Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploring: random action
+total reward:-2
+Episode: 98.01Total Reward: -2Total Steps: 1Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
+exploiting: q-values predicted from network
+-------------------------------
+total reward:9
+exploiting: q-values predicted from network
+-------------------------------
+total reward:18
+exploiting: q-values predicted from network
+-------------------------------
+total reward:27
+exploring: random action
+total reward:36
+exploiting: q-values predicted from network
+-------------------------------
+total reward:45
+exploiting: q-values predicted from network
+-------------------------------
+total reward:54
+exploiting: q-values predicted from network
+-------------------------------
+total reward:63
+exploiting: q-values predicted from network
+-------------------------------
+total reward:61
+Episode: 99.01Total Reward: 61Total Steps: 8Epsilon: 0.09944025698709223
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+actions:torch.Size([16, 6])
+actions shape:torch.Size([16, 6, 1])
+q-values:torch.Size([16, 6, 3])
+q-expected:torch.Size([16, 6])
+q-values next:torch.Size([16, 6, 3])
+q-targets next:torch.Size([16, 6])
+reward shape:torch.Size([16])
+not done shape:torch.Size([16])
