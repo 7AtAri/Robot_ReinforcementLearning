@@ -360,7 +360,6 @@ class RobotEnvironment(gym.Env):
 
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
-        if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
             self.truncated = False
         if self.terminated:
