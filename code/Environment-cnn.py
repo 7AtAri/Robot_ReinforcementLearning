@@ -93,8 +93,9 @@ class RobotEnvironment(gym.Env):
         # helixpoints
         self.helix_points = 0
 
-        # closest distance
+        # closest distance and closest point
         self.closest_distance = None
+        self.closest_point = None
 
 
     def step(self, action):
@@ -146,8 +147,8 @@ class RobotEnvironment(gym.Env):
 
         # eventually also return an info dictionary (for debugging)
         info = {
-            'robot_state': self.joint_angles.tolist(),
-            'tcp_position': self.tcp_position.tolist(),
+            'tcp_position': self.tcp_position.tolist(), # current TCP position in voxel space
+            'closest_point': self.closest_point.tolist(), # closest point on the helix
             'closest_distance': self.closest_distance.tolist()
         }
 
@@ -589,6 +590,7 @@ class RobotEnvironment(gym.Env):
         test = [ x_idx,  y_idx,  z_idx]
         print("closest_point invoxel_space", test)
         self.closest_distance = closest_distance
+        self.closest_point = closest_point
 
         return closest_point, closest_distance
 

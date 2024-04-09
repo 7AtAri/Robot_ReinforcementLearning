@@ -179,7 +179,7 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 4, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    grid = [{'batch_size': 4, 'episodes': 10, 'epsilon_decay': 0.5, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
@@ -222,6 +222,7 @@ if __name__ == "__main__":
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
+        mse_list = []
    
         for episode in range(episodes):
             state, info = env.reset()  
@@ -241,6 +242,10 @@ if __name__ == "__main__":
                 # if step_counter > 1:
                 #     env.render()
                 min_distance_tcp_helix = info['closest_distance']
+                closest_helix_point = info['closest_point']
+                current_tcp_position = info['tcp_position']
+
+                min_distances.append(min_distance_tcp_helix) # same size as episode 
                 #print("next_state:", next_state)
                 #print("next_state shape:", next_state.shape)
                 #next_state = np.reshape(next_state, [1, state_size])
@@ -249,8 +254,8 @@ if __name__ == "__main__":
                 total_reward += reward
                 step_counter += 1
                 print("total_reward", total_reward)
-                print("terminated:", terminated)
-                print("truncated:", truncated)
+                #print("terminated:", terminated)
+                #print("truncated:", truncated)
 
                 #if step_counter > prev_episode_steps:
                 #    episode_with_more_steps = True
@@ -263,7 +268,7 @@ if __name__ == "__main__":
                 first_experience = agent.n_step_buffer.popleft()
                 agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
                 
-            min_distances.append(min_distance_tcp_helix) # same size as episode
+            
             if terminated or truncated:
                 log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
@@ -272,20 +277,19 @@ if __name__ == "__main__":
                 #env.render()
                 agent.update_target_network()
 
-        # calcualte mse for each episode --> first arg is expected distanz --> zero?
-        mse = mean_squared_error(np.zeros(episodes), min_distances)
-        # wenn for beednet wurde
-        # loop draußen dann mse plot
-        
-        # Erstellen des Plots
-        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+            # calcualte mse for each episode --> first arg is expected distanz --> zero?
+            mse = mean_squared_error(current_tcp_position, closest_helix_point)
+            mse_list.append(mse)
+
+        # mse plot
+        plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
         # Save the figure
-        plt.savefig(os.path.join('Episode1', 'MSE.png'))
-        #plt.show()
+        #plt.savefig(os.path.join('Episode1', 'MSE.png'))
+        plt.show()
 
 
 
