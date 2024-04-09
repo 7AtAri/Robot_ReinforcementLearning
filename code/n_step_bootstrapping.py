@@ -9,7 +9,7 @@ from gymnasium.envs.registration import register
 import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
-
+import GLOBALS 
 
 import os
 
@@ -18,17 +18,6 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 #os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
 torch.set_default_dtype(torch.float)
-
-class LogStore():
-    def __init__(self):
-        self.filename = ""
-
-    def setfilename(self,name):
-        self.filename = name
-
-    def write_to_log(self, input):
-            with open("code/" +self.filename + ".txt", 'a') as log:
-                log.write(input + "\n")
     
 class QNetworkCNN(nn.Module):
     def __init__(self, state_size, actions):
@@ -192,7 +181,7 @@ if __name__ == "__main__":
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     #creates logclass
-    log = LogStore()
+    log = GLOBALS.log
     log.setfilename("Setup")
     register(
         id='RobotEnvironment-v1',
@@ -212,6 +201,7 @@ if __name__ == "__main__":
     for i in range(len(grid)):
         params = grid[i]
         log.setfilename("Grid_" + str(i))
+        GLOBALS.Filename = log.getfilename()
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
@@ -276,7 +266,7 @@ if __name__ == "__main__":
         # loop draußen dann mse plot
         
         # Erstellen des Plots
-        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+       # plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')

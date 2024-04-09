@@ -17,6 +17,8 @@ from math import cos, sin, pi
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import gymnasium as gym  # original gym is no longer maintained and now called gymnasium
+import GLOBALS
+
 
 
 class RobotEnvironment(gym.Env):
@@ -75,7 +77,7 @@ class RobotEnvironment(gym.Env):
 
         #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        print("TCP on Helix:", self.tcp_on_helix)
+        log.write_to_log("TCP on Helix: " + str(self.tcp_on_helix))
         self.tcp_orientation= None
         self.reward = 0 # reward points
         self.terminated = False
@@ -200,7 +202,7 @@ class RobotEnvironment(gym.Env):
                 else:
                     self.voxel_space[x_idx, y_idx, z_idx] = 0  # helix path
             else:
-                print(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
+                log.write_to_log(f"Helix point out of bounds: {x_idx}, {y_idx}, {z_idx}")
 
         
         # Convert the list of indices to a numpy array and store it in self.helix_points
@@ -231,7 +233,7 @@ class RobotEnvironment(gym.Env):
         y_idx = int(round((tcp_coords[1] - self.y_range[0]) / self.resolution))
         z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
 
-        print(f"TCP coords: {tcp_coords} -> Voxel indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debugging info
+        log.write_to_log(f"TCP coords: {tcp_coords} -> Voxel indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debugging info
 
         # check if these indices are in the voxel space. If not, the TCP is outside the voxel space.
         if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
@@ -241,13 +243,13 @@ class RobotEnvironment(gym.Env):
             
             # if the TCP has reached the target (voxel-value = 1):
             if voxel_value == 1:
-                print("TCP reached the target!")
+                log.write_to_log("TCP reached the target!")
                 self.terminated = True
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
-                print("TCP is on the helix path.")
+                log.write_to_log("TCP is on the helix path.")
                 return True # TCP is on the helix path
             
             elif voxel_value == -1:
@@ -255,23 +257,24 @@ class RobotEnvironment(gym.Env):
                 _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
                 #max_distance = np.max(closest_distance)
                 if closest_distance <= self.tolerance_tcp_pos:
-                    print("TCP is close to the helix.")
+                    log.write_to_log("TCP is close to the helix.")
                     self.truncated = False
                     return True
                 else:
-                    print("TCP is outside the helix voxels.")
+                    log.write_to_log("TCP is outside the helix voxels.")
                     self.truncated = True
                     return False
             
         else:
             self.truncated = True
-            print("TCP is outside the voxel space.")
+            log.write_to_log("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
             return False
 
 
 
     def reset(self, seed=None, options=None):
+        log.setfilename = GLOBALS.Filename
         """Resets the environment to an initial internal state, returning an initial observation and info.
 
         Returns:
@@ -282,7 +285,7 @@ class RobotEnvironment(gym.Env):
                             analogous to the info returned by step()
         """
         # reset the environment 
-        print("Resetting the environment...")
+        log.write_to_log("Resetting the environment...")
         _ = seed  # acknowledging the seed parameter without using it to fit the gymnasium requirements
         self.voxel_space.fill(-1)
 
@@ -378,7 +381,7 @@ class RobotEnvironment(gym.Env):
         # Adjust reward based on orientation deviation
         orientation_reward = 0
         max_deviation = np.max(orientation_deviation)
-        print("max_deviation (in reward)", np.round(max_deviation,2))
+        log.write_to_log("max_deviation (in reward)"+ str(np.round(max_deviation,2)))
         if max_deviation <= self.tolerance:
             orientation_reward = 5
         else:
@@ -455,7 +458,7 @@ class RobotEnvironment(gym.Env):
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles (process action):", delta_angles)
+            log.write_to_log("Delta Angles (process action): " + str(delta_angles))
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
@@ -465,7 +468,7 @@ class RobotEnvironment(gym.Env):
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles (process action):", self.joint_angles)
+        log.write_to_log("New Joint Angles (process action):"+ str(self.joint_angles))
         # Return the delta angles
         return delta_angles
 
@@ -593,11 +596,11 @@ class RobotEnvironment(gym.Env):
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
-        print("current_tcp_pos_in_voxel_space (objective func):", current_position)
+        log.write_to_log("current_tcp_pos_in_voxel_space (objective func): "+ str(current_position))
         closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
         
-        print("current_orientation:", np.round(current_orientation, 2))
+        log.write_to_log("current_orientation: "+ str(np.round(current_orientation, 2)))
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
@@ -651,14 +654,14 @@ class RobotEnvironment(gym.Env):
         closest_point = helix_points[:, closest_index]
         closest_distance = distances[closest_index]
 
-        print("closest point ", closest_point)
-        print("closest distance ", np.round(closest_distance,4)) # double
+        log.write_to_log("closest point "+ str(closest_point))
+        log.write_to_log("closest distance "+ str(np.round(closest_distance,4))) # double
         #x_idx = int(round(closest_point[0] / self.resolution))
         x_idx = (closest_point[0] - self.x_range[0]) / self.resolution
         y_idx = (closest_point[1] - self.y_range[0]) / self.resolution
         z_idx = (closest_point[2] - self.z_range[0]) / self.resolution
         test = [ x_idx,  y_idx,  z_idx]
-        print("closest_point invoxel_space", test)
+        log.write_to_log("closest_point invoxel_space " +str(test))
         self.closest_distance = closest_distance
 
         return closest_point, closest_distance
@@ -706,12 +709,14 @@ class RobotEnvironment(gym.Env):
         try:
             grid[x_idx, y_idx, z_idx] = 1
         except:
-            print("TCP Position Indices out of bounds!")
+            log.write_to_log("TCP Position Indices out of bounds!")
         #print("TCP Position Grid:", grid)
         return grid
+        
 
 
 if __name__ == "__main__":
+    log = GLOBALS.log
     env = RobotEnvironment()
     env.render()
     
