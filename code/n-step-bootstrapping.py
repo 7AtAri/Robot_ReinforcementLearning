@@ -179,7 +179,7 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    grid = [{'batch_size': 4, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
@@ -284,7 +284,7 @@ if __name__ == "__main__":
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
         # Save the figure
-        plt.savefig(os.path.join('Figure_1', 'MSE.png'))
+        plt.savefig(os.path.join('Episode1', 'MSE.png'))
         #plt.show()
 
 
