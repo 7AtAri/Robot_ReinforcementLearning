@@ -74,15 +74,15 @@ class RobotEnvironment(gym.Env):
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
         self.old_tcp_position = self.tcp_position
         #print("Initial Voxel TCP Position:", self.tcp_position)
-        # # set the TCP position in the voxel space channel 2
+
+        # # set the TCP position for the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
         self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
-        #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        print("TCP on Helix:", self.tcp_on_helix)
-        self.tcp_orientation= None
+        #print("TCP on Helix:", self.tcp_on_helix)
+        self.tcp_orientation= self.init_orientation
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
@@ -107,6 +107,7 @@ class RobotEnvironment(gym.Env):
 
         # tuple of spatial and tcp data
         self.state = (self.observation, self.tcp_data)
+      
 
 
     def step(self, action):
@@ -144,18 +145,18 @@ class RobotEnvironment(gym.Env):
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         #print("New Voxel TCP Position in step:", self.tcp_position)
 
-        # set the TCP position in the voxel space channel 2
+        # set the TCP position for the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         
         # stack to create a two-channel observation
-        self.spatial_data = np.stack([self.voxel_space, self.tcp_observation], axis=0), 
+        spatial_data = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # tcp_data
         self.tcp_data = np.concatenate([self.tcp_position,  tcp_orientation])
 
         # tuple of spatial and tcp data
-        self.state = (self.spatial_data, self.tcp_data)
-
+        self.state = (spatial_data, self.tcp_data)
+     
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
 
@@ -444,8 +445,8 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        #.legend()
-        #plt.show()
+        plt.legend()
+        plt.show()
 
 
     def process_action(self, action):
