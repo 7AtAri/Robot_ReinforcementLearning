@@ -563,29 +563,7 @@ class RobotEnvironment(gym.Env):
 
         return position_error, orientation_errors, closes_distance
     
-    #def find_closest_helix_point(self, current_tcp_position, helix_points):
-    #    """
-    #    Find the closest point on the helix to the current TCP position.
-    #    """
-    #    # calculate distance between every helix point and every current tcp position
-    #    distances_x = np.linalg.norm(helix_points[0] - current_tcp_position[0])
-    #    distances_y = np.linalg.norm(helix_points[1] - current_tcp_position[1])
-    #    distances_z = np.linalg.norm(helix_points[2] - current_tcp_position[2])
-    #    distances = [distances_x, distances_y, distances_z]
-    #    # find index with smallest distance
-    #    closest_index_x = np.argmin(distances_x)
-    #    closest_index_y = np.argmin(distances_y)
-    #    closest_index_z = np.argmin(distances_z)
-    #    closest_index = [closest_index_x, closest_index_y, closest_index_z]
-    #    # Return of the point on the helix closest to the current TCP position and the corresponding distance
-    #    closest_point = helix_points[closest_index]
-    #    closest_distance = distances[closest_index]
-    #    print("closest point ", closest_point)
-    #    print("closest distance ", closest_distance) # double
-#
-    #    self.closest_distance = closest_distance
-#
-    #    return closest_point, closest_distance
+ 
 
     def find_closest_helix_point(self, current_tcp_position, helix_points):
         """
@@ -615,21 +593,6 @@ class RobotEnvironment(gym.Env):
         return closest_point, closest_distance
 
 
-
-    # def get_closest_distance_tcp_helix(self):
-    #     return self.closest_distance_TCP_Helix
-
-
-    # def tcp_position_to_grid_index(self, tcp_position):
-    #     """Converts the TCP position to voxel grid indices."""
-    #     # Implement conversion from TCP position to grid indices based on your environment's specifics
-    #     # This is a placeholder function; you'll need to adjust it based on how your environment and TCP positions are defined
-    #     #print("TCP Position:", tcp_position)
-    #     x_idx = int(round((tcp_position[0] - self.x_range[0]) / self.resolution))
-    #     y_idx = int(round((tcp_position[1] - self.y_range[0]) / self.resolution))
-    #     z_idx = int(round((tcp_position[2] - self.z_range[0]) / self.resolution))
-    #     print("TCP Position Indices:", x_idx, y_idx, z_idx)
-    #     return x_idx, y_idx, z_idx
     
     def position_to_voxel_indices(self, point_in_voxel_space):
         """
@@ -665,18 +628,3 @@ class RobotEnvironment(gym.Env):
 if __name__ == "__main__":
     env = RobotEnvironment()
     env.render()
-    
-    #joint_angles = np.array([85.06, 24.65, 164.58, 179.33, -179.90, 0. ])
-    #joint_angles= np.array([ 120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ])
-    #joint_angles = np.array([ 89.99683147,  23.85781021, 164.55283017, 179.55921263 ,180., 180. ])
-    #tcp_position = env.forward_kinematics(joint_angles)
-    #print("TCP Position env:", tcp_position)
-    #x,y,z= env.tcp_position_to_grid_index(tcp_position)
-    #print("TCP Position Indices:", x, y, z)
-    #state_size = np.prod(env.observation_space.shape)
-    # print("action space: ", env.action_space) # action space:  MultiDiscrete([3 3 3 3 3 3])
-    # print("obs space:", env.observation_space.shape)  #obs space: (2, 61, 61, 101)
-    # action_size = env.action_space.shape[0] #.nvec.prod()   #Action size: (6,)  # tuple
-    # print(f"State size: {state_size}, Action size: {action_size}") #State size: 751642
-
-    # print("channels: ", env.observation_space.shape[0])  # channels: 2
