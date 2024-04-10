@@ -279,9 +279,9 @@ class RobotEnvironment(gym.Env):
             
             elif voxel_value == -1:
                 # Check if the distance to the helix is less than or equal to 0.001
-                _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
+                self.closest_point, self.closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
                 #max_distance = np.max(closest_distance)
-                if closest_distance <= self.tolerance_tcp_pos:
+                if self.closest_distance <= self.tolerance_tcp_pos:
                     print("TCP is close to the helix.")
                     self.truncated = False
                     self.out_of_voxel_space = False

@@ -52,8 +52,9 @@ class QNetworkCNN(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
         # concatenate flattened spatial data with TCP position and orientation data
-        print("x shape:", x.shape)
-        print("tcp_data shape:", tcp_data.shape)
+        #print("x shape:", x.shape)
+        #print("tcp_data shape:", tcp_data.shape)
+        tcp_data= torch.squeeze(tcp_data, dim=1)
         combined_features = torch.cat((x, tcp_data), dim=1)
 
         x = F.relu(self.fc1(combined_features))
@@ -115,25 +116,28 @@ class DQNAgent:
 
 
     def act(self, state):
+        exploiting  =  False
         spatial_data, tcp_data = state  # unpack the state tuple
         if np.random.rand() <= self.epsilon:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
             print("exploring: random action")
             #print("action shape:", len(action))
-            return action # shape [6] ?
+            return action, exploiting # shape [6] ?
 
         spatial_data = torch.FloatTensor(spatial_data).unsqueeze(0).to(device)
         tcp_data = torch.FloatTensor(tcp_data).unsqueeze(0).to(device)
         q_values = self.q_network(spatial_data, tcp_data)
         print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
-        
+        exploiting = True
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
         #print("action shape:", len(action))
         print("-------------------------------")
-        return action
+        print("action:", action)
+        print("exploiting:", exploiting)
+        return action, exploiting
 
 
     def replay(self):
@@ -261,11 +265,12 @@ if __name__ == "__main__":
         log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
+
         # initialize the agent
         agent = DQNAgent(spatial_data_shape, actions, epsilon_decay, epsilon_min, device)
 
         #agent = DQNAgent(state_size, actions, device=device)
-        print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
+        #print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
@@ -282,7 +287,7 @@ if __name__ == "__main__":
             log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++")
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-                action = agent.act(state)
+                action, exploiting = agent.act(state)
                 #print("action:", action)
                 next_state, reward, terminated, truncated, info = env.step(action)  
                 # if step_counter > 1:
@@ -302,6 +307,7 @@ if __name__ == "__main__":
                 print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
+                log.write_to_log(f"Exploiting: {exploiting}")
                 log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
                 log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
                 log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
