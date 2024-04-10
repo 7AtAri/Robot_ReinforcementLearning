@@ -159,8 +159,8 @@ class RobotEnvironment(gym.Env):
             action (np.array): action provided by the agent (array of 6 integers between 0 and 2)
 
         Returns:
-            observation (state):  stacked voxel_space and 
-                                            current position of the TCP (end-effector) in the 3D space
+            observation (state):  Tuple of stacked voxel_space and current position of the TCP (end-effector) in the 3D space
+                                  and the TCP Orientation
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
