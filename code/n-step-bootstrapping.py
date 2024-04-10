@@ -329,17 +329,18 @@ if __name__ == "__main__":
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
 
-        # check if the MSE file exists in folder (this means that this folders episode has ended)
+        # check length of files in the folders
         num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
         num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
 
+        # Check which folder to save the file in depending on the number of files in the folders
         if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
-            if os.path.exists(file_path1):
-                folder_name = folder_path2
+            if os.path.exists(file_path1): # is mse plot in folder 1?
+                folder_name = folder_path2 # take the other folder for saving
             else:
-                folder_name = folder_path1
-        elif not os.path.exists(file_path2):
-                folder_name = folder_path2
+                folder_name = folder_path1 # save in folder 1 if mse plot is not there
+        elif not os.path.exists(file_path2): # if mse plot is not in folder 1 and not in folder 2?
+                folder_name = folder_path2 # save in folder 2
         else:
                 print("Error: File already exists in both folders")
 
