@@ -11,6 +11,7 @@ from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
 import os
+import shutil
 
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 # mute the MKL warning on macOS
@@ -176,6 +177,12 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
+
+    # delete the plot folders if they already exist before starting the training
+    shutil.rmtree('ParamCombi1')
+    shutil.rmtree('ParamCombi2')
+
+    # hyperparameters grid 
     grid = [{'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
@@ -185,9 +192,11 @@ if __name__ == "__main__":
                 # {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
                 # {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.995, 'epsilon_min': 0.1},
                 # {'batch_size': 64, 'episodes': 500, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
+    
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
     #creates logclass
     log = LogStore()
     log.setfilename("Setup")
