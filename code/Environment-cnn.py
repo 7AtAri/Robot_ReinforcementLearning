@@ -453,10 +453,12 @@ class RobotEnvironment(gym.Env):
                 # Save the figure in folder 1
                 plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
             else:
-                    # Save the figure in folder 2
-                    plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
+                # Save the figure in folder 2
+                plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
+
+        plt.close() # close the figure  
         
-        self.figure_count += 1
+        self.figure_count += 1 # increment the figure count
 
 
     def process_action(self, action):

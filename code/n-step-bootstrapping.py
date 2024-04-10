@@ -179,8 +179,15 @@ class DQNAgent:
 if __name__ == "__main__":
 
     # delete the plot folders if they already exist before starting the training
-    shutil.rmtree('ParamCombi1')
-    shutil.rmtree('ParamCombi2')
+    # Specify the folder path
+    folder_path = 'ParamCombi1'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi1')
+    folder_path = 'ParamCombi2'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi2')
 
     # hyperparameters grid 
     grid = [{'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
@@ -196,7 +203,7 @@ if __name__ == "__main__":
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    
+
     #creates logclass
     log = LogStore()
     log.setfilename("Setup")
