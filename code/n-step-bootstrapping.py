@@ -10,7 +10,9 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+import datetime
 import os
+import shutil
 
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 # mute the MKL warning on macOS
@@ -18,9 +20,20 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 
 torch.set_default_dtype(torch.float)
 
+class LogStore():
+    def __init__(self):
+        self.filename = ""
+
+    def setfilename(self,name):
+        self.filename = name
+
+    def write_to_log(self, input):
+            with open("code/" + self.filename + ".txt", 'a') as log:
+                log.write(input + "\n")
+
 
 class QNetworkCNN(nn.Module):
-    def __init__(self, state_size, actions, tcp_feature_size=6):
+    def __init__(self, state_size, actions, tcp_feature_size=3):
         super(QNetworkCNN, self).__init__()
         # Initialize convolutional and pooling layers
         self.conv1 = nn.Conv3d(in_channels=state_size[0], out_channels=64, kernel_size=3, stride=1, padding=1)
@@ -38,8 +51,9 @@ class QNetworkCNN(nn.Module):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
-
         # concatenate flattened spatial data with TCP position and orientation data
+        print("x shape:", x.shape)
+        print("tcp_data shape:", tcp_data.shape)
         combined_features = torch.cat((x, tcp_data), dim=1)
 
         x = F.relu(self.fc1(combined_features))
@@ -67,8 +81,8 @@ class DQNAgent:
         # this ensures that the memory does not grow beyond buffer_size - oldest elements are removed:
         self.memory = deque(maxlen=buffer_size) 
         
-        self.q_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=6).to(device)
-        self.target_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=6).to(device)
+        self.q_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=3).to(device)
+        self.target_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=3).to(device)
         self.target_network.load_state_dict(self.q_network.state_dict())
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
@@ -179,7 +193,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -187,7 +201,8 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 16, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    
+    grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
@@ -200,6 +215,22 @@ if __name__ == "__main__":
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # delete the plot folders if they already exist before starting the training
+    # Specify the folder path
+    folder_path = 'ParamCombi1'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi1')
+    folder_path = 'ParamCombi2'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi2')
+
+    # instantiate logging
+    log = LogStore()
+    log.setfilename("Setup")
+
+    # register the environment
     register(
         id='RobotEnvironment-v1',
         entry_point='Environment-cnn:RobotEnvironment',
@@ -207,9 +238,11 @@ if __name__ == "__main__":
 
     env = gym.make('RobotEnvironment-v1')
     # the shapes of the components of the Tuple space
+    
     spatial_data_shape = env.observation_space[0].shape   # (2, 61, 61, 101)
     tcp_data_shape = env.observation_space[1].shape  # (6,)
 
+    #log.write_to_log("obs space: " + str(env.observation_space[0].shape) + str(env.observation_space[1].shape))
     #print("Spatial Data Shape:", spatial_data_shape)
     #print("TCP Data Shape:", tcp_data_shape)
 
@@ -223,6 +256,9 @@ if __name__ == "__main__":
      # # Training loop
     for i in range(len(grid)):
         params = grid[i]
+        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H_%M")))
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
@@ -233,6 +269,8 @@ if __name__ == "__main__":
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
+        mse_list = []
+        new_episode= False
    
         for episode in range(episodes):
             state, info = env.reset()  
@@ -241,6 +279,7 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
+            log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++")
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action = agent.act(state)
@@ -249,6 +288,10 @@ if __name__ == "__main__":
                 # if step_counter > 1:
                 #     env.render()
                 min_distance_tcp_helix = info['closest_distance']
+                closest_helix_point = info['closest_point']
+                current_tcp_position = info['tcp_position']
+                current_tcp_orientation = info['current_orientation']
+                tcp_on_helix = info['tcp_on_helix']
                 #print("next_state:", next_state)
                 #print("next_state shape:", next_state.shape)
                 #next_state = np.reshape(next_state, [1, state_size])
@@ -259,39 +302,75 @@ if __name__ == "__main__":
                 print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
+                log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
+                log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
+                log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
+                log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
+                log.write_to_log(f"Total Reward: {total_reward}")
+                #if step_counter > prev_episode_steps:
+                #    episode_with_more_steps = True
+                #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+                if step_counter % 7 == 0:  # every 7 steps
+                    env.render()
+                    
             
             while len(agent.n_step_buffer) > 0:
+                print("----writing n-step buffer to memory-----")
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
                 agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
-                
-            min_distances.append(min_distance_tcp_helix) # same size as episode
+
             if terminated or truncated:
+                log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                #log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                 print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
             agent.replay()
+
             if episode % 10 == 0:
                 #env.render()
                 agent.update_target_network()
 
-        # calcualte mse for each episode --> first arg is expected distanz --> zero?
-        mse = mean_squared_error(np.zeros(episodes), min_distances)
-        # wenn for beednet wurde
-        # loop draußen dann mse plot
-        # Erstellen des Plots
-        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+            # calcualte mse for each episode --> first arg is expected distanz --> zero?
+            mse = mean_squared_error(current_tcp_position, closest_helix_point)
+            mse_list.append(mse)
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        log.write_to_log("-------------------------------------End of Training with Parameter Combination-----------------------------------------------")
+        # mse plot
+        plt.figure()
+        plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
-        plt.show()
 
+        # check in which folder the file should be saved
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
 
+        # check length of files in the folders
+        num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+        num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
 
+        # Check which folder to save the file in depending on the number of files in the folders
+        if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+            if os.path.exists(file_path1): # is mse plot in folder 1?
+                folder_name = folder_path2 # take the other folder for saving
+            else:
+                folder_name = folder_path1 # save in folder 1 if mse plot is not there
+        elif not os.path.exists(file_path2): # if mse plot is not in folder 1 and not in folder 2?
+                folder_name = folder_path2 # save in folder 2
+        else:
+                print("Error: File already exists in both folders")
 
-
-
-
-
-
-
+        # Save the figure
+        plt.savefig(os.path.join(folder_name, 'MSE.png'))
+        #plt.show()
