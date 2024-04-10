@@ -411,7 +411,7 @@ if __name__ == "__main__":
                 current_tcp_position_voxels = info['tcp_position_in_voxels']
                 current_tcp_orientation = info['current_orientation']
                 tcp_on_helix = info['tcp_on_helix']
-                current_tcp_position_coordinates = info['tcp_position']
+                current_tcp_position_coordinates = info['tcp_position_in_coordinates']
 
                 # add the experience to the agent's memory
                 agent.add_experience(*state, action, reward, *next_state, terminated or truncated)
