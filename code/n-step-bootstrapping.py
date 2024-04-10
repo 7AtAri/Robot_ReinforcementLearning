@@ -20,7 +20,7 @@ torch.set_default_dtype(torch.float)
 
 
 class QNetworkCNN(nn.Module):
-    def __init__(self, state_size, actions, tcp_feature_size=6):
+    def __init__(self, state_size, actions, tcp_feature_size=3):
         super(QNetworkCNN, self).__init__()
         # Initialize convolutional and pooling layers
         self.conv1 = nn.Conv3d(in_channels=state_size[0], out_channels=64, kernel_size=3, stride=1, padding=1)
@@ -38,10 +38,8 @@ class QNetworkCNN(nn.Module):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
-
         # concatenate flattened spatial data with TCP position and orientation data
         combined_features = torch.cat((x, tcp_data), dim=1)
-
         x = F.relu(self.fc1(combined_features))
         x = self.fc2(x)
         return x.view(-1, 6, 3)
