@@ -230,8 +230,6 @@ if __name__ == "__main__":
         #+ str(datetime.datetime.today().weekday())+
         log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H_%M")))
         log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
-        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H_%M")))
-        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
