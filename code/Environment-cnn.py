@@ -21,8 +21,36 @@ import gymnasium as gym  # original gym is no longer maintained and now called g
 
 
 class RobotEnvironment(gym.Env):
-    """Custom Environment that follows gym interface"""
-    """Every Gym environment must have the attributes action_space and observation_space (containing states). """
+    """_summary_: Custom Environment that follows gym interface for a 6-joint robot arm in a voxel space with a helix path.
+
+    _gymnasium parameters_:
+
+    action space: The action space consists of 6 discrete actions, one for each joint.
+    state / observation space: The observation space consists of a 3D voxel grid and the current TCP position.
+
+    _gymnasium methods_:
+
+    - __init__(self, radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001): Initializes the environment
+    - step(self, action): Updates the environment with actions and returns the next agent observation, reward, and info.
+    - reset(self, seed=None, options=None): Resets the environment to an initial internal state.
+    - render(self): Visualizes the voxel space with the helix path and highlights the TCP position if provided.
+
+    _custom methods_:
+
+    - init_helix(self): Initializes a helix path in the voxel space.
+    - is_on_helix(self, tcp_coords): Checks if the TCP coordinates lie on the helix path.
+    - process_action(self, action): Processes the action provided to generate new joint angles.
+    - init_translation_matrix(self): Initializes the translation matrix based on the initial TCP position.
+    - translate_robot_to_voxel_space(self, point): Translates a point from robot space to voxel space.
+    - update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space): Updates the TCP position in voxel space.
+    - dh_transform_matrix(self, a, d, alpha, theta): Computes the standard Denavit-Hartenberg transformation matrix.
+    - forward_kinematics(self, theta_degrees): Calculates the end-effector position and orientation using the provided joint angles.
+    - objective_function_with_orientation(self, theta, constant_orientation): Calculates the combined positional and orientational error.
+    - find_closest_helix_point(self, current_tcp_position, helix_points): Finds the closest point on the helix to the current TCP position.
+    - reward_function(self, tcp_on_helix): Calculates the reward based on the current state of the environment.
+
+    """
+    
 
     def __init__(self,  radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001):
         # each joint can have one of three actions: decrease (-0.1°), keep (0.0°), increase (+0.1°)
@@ -133,7 +161,7 @@ class RobotEnvironment(gym.Env):
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
-            info (dict): A dictionary containing other information from the environment
+            info (dict): A dictionary containing other customizable information from the environment
         """
         # convert action to delta angles and apply them
         delta_angles = self.process_action(action)
@@ -188,17 +216,10 @@ class RobotEnvironment(gym.Env):
 
 
     def init_helix(self):
-        """
-        Initialize a helix path in the voxel space.
+        """_summary_: Initialize a helix path in the voxel space.
 
         This function computes the coordinates of points along a helix path
         defined by the given radius, height per turn, and number of turns.
-
-        Parameters:
-            self
-
-        Returns:
-            None
         """
 
         # initialize helix
@@ -239,8 +260,7 @@ class RobotEnvironment(gym.Env):
         #print(self.helix_points)
 
     def is_on_helix(self, tcp_coords):
-        """
-        Check if the TCP (Tool Center Point) coordinates lie on the helix path.
+        """_summary_Check if the TCP (Tool Center Point) coordinates lie on the helix path.
 
         This function converts the TCP coordinates to voxel indices within the voxel space
         and determines whether the TCP is on the helix path, at the target/end of the helix, 
@@ -305,7 +325,7 @@ class RobotEnvironment(gym.Env):
 
 
     def reset(self, seed=None, options=None):
-        """Resets the environment to an initial internal state, returning an initial observation and info.
+        """_summary_: Resets the environment to an initial internal state, returning an initial observation and info.
 
         Returns:
             observsation (state): Observation of the initial state. 
@@ -362,7 +382,7 @@ class RobotEnvironment(gym.Env):
 
 
     def reward_function(self, tcp_on_helix):
-        """Calculate the reward based on the current state of the environment."""
+        """Calculate the reward based on the current TCP position."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
         _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.constant_orientation)  # Roll, Pitch, Yaw in Grad
@@ -396,13 +416,7 @@ class RobotEnvironment(gym.Env):
     
 
     def render(self):
-        """
-
-        This function visualizes the voxel space with the helix path and highlights the TCP position
-        if provided and valid.
-            
-        Returns:
-            None
+        """_summary_: This function visualizes the voxel space with the helix path and highlights the TCP position 
         """
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -499,8 +513,7 @@ class RobotEnvironment(gym.Env):
 
 
     def process_action(self, action):
-        """
-        Process the action provided to generate new joint angles.
+        """_summary_: Process the action provided to generate new joint angles.
 
         This function calculates the delta angles for each action and updates the joint angles accordingly.
         The delta angles are calculated based on the action values provided, and the joint angles are limited
@@ -531,14 +544,10 @@ class RobotEnvironment(gym.Env):
         return delta_angles
 
     def init_translation_matrix(self):
-        """
-        Initialize the translation matrix based on the initial TCP position.
+        """_summary_: Initialize the translation matrix based on the initial TCP position.
 
         This function computes the translation vector as the negative of the initial TCP position,
         and constructs the translation matrix accordingly.
-
-        Returns:
-            None
         """
         # self.initial_tcp_position is the initial TCP position
         # the translation vector is the negative of this position
@@ -552,6 +561,7 @@ class RobotEnvironment(gym.Env):
         ])
 
     def translate_robot_to_voxel_space(self, point):
+        """_summary_: Translate a point from robot space to voxel space."""
         # convert the point to homogeneous coordinates for matrix multiplication
         homogeneous_point = np.append(point, 1)
         # apply the translation matrix
@@ -561,6 +571,7 @@ class RobotEnvironment(gym.Env):
         return translated_point
     
     def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
+        """_summary_: Update the TCP position in voxel space."""
         # translate new TCP position to voxel space
         translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
         # convert translated position to voxel indices
@@ -569,6 +580,20 @@ class RobotEnvironment(gym.Env):
         return x_idx, y_idx, z_idx
 
     def dh_transform_matrix(self,a, d, alpha, theta):
+        """_summary_: Compute the standard Denavit-Hartenberg transformation matrix.
+
+        This function computes the standard Denavit-Hartenberg transformation matrix based on the provided DH parameters.
+        The transformation matrix is computed using the cosine and sine functions of the given angles.
+
+        Parameters:
+            a: The link length.
+            d: The link offset.
+            alpha: The link twist angle.
+            theta: The joint angle.
+
+        Returns:
+            np.ndarray: The computed transformation matrix.
+        """ 
     
     ## compute the standard Denavit-Hartenberg transformation matrix.
     ## source: wikipedia
@@ -580,17 +605,16 @@ class RobotEnvironment(gym.Env):
             ])
 
     def forward_kinematics(self, theta_degrees):
-        """
-        Calculate the end-effector position and orientation using the provided joint angles.
+        """_summary_: Calculate the TCP position and orientation using the provided joint angles.
 
-        This function computes the end-effector position and orientation based on the Denavit-Hartenberg (DH) parameters
+        This function computes the TCP position and orientation based on the Denavit-Hartenberg (DH) parameters
         and the given joint angles.
 
         Parameters:
             theta_degrees: Joint angles in degrees.
 
         Returns:
-            tuple: A tuple containing the end-effector position (x, y, z) and orientation angles (alpha, beta, gamma).
+            tuple: A tuple containing the TCP position (x, y, z) and orientation angles (alpha, beta, gamma).
         """
         theta = np.radians(theta_degrees) # convert angles from degree to radians for cos and sin functions
         # DH parameters for each joint: (a, d, alpha, theta)
@@ -647,8 +671,7 @@ class RobotEnvironment(gym.Env):
 
 
     def objective_function_with_orientation(self, theta, constant_orientation): # closes_target_pos
-        """
-        Calculate the combined positional and orientational error for the robot end-effector.
+        """_summary_: Calculate the error based on the current position and orientation.
         """
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
@@ -677,9 +700,8 @@ class RobotEnvironment(gym.Env):
 
 
     def find_closest_helix_point(self, current_tcp_position, helix_points):
-        """
-        Find the closest point on the helix to the current TCP position.
-        """
+        """_summary_: Find the closest point on the helix to the current TCP position."""
+   
         # calculate distance between every helix point and every current tcp position
         differences = helix_points - current_tcp_position.reshape(3, 1)
         distances = np.linalg.norm(differences, axis=0)
@@ -707,7 +729,7 @@ class RobotEnvironment(gym.Env):
 
 
     def position_to_voxel_indices(self, point_in_voxel_space):
-        """
+        """_summary_:
         This function converts the coordinates of a point in voxel space to voxel indices,
         considering the resolution of the voxel grid.
 
@@ -724,7 +746,7 @@ class RobotEnvironment(gym.Env):
         return x_idx, y_idx, z_idx
 
     def embed_tcp_position(self, tcp_position):
-        """Embeds the TCP position in a 3D grid of the same shape as the voxel space."""
+        """_summary_: Embeds the TCP position in a 3D grid of the same shape as the voxel space."""
         grid = np.zeros(self.voxel_space.shape, dtype=np.float32)
         # TCP position to grid index + set to 1
         #x_idx, y_idx, z_idx = self.tcp_position_to_grid_index(tcp_position)

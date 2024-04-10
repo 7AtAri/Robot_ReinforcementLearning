@@ -21,6 +21,19 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 torch.set_default_dtype(torch.float)
 
 class LogStore():
+    """_summary_
+    This class is used to store the log information in a text file.
+
+    _attributes_
+    filename: str
+        The name of the file to store the log information
+    
+    _methods_
+    setfilename(name: str)
+        Set the filename to store the log information
+    write_to_log(input: str)
+        Write the input to the log file
+    """
     def __init__(self):
         self.filename = ""
 
@@ -33,6 +46,27 @@ class LogStore():
 
 
 class QNetworkCNN(nn.Module):
+    """_summary_
+    This class defines the Q-network 
+    using a Multimodal Approach: Convolutional Neural Network (CNN) architecture for the spatial data
+    and Late Feature Fusion for the TCP orientation data to predict the Q-values for the actions.
+
+    _attributes_
+    conv1 & conv2: nn.Conv3d
+        3-Dimensionaler Convolutional layer 
+    pool: nn.MaxPool3d
+        3-Dimensionaler MaxPooling layer
+    flat_features: int
+        The number of flat features calculated from the convolutional layers
+    fc1 & fc2: nn.Linear
+        Fully connected layers
+    
+    _methods_
+    forward(x, tcp_data)
+        Forward pass through the network
+    calculate_flat_features(dummy_input)
+        Calculate the number of flat features from the convolutional layers
+    """
     def __init__(self, state_size, actions, tcp_feature_size=3):
         super(QNetworkCNN, self).__init__()
         # Initialize convolutional and pooling layers
@@ -72,6 +106,57 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
+    """_summary_
+    This class defines the DQN agent that interacts with the environment.
+    The agent uses a Q-network to predict the Q-values for the actions and learns from the experiences in the memory.
+
+    _attributes_
+    spatial_data_shape: tuple
+        The shape of the spatial data
+    actions: int
+        The number of actions
+    epsilon: float
+        The exploration rate
+    epsilon_decay: float
+        The rate at which the epsilon value decays
+    epsilon_min: float
+        The minimum value of epsilon
+    device: str
+        The device to run the computations on
+    lr: float
+        The learning rate
+    gamma: float
+        The discount factor
+    batch_size: int
+        The batch size
+    buffer_size: int
+        The size of the memory buffer
+    n_step: int
+        The number of steps to calculate the n-step return
+    n_step_buffer: deque
+        A temporary buffer for n-step calculation
+    memory: deque
+        The memory buffer to store experiences
+    q_network: QNetworkCNN
+        The Q-network to predict Q-values
+    target_network: QNetworkCNN
+        The target network to predict Q-values
+    optimizer: optim.Adam
+        The optimizer to update the weights of the Q-network
+
+    _methods_
+    add_experience(spatial_data, tcp_data, action, reward, next_spatial_data, next_tcp_data, done)
+        Add the experience to the memory
+    calculate_n_step_info()
+        Calculate the n-step reward, final state, and done status
+    act(state)
+        Choose an action based on the epsilon-greedy policy
+    replay()
+        Learn from the experiences in the memory
+    update_target_network()
+        Update the target network with the weights of the Q-network
+    """
+
     def __init__(self, spatial_data_shape, actions, epsilon_decay, epsilon_min,device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.spatial_data_shape = spatial_data_shape
         self.actions = actions
@@ -106,7 +191,17 @@ class DQNAgent:
                 self.n_step_buffer.clear()
 
     def calculate_n_step_info(self):
-        """Calculate n-step reward, final state, and done status."""
+        """_summary_
+        Calculate the n-step reward, final state, and done status
+
+        _returns_
+        n_step_reward: float
+            The n-step reward
+        n_step_state: tuple
+            The final state
+        n_step_done: bool
+            The done status
+        """
         n_step_reward = 0
         for idx, (_, _, reward, _, _) in enumerate(self.n_step_buffer):
             n_step_reward += (self.gamma ** idx) * reward
@@ -116,6 +211,20 @@ class DQNAgent:
 
 
     def act(self, state):
+        """_summary_
+        Choose an action based on the epsilon-greedy policy
+
+        _parameters_
+        state: tuple
+            The current state
+
+        _returns_
+        action: list
+            The chosen action
+        exploiting: bool
+            The exploitation status
+        """
+
         exploiting  =  False
         spatial_data, tcp_data = state  # unpack the state tuple
         if np.random.rand() <= self.epsilon:
@@ -141,6 +250,9 @@ class DQNAgent:
 
 
     def replay(self):
+        """_summary_
+        Learn from the experiences in the memory
+        """
         if len(self.memory) < self.batch_size:
             return
 
@@ -200,12 +312,15 @@ class DQNAgent:
             #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
+        """_summary_
+        Update the target network with the weights of the Q-network
+        """
         self.target_network.load_state_dict(self.q_network.state_dict())
 
 
 
 if __name__ == "__main__":
-    
+
     # grid for hyperparameters grid search
     grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
@@ -226,6 +341,7 @@ if __name__ == "__main__":
     # Check if the folder exists and is a directory
     if os.path.isdir(folder_path):
         shutil.rmtree('ParamCombi1')
+
     folder_path = 'ParamCombi2'
     # Check if the folder exists and is a directory
     if os.path.isdir(folder_path):
@@ -251,7 +367,7 @@ if __name__ == "__main__":
     #print("Spatial Data Shape:", spatial_data_shape)
     #print("TCP Data Shape:", tcp_data_shape)
 
-    actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
+    actions = env.action_space.shape[0] # actions = 6
     
     # hyperparameters initialization
     episodes = 0
@@ -360,7 +476,6 @@ if __name__ == "__main__":
 
         # check in which folder the file should be saved
         # check if one of the folders contains the MSE file:
-        # Specify the folder path and the filename
         folder_path1 = 'ParamCombi1'
         folder_path2 = 'ParamCombi2'
         filename = 'MSE.png'
@@ -368,7 +483,7 @@ if __name__ == "__main__":
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
 
-        # check if the folders exist
+        # check if the folders exist, if not make them
         if not os.path.exists(folder_path1):
             os.makedirs(folder_path1)
         if not os.path.exists(folder_path2):
@@ -385,7 +500,7 @@ if __name__ == "__main__":
             else:
                 folder_name = folder_path1 # save in folder 1 if mse plot is not there
         elif not os.path.exists(file_path2): # if mse plot is not in folder 1 and not in folder 2?
-                folder_name = folder_path2 # save in folder 2
+                folder_name = folder_path1 # save in folder 1
         else:
                 print("Error: File already exists in both folders")
 
