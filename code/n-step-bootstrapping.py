@@ -191,7 +191,7 @@ if __name__ == "__main__":
         shutil.rmtree('ParamCombi2')
 
     # hyperparameters grid 
-    grid = [{'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},

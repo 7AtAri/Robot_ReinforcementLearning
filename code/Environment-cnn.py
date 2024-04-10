@@ -248,11 +248,13 @@ class RobotEnvironment(gym.Env):
             if voxel_value == 1:
                 print("TCP reached the target!")
                 self.terminated = True
+                self.out_of_voxel_space = False
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
                 print("TCP is on the helix path.")
+                self.out_of_voxel_space = False
                 return True # TCP is on the helix path
             
             elif voxel_value == -1:
@@ -262,10 +264,12 @@ class RobotEnvironment(gym.Env):
                 if closest_distance <= self.tolerance_tcp_pos:
                     print("TCP is close to the helix.")
                     self.truncated = False
+                    self.out_of_voxel_space = False
                     return True
                 else:
                     print("TCP is outside the helix voxels.")
                     self.truncated = True
+                    self.out_of_voxel_space = False
                     return False
             
         else:
