@@ -176,15 +176,15 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 4, 'episodes': 10, 'epsilon_decay': 0.5, 'epsilon_min': 0.25},
-                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
+    grid = [{'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+                {'batch_size': 8, 'episodes': 50, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
-                {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
-                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
-                {'batch_size': 64, 'episodes': 200, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
-                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
-                {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
-                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
+                {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2}]
+                # {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+                # {'batch_size': 64, 'episodes': 200, 'epsilon_decay': 0.995, 'epsilon_min': 0.05},
+                # {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
+                # {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.995, 'epsilon_min': 0.1},
+                # {'batch_size': 64, 'episodes': 500, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -308,14 +308,11 @@ if __name__ == "__main__":
                 folder_name = folder_path2
             else:
                 folder_name = folder_path1
-        else:
-            if not os.path.exists(file_path2):
+        elif not os.path.exists(file_path2):
                 folder_name = folder_path2
-            else:
+        else:
                 print("Error: File already exists in both folders")
 
-        
-    
         # Save the figure
         plt.savefig(os.path.join(folder_name, 'MSE.png'))
         #plt.show()
