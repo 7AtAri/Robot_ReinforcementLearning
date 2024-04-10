@@ -329,6 +329,12 @@ if __name__ == "__main__":
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
 
+        # check if folders exist:
+        if not os.path.exists(folder_path1):
+            os.makedirs(folder_path1)
+        if not os.path.exists(folder_path2):
+            os.makedirs(folder_path2)
+            
         # check length of files in the folders
         num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
         num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
