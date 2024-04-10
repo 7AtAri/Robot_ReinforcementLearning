@@ -146,6 +146,7 @@ class RobotEnvironment(gym.Env):
 
         # tuple of spatial and tcp data
         self.state = (self.observation, self.tcp_data)
+        self.current_directory = None
       
 
 
