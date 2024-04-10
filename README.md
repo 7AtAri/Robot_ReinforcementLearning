@@ -2,7 +2,7 @@
 
 ## Project: 6-joint Robot Arm
 
-- [ ] presentation [slides](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+- [x] presentation [slides](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
 - [x] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
 - [x] [notes on the task](https://docs.google.com/document/d/1-oN-ch47fVDCPkOF1WOgRCZygJi9Pc00SBXlcemRMhU/edit?usp=sharing) 
 
@@ -11,29 +11,29 @@
 - [x] Code the Environment with the given direct kinematics and the constraints of the join angles and the chosen voxel.
       Define a suitable Reward Function for the Agent,
       as well as the strategy how to deal with occasions where the TCP leaves the trajectory and/or the voxel.
-- [ ]	Code the defined algorithm to come to an optimal Policy.
-- [ ]	Verify the performance vs. time of the Learning process showing that your Agent is in fact learning
+- [x]	Code the defined algorithm to come to an optimal Policy.
+- [x]	Verify the performance vs. time of the Learning process showing that your Agent is in fact learning
       and the decisions are becoming “better” after each training.
-- [ ] Once your Agent learned the optimal Policy, test the Policy
+- [x] Once your Agent learned the optimal Policy, test the Policy
       showing that the robot’s TCP is indeed following the trajectory.
       Compute the mean square error (MSE) from the ideal trajectory and what the Agent is doing in reality.
 - [ ]	Propose new ideas how to reduce the MSE …
       you don’t need to code them, but your ideas must be plausible and realistic: Substantiate them! 
-- [ ]	Make sure that your code has some tools to allow for easy verification of the performance of your Agent.
+- [x]	Make sure that your code has some tools to allow for easy verification of the performance of your Agent.
 
 ### Presentation of the project (30 min):
 upload your code + environment two days before the appointment
 
-- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+- [x] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
 
 Questions:
 
-- [ ] Prepare a short summary of the problem and the way to solve it
-- [ ] Create a few test scenarios upfront to test the performance of your code
-- [ ] Document your code
-- [ ] Show the behaviour of the Environment
-- [ ] Show that the learned policy performs well
-- [ ] Be prepared to make a few changes in your code and re-run it showing the new performance!
+- [x] Prepare a short summary of the problem and the way to solve it
+- [x] Create a few test scenarios upfront to test the performance of your code
+- [x] Document your code
+- [x] Show the behaviour of the Environment (--> render())
+- [x] Show that the learned policy performs well (more or less)
+- [x] Be prepared to make a few changes in your code and re-run it showing the new performance!
 
 Dependencies:
 - pip install numpy
