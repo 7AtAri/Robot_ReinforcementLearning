@@ -648,21 +648,21 @@ class RobotEnvironment(gym.Env):
         Calculate the combined positional and orientational error for the robot end-effector.
         """
         # Calculate the current position and orientation from forward kinematics
-        current_position, self.current_orientation = self.forward_kinematics(theta) # joint angle
+        current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
         #print("current_tcp_pos_in_voxel_space (objective func):", current_position)
         closest_helix_point, closest_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
         # Format the orientation to two decimals
-        formatted_orientation = [f'{num:.2f}' for num in self.current_orientation]
+        formatted_orientation = [f'{num:.2f}' for num in current_orientation]
         print(formatted_orientation)
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
         # Convert orientation tuples to numpy arrays
-        current_orientation = np.array(self.current_orientation)
-        constant_orientation = np.array(self.constant_orientation)
+        current_orientation = np.array(current_orientation)
+        constant_orientation = np.array(constant_orientation)
         
         # deviation of current and constant orientation
         orientation_errors = np.abs(current_orientation - constant_orientation)
