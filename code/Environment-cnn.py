@@ -22,8 +22,11 @@ import gymnasium as gym  # original gym is no longer maintained and now called g
 
 class RobotEnvironment(gym.Env):
     """_summary_: Custom Environment that follows gym interface for a 6-joint robot arm in a voxel space with a helix path.
-
-    _gymnasium parameters_:
+        
+        note:   Custom Environment that follows gym interface
+                Every Gym environment must have the attributes action_space and observation_space (containing states). 
+    
+    _gymnasium attributes_:
 
     action space: The action space consists of 6 discrete actions, one for each joint.
     state / observation space: The observation space consists of a 3D voxel grid and the current TCP position.
