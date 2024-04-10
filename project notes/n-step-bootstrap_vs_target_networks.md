@@ -18,3 +18,25 @@ Relationship and Differences
 - Complementary Use: These techniques can be complementary. For example, a Deep Q-Learning algorithm could use both an n-step return approach to compute the target Q-values and a target network to provide stability in those targets. This combination can enhance the efficiency and effectiveness of the learning process.
 
 In summary, while both techniques aim to improve the reinforcement learning process, they do so from different angles: one focuses on stabilizing the training process, and the other on improving the estimates of future rewards. Their combined use can potentially offer a more robust learning algorithm.
+
+## Mathematical Formulation of n-step-bootstrapping for Deep Q-Learning
+
+- computing the n-step return from a sequence of experiences stored in an n-step buffer
+- n-step return as target for updating the Q-value estimates in Deep Q-Learning
+
+each experience at step i consists of the current state $s_{i}$,  action $a_{i}$, reward $r_{i}$, and the discount factor $\gamma$, the n-step return, $R_{t:t+n}$, can be calculated like this:
+
+$$
+R_{t:t+n} = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots + \gamma^{n-1} r_{t+n-1}
+$$
+
+Episode continues for at least n steps from time t.
+
+To update the Q-value:
+$$
+Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left[R_{t:t+n} + \gamma^n \max_{a}Q(s_{t+n}, a) - Q(s_t, a_t)\right]
+$$
+
+$\alpha$ is the learning rate, $\max_{a}Q(s_{t+n}, a)$ represents the value of the best possible action in the state $s_{t+n}$.This term is omitted if the episode ends within the n steps, as indicated by the done flag.
+
+This formula encapsulates the essence of n-step bootstrapping in Q-learning, aiming to balance immediate feedback with longer-term outcomes for more effective learning.
