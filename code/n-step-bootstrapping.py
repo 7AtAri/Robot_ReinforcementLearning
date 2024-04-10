@@ -206,6 +206,7 @@ class DQNAgent:
 
 if __name__ == "__main__":
     
+    # grid for hyperparameters grid search
     grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
@@ -215,12 +216,12 @@ if __name__ == "__main__":
                 {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
                 {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
                 {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
+    
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # delete the plot folders if they already exist before starting the training
-    # Specify the folder path
     folder_path = 'ParamCombi1'
     # Check if the folder exists and is a directory
     if os.path.isdir(folder_path):
@@ -241,8 +242,8 @@ if __name__ == "__main__":
     )
 
     env = gym.make('RobotEnvironment-v1')
+
     # the shapes of the components of the Tuple space
-    
     spatial_data_shape = env.observation_space[0].shape   # (2, 61, 61, 101)
     tcp_data_shape = env.observation_space[1].shape  # (6,)
 
@@ -269,17 +270,13 @@ if __name__ == "__main__":
         # initialize the agent
         agent = DQNAgent(spatial_data_shape, actions, epsilon_decay, epsilon_min, device)
 
-        #agent = DQNAgent(state_size, actions, device=device)
         #print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
 
-        min_distances = [] # list to save the minum distanz of ech episode
-        min_distance_tcp_helix = None
+        # initialize the mse list
         mse_list = []
-        new_episode= False
    
         for episode in range(episodes):
-            state, info = env.reset()  
-            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            state, info = env.reset()  # reset the environment and get the initial state
             terminated = False
             truncated = False
             step_counter = 0
@@ -288,35 +285,39 @@ if __name__ == "__main__":
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action, exploiting = agent.act(state)
-                #print("action:", action)
+
+                # get results for the action from the environment:
                 next_state, reward, terminated, truncated, info = env.step(action)  
-                # if step_counter > 1:
-                #     env.render()
+
+                # get the information from the environment
                 min_distance_tcp_helix = info['closest_distance']
                 closest_helix_point = info['closest_point']
-                current_tcp_position = info['tcp_position']
+                current_tcp_position_voxels = info['tcp_position_in_voxels']
                 current_tcp_orientation = info['current_orientation']
                 tcp_on_helix = info['tcp_on_helix']
-                #print("next_state:", next_state)
-                #print("next_state shape:", next_state.shape)
-                #next_state = np.reshape(next_state, [1, state_size])
+                current_tcp_position_coordinates = info['tcp_position']
+
+                # add the experience to the agent's memory
                 agent.add_experience(*state, action, reward, *next_state, terminated or truncated)
                 state = next_state # update to the current state
                 total_reward += reward
                 step_counter += 1
-                print("total_reward", total_reward)
+
+                #print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
+
+                # log the information
                 log.write_to_log(f"Exploiting: {exploiting}")
-                log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
-                log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                log.write_to_log(f"current TCP Position in voxels: {np.round(current_tcp_position_voxels,6)}")
                 log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
                 log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
                 log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
                 log.write_to_log(f"Total Reward: {total_reward}")
-                #if step_counter > prev_episode_steps:
-                #    episode_with_more_steps = True
-                #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+                #log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                #log.write_to_log(f"current TCP Position in coordinates: {np.round(current_tcp_position_coordinates,6)}")
+
+                # render the environment:
                 if step_counter % 7 == 0:  # every 7 steps
                     env.render()
                     
@@ -333,6 +334,8 @@ if __name__ == "__main__":
                 print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
+            # replay the agent
+            # this means that the agent learns from the experiences in the memory
             agent.replay()
 
             if episode % 10 == 0:
@@ -340,10 +343,13 @@ if __name__ == "__main__":
                 agent.update_target_network()
 
             # calcualte mse for each episode --> first arg is expected distanz --> zero?
-            mse = mean_squared_error(current_tcp_position, closest_helix_point)
+            mse = mean_squared_error(current_tcp_position_coordinates, closest_helix_point)
             mse_list.append(mse)
+
+        # log the end
         log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         log.write_to_log("-------------------------------------End of Training with Parameter Combination-----------------------------------------------")
+        
         # mse plot
         plt.figure()
         plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')

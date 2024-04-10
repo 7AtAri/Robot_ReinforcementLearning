@@ -89,6 +89,8 @@ class RobotEnvironment(gym.Env):
         self.truncated = False
         self.out_of_voxel_space = False 
 
+        self.tcp_in_voxels = None
+
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
         self.constant_orientation = (0, 0, 180)  # Roll-, pitch- und yaw in rad
@@ -172,7 +174,8 @@ class RobotEnvironment(gym.Env):
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.joint_angles.tolist(),
-            'tcp_position': self.tcp_position.tolist(), # current TCP position in voxel space
+            'tcp_position_in_coordinates': self.tcp_position.tolist(), # current TCP position in voxel space
+            'tcp_position_in_voxels': self.tcp_in_voxels, # current TCP position in voxel indices
             'closest_point': self.closest_point.tolist(), # closest point on the helix
             'closest_distance': self.closest_distance.tolist(), # closest distance to the helix
             'current_orientation': self.tcp_orientation, # current orientation of the TCP
@@ -257,7 +260,7 @@ class RobotEnvironment(gym.Env):
         z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
 
         print(f"TCP coords: {tcp_coords} -> Voxel indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debugging info
-
+        self.tcp_in_voxels= [x_idx, y_idx, z_idx]
         # check if these indices are in the voxel space. If not, the TCP is outside the voxel space.
         if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
             # get value of the voxel at the calculated indices. check if voxel
@@ -419,7 +422,7 @@ class RobotEnvironment(gym.Env):
         ax.scatter([x_idx], [y_idx], [z_idx], c='orange', s=100, alpha= 1, label='TCP Position')
         # Erstellen Sie den Pfeil für die Orientierung
         #ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
-        ax.quiver(x_idx, y_idx, z_idx, self.constant_orientation[0], self.constant_orientation[1], self.constant_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
+        ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
         # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
         #ax.set_ylim(0, self.y_size)
