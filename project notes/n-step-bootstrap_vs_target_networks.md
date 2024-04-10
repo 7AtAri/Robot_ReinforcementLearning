@@ -33,6 +33,7 @@ $$
 Episode continues for at least n steps from time t.
 
 To update the Q-value:
+
 $$
 Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left[R_{t:t+n} + \gamma^n \max_{a}Q(s_{t+n}, a) - Q(s_t, a_t)\right]
 $$
