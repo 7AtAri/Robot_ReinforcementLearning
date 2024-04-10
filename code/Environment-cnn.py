@@ -697,6 +697,7 @@ class RobotEnvironment(gym.Env):
         test = [ x_idx,  y_idx,  z_idx]
         #print("closest_point invoxel_space", test)
         self.closest_distance = closest_distance
+        self.closest_point = closest_point
 
         return closest_point, closest_distance
 
