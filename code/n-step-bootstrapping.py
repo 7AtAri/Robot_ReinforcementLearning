@@ -224,7 +224,9 @@ if __name__ == "__main__":
 
     for i in range(len(grid)):
         params = grid[i]
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         log.setfilename("Grid_" + str(i))
+        log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
@@ -237,7 +239,7 @@ if __name__ == "__main__":
         min_distance_tcp_helix = None
         mse_list = []
         new_episode= False
-   
+
         for episode in range(episodes):
             state, info = env.reset()  
             #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
@@ -245,7 +247,7 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
-
+            log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++++++")
             #prev_episode_steps = 0 # counter for max steps per episode
             #episode_with_more_steps = False
             while not terminated and not truncated:
@@ -258,6 +260,8 @@ if __name__ == "__main__":
                 min_distance_tcp_helix = info['closest_distance']
                 closest_helix_point = info['closest_point']
                 current_tcp_position = info['tcp_position']
+                current_tcp_orientation = info['current_orientation']
+                tcp_on_helix = info['tcp_on_helix']
 
                 min_distances.append(min_distance_tcp_helix) # same size as episode 
                 #print("next_state:", next_state)
@@ -270,7 +274,12 @@ if __name__ == "__main__":
                 print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
-
+                log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
+                log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                log.write_to_log(f"Min Distance to Helix: {min_distance_tcp_helix:.5f}")
+                log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
+                log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
+                log.write_to_log(f"Total Reward: {total_reward}")
                 #if step_counter > prev_episode_steps:
                 #    episode_with_more_steps = True
                 #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
@@ -296,7 +305,8 @@ if __name__ == "__main__":
             # calcualte mse for each episode --> first arg is expected distanz --> zero?
             mse = mean_squared_error(current_tcp_position, closest_helix_point)
             mse_list.append(mse)
-
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        log.write_to_log("-------------------------------------End of Training with Parameter Combination-----------------------------------------------")
         # mse plot
         plt.figure()
         plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')

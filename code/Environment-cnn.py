@@ -130,7 +130,7 @@ class RobotEnvironment(gym.Env):
 
         #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
-        new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        new_tcp_position_in_robot_space, self.tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.old_tcp_position = self.tcp_position
@@ -153,7 +153,9 @@ class RobotEnvironment(gym.Env):
         info = {
             'tcp_position': self.tcp_position.tolist(), # current TCP position in voxel space
             'closest_point': self.closest_point.tolist(), # closest point on the helix
-            'closest_distance': self.closest_distance.tolist()
+            'closest_distance': self.closest_distance.tolist(), # closest distance to the helix
+            'current_orientation': self.tcp_orientation, # current orientation of the TCP
+            'tcp_on_helix': self.tcp_on_helix # is the TCP on the helix?
         }
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
@@ -329,7 +331,7 @@ class RobotEnvironment(gym.Env):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.tcp_orientation)  # Roll, Pitch, Yaw in Grad
        
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
@@ -347,9 +349,9 @@ class RobotEnvironment(gym.Env):
         max_deviation = np.max(orientation_deviation)
         print("max_deviation (in reward)", np.round(max_deviation,2))
         if max_deviation <= self.tolerance:
-            orientation_reward = 5
+            orientation_reward = 10
         else:
-            orientation_reward = -1
+            orientation_reward = 0
 
         # Add orientation reward to total reward
         self.reward += orientation_reward
@@ -406,7 +408,6 @@ class RobotEnvironment(gym.Env):
         # to check if a new episode has started
         new_episode = False 
         
-
         # check if one of the folders contains the MSE file:
         # Specify the folder path and the filename
         folder_path1 = 'ParamCombi1'
@@ -618,9 +619,8 @@ class RobotEnvironment(gym.Env):
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
         print("current_tcp_pos_in_voxel_space (objective func):", current_position)
-        closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
+        closest_helix_point, closest_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        
         print("current_orientation:", np.round(current_orientation, 2))
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
@@ -634,7 +634,7 @@ class RobotEnvironment(gym.Env):
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return position_error, orientation_errors, closes_distance
+        return position_error, orientation_errors, closest_distance
     
  
 
