@@ -21,6 +21,19 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 torch.set_default_dtype(torch.float)
 
 class LogStore():
+    """_summary_
+    This class is used to store the log information in a text file.
+
+    _attributes_
+    filename: str
+        The name of the file to store the log information
+    
+    _methods_
+    setfilename(name: str)
+        Set the filename to store the log information
+    write_to_log(input: str)
+        Write the input to the log file
+    """
     def __init__(self):
         self.filename = ""
 
@@ -32,6 +45,27 @@ class LogStore():
                 log.write(input + "\n")
     
 class QNetworkCNN(nn.Module):
+    """_summary_
+    This class defines the Q-network 
+    using a Convolutional Neural Network (CNN) architecture for the spatial data
+    to predict the Q-values for the actions.
+
+    _attributes_
+    conv1 & conv2: nn.Conv3d
+        3-Dimensionaler Convolutional layer 
+    pool: nn.MaxPool3d
+        3-Dimensionaler MaxPooling layer
+    flat_features: int
+        The number of flat features calculated from the convolutional layers
+    fc1 & fc2: nn.Linear
+        Fully connected layers
+    
+    _methods_
+    forward(x, tcp_data)
+        Forward pass through the network
+    calculate_flat_features(dummy_input)
+        Calculate the number of flat features from the convolutional layers
+    """
     def __init__(self, state_size, actions):
         super(QNetworkCNN, self).__init__()
         # Initialize convolutional and pooling layers
@@ -66,6 +100,56 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
+    """_summary_
+    This class defines the DQN agent that interacts with the environment.
+    The agent uses a Q-network to predict the Q-values for the actions and learns from the experiences in the memory.
+
+    _attributes_
+    spatial_data_shape: tuple
+        The shape of the spatial data
+    actions: int
+        The number of actions
+    epsilon: float
+        The exploration rate
+    epsilon_decay: float
+        The rate at which the epsilon value decays
+    epsilon_min: float
+        The minimum value of epsilon
+    device: str
+        The device to run the computations on
+    lr: float
+        The learning rate
+    gamma: float
+        The discount factor
+    batch_size: int
+        The batch size
+    buffer_size: int
+        The size of the memory buffer
+    n_step: int
+        The number of steps to calculate the n-step return
+    n_step_buffer: deque
+        A temporary buffer for n-step calculation
+    memory: deque
+        The memory buffer to store experiences
+    q_network: QNetworkCNN
+        The Q-network to predict Q-values
+    target_network: QNetworkCNN
+        The target network to predict Q-values
+    optimizer: optim.Adam
+        The optimizer to update the weights of the Q-network
+
+    _methods_
+    add_experience(spatial_data, tcp_data, action, reward, next_spatial_data, next_tcp_data, done)
+        Add the experience to the memory
+    calculate_n_step_info()
+        Calculate the n-step reward, final state, and done status
+    act(state)
+        Choose an action based on the epsilon-greedy policy
+    replay()
+        Learn from the experiences in the memory
+    update_target_network()
+        Update the target network with the weights of the Q-network
+    """
     def __init__(self, state_size, actions, epsilon_decay, epsilon_min,device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.state_size = state_size
         self.actions = actions
@@ -86,6 +170,8 @@ class DQNAgent:
         self.epsilon_min = epsilon_min
 
     def add_experience(self, state, action, reward, next_state, done):
+        """_summary_ This function adds the experience to the memory.
+        """
         # keep experience in n-step buffer
         self.n_step_buffer.append((state, action, reward, next_state, done))
 
@@ -109,6 +195,19 @@ class DQNAgent:
 
 
     def act(self, state):
+        """_summary_
+        Choose an action based on the epsilon-greedy policy
+
+        _parameters_
+        state: tuple
+            The current state
+
+        _returns_
+        action: list
+            The chosen action
+        exploiting: bool
+            The exploitation status
+        """
         if np.random.rand() <= self.epsilon:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
@@ -127,6 +226,9 @@ class DQNAgent:
 
 
     def replay(self):
+        """_summary_
+        Learn from the experiences in the memory
+        """
         if len(self.memory) < self.batch_size:
             return
 
@@ -137,11 +239,13 @@ class DQNAgent:
         rewards = torch.FloatTensor(np.array(rewards)).to(device).view(-1) # shape [batch_size]
         next_states = torch.FloatTensor(np.array(next_states)).to(device)
         dones = torch.FloatTensor(np.array(dones)).to(device) # dones is terminated or truncated states
+
         # convert actions to long tensor for indexing
         actions = actions.long()
         # actions is of shape [batch_size], containing the index of the action taken for each batch item
         actions = actions.view(-1, 6, 1)  # reshape for gathering: [batch_size*6, 1]
         states = states.float().to(device)  # Ensure states is a FloatTensor 
+
         # get the q-values from the q-network for the current states
         Q_values = self.q_network(states) # this returns Q(s,a) for all actions a
         # get the q-values for the actions taken
@@ -173,8 +277,10 @@ class DQNAgent:
             log.write_to_log("epsilon reduced: " + str(self.epsilon))
 
     def update_target_network(self):
+        """_summary_
+        Update the target network with the weights of the Q-network
+        """
         self.target_network.load_state_dict(self.q_network.state_dict())
-
 
 
 if __name__ == "__main__":
