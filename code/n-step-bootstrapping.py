@@ -288,8 +288,36 @@ if __name__ == "__main__":
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
+
+        # check in which folder the file should be saved
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
+
+        # check if the MSE file exists in folder (this means that this folders episode has ended)
+        num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+        num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
+
+        if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+            if os.path.exists(file_path1):
+                folder_name = folder_path2
+            else:
+                folder_name = folder_path1
+        else:
+            if not os.path.exists(file_path2):
+                folder_name = folder_path2
+            else:
+                print("Error: File already exists in both folders")
+
+        
+    
         # Save the figure
-        plt.savefig(os.path.join('Episode1', 'MSE.png'))
+        plt.savefig(os.path.join(folder_name, 'MSE.png'))
         #plt.show()
 
 

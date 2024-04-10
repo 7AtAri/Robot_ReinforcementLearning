@@ -405,6 +405,7 @@ class RobotEnvironment(gym.Env):
         
         # to check if a new episode has started
         new_episode = False 
+        
 
         # check if one of the folders contains the MSE file:
         # Specify the folder path and the filename
@@ -416,31 +417,39 @@ class RobotEnvironment(gym.Env):
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
 
-        if os.listdir('ParamCombi1') == [] or os.listdir('ParamCombi2') == []:
+        if os.listdir('ParamCombi1') == [] and os.listdir('ParamCombi2') == []:
             new_episode = True
 
-        # check if the MSE file exists in folder 1 (this means that the episode has ended)
+        # check if the MSE file exists in folder (this means that this folders episode has ended)
         if os.path.exists(file_path1):
             if os.path.exists(file_path2):
                 new_episode = True
+        elif os.path.exists(file_path2) and os.listdir('ParamCombi1') == []:
+                new_episode = True
+        elif os.path.exists(file_path1) and os.listdir('ParamCombi2') == []:
+                new_episode = True
+
 
         if new_episode:
+            print("New Episode")
             # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
             num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
             num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
 
             if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
-                    current_directory = 2
+                    self.current_directory = 2
+                    print("Current Directory: 2")
                     shutil.rmtree('ParamCombi2')
                     os.makedirs('ParamCombi2')
                     plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))
             else:
-                    current_directory = 1
+                    self.current_directory = 1
+                    print("Current Directory: 1")
                     shutil.rmtree('ParamCombi1')
                     os.makedirs('ParamCombi1')
                     plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
         else:
-            if current_directory == 1:
+            if self.current_directory == 1:
                 # Save the figure in folder 1
                 plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
             else:

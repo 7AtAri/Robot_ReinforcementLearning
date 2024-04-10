@@ -922,3 +922,280 @@ Episode: 1/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 exploring: random action
 exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 2/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 3/10, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 2/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 3/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 4/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 5/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 6/10, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 7/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 8/10, Total Reward: 14, Total Steps: 5, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 9/10, Total Reward: -4, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 10/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 2/10, Total Reward: 13, Total Steps: 6, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 3/10, Total Reward: 16, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 4/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 5/10, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 6/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 7/10, Total Reward: 30, Total Steps: 9, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 8/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 9/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 10/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 2/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 3/10, Total Reward: 5, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 4/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 5/10, Total Reward: 22, Total Steps: 7, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 6/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 7/10, Total Reward: 15, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 8/10, Total Reward: 23, Total Steps: 6, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 9/10, Total Reward: 15, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 10/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 1/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 2/10, Total Reward: 34, Total Steps: 5, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 3/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 4/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 5/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 6/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 7/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 8/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 9/10, Total Reward: 38, Total Steps: 11, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 10/10, Total Reward: 7, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 1/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+Episode: 2/10, Total Reward: -3, Total Steps: 2, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 3/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 4/10, Total Reward: 25, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 5/10, Total Reward: 14, Total Steps: 5, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 6/10, Total Reward: 25, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 7/10, Total Reward: 15, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 8/10, Total Reward: 6, Total Steps: 3, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 9/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action
+exploring: random action
+exploring: random action
+Episode: 10/10, Total Reward: 15, Total Steps: 4, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
