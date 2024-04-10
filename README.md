@@ -17,23 +17,22 @@ Install the required dependencies
       python -m pip install -r requirements.txt
 
 
-**The only important files are in the folder "code":**
+**The main files are in the folder "code":**
 * n-step-bootstrapping.py
 * Environment-cnn.py
 
-if you want to run the project please run the file **n-step-bootstrapping.py**
+To run the project please run the file **n-step-bootstrapping.py**
 
 ## Different Branches
-We have to different branches with different methods with what kind of Networks we are training our Agent
+We have two different branches that have different Deep Q-Networks implemented.
 
 1. "main" branch
 
-here we work with a Convolutional neural network (CNN) which can operate with 3D datas and the orientation of TCP 
-will inserted just in the Fully Connected Layer (FC).
+here we work with a Late Fusion Convolutional neural network (CNN) which can operate with 3D data and the orientation of TCP that is inserted just in the Fully Connected Layer (FC).
 
 2. "working-secondbranch"
 
-in that Version we also work with a CNN but we are not implementing the orientation of the TCP in the CNN.
+in that Version we also work with a CNN but we are not using the orientation of the TCP.
 
 ## Usage
  In our environment we use the following functions based on the gymnasium environment
