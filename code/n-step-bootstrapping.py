@@ -10,13 +10,26 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+import datetime
 import os
+import shutil
 
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
 # mute the MKL warning on macOS
 #os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
 
 torch.set_default_dtype(torch.float)
+
+class LogStore():
+    def __init__(self):
+        self.filename = ""
+
+    def setfilename(self,name):
+        self.filename = name
+
+    def write_to_log(self, input):
+            with open("code/" + self.filename + ".txt", 'a') as log:
+                log.write(input + "\n")
 
 
 class QNetworkCNN(nn.Module):
@@ -188,6 +201,7 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
+    
     grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
@@ -201,6 +215,22 @@ if __name__ == "__main__":
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # delete the plot folders if they already exist before starting the training
+    # Specify the folder path
+    folder_path = 'ParamCombi1'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi1')
+    folder_path = 'ParamCombi2'
+    # Check if the folder exists and is a directory
+    if os.path.isdir(folder_path):
+        shutil.rmtree('ParamCombi2')
+
+    # instantiate logging
+    log = LogStore()
+    log.setfilename("Setup")
+
+    # register the environment
     register(
         id='RobotEnvironment-v1',
         entry_point='Environment-cnn:RobotEnvironment',
@@ -249,7 +279,7 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
-            log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+            log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++")
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action = agent.act(state)
@@ -333,14 +363,14 @@ if __name__ == "__main__":
         # Check which folder to save the file in depending on the number of files in the folders
         if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
             if os.path.exists(file_path1): # is mse plot in folder 1?
+                folder_name = folder_path2 # take the other folder for saving
+            else:
+                folder_name = folder_path1 # save in folder 1 if mse plot is not there
+        elif not os.path.exists(file_path2): # if mse plot is not in folder 1 and not in folder 2?
+                folder_name = folder_path2 # save in folder 2
+        else:
+                print("Error: File already exists in both folders")
 
-              
-
-
-
-
-
-
-
-
-
+        # Save the figure
+        plt.savefig(os.path.join(folder_name, 'MSE.png'))
+        #plt.show()
