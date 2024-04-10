@@ -226,10 +226,10 @@ if __name__ == "__main__":
 
     for i in range(len(grid)):
         params = grid[i]
-        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         #now = datetime.datetime.now()
         #+ str(datetime.datetime.today().weekday())+
-        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H:%M")))
+        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H_%M")))
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
@@ -287,7 +287,7 @@ if __name__ == "__main__":
                 #if step_counter > prev_episode_steps:
                 #    episode_with_more_steps = True
                 #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
-                if step_counter % 2 == 0:  # every 4 steps
+                if step_counter % 7 == 0:  # every 7 steps
                     env.render()
                     
             while len(agent.n_step_buffer) > 0:
