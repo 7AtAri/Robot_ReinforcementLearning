@@ -10,7 +10,6 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
-
 import os
 
 print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is found
@@ -112,7 +111,6 @@ class DQNAgent:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
             log.write_to_log("exploring: random action")
-            log.write_to_log( "action shape: " + str(len(action)))
             return action # shape [6] ?
             
         state = torch.FloatTensor(state).unsqueeze(0).to(device)
@@ -122,7 +120,6 @@ class DQNAgent:
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
-        log.write_to_log("action shape:" + str(len(action)))
         log.write_to_log("-------------------------------")
         return action
 
@@ -202,7 +199,7 @@ if __name__ == "__main__":
     env = gym.make('RobotEnvironment-v1')
     log.write_to_log("obs space: " + str(env.observation_space.shape))
     state_size = env.observation_space.shape  # (2, 61, 61, 101)
-    actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
+    actions = env.action_space.shape[0]  # actions = 6
 
     # # Training loop
     episodes = 0
@@ -218,11 +215,12 @@ if __name__ == "__main__":
         agent = DQNAgent(state_size, actions, epsilon_decay, epsilon_min, device)
 
         #agent = DQNAgent(state_size, actions, device=device)
-        log.write_to_log(f"State size: {state_size}, Action size: {actions}")
+        #log.write_to_log(f"State size: {state_size}, Action size: {actions}")
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
         mse_list = []
+        new_episode= False
    
         for episode in range(episodes):
             state, info = env.reset()  
@@ -231,7 +229,8 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
-
+            if episode == 0:
+                new_episode = True
             #prev_episode_steps = 0 # counter for max steps per episode
             #episode_with_more_steps = False
             while not terminated and not truncated:
@@ -260,18 +259,20 @@ if __name__ == "__main__":
                 #if step_counter > prev_episode_steps:
                 #    episode_with_more_steps = True
                 #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
-                if step_counter % 4 == 0:  # Check if the number of steps in the current episode is greater than the previous episode
-                    env.render()
+                if step_counter % 2 == 0:  # every 4 steps
+                    env.render(new_episode)
                     
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
                 agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
                 
-            
             if terminated or truncated:
                 log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+               
             agent.replay()
             if episode % 10 == 0:
                 #env.render()
@@ -282,14 +283,15 @@ if __name__ == "__main__":
             mse_list.append(mse)
 
         # mse plot
+        plt.figure()
         plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
         # Save the figure
-        #plt.savefig(os.path.join('Episode1', 'MSE.png'))
-        plt.show()
+        plt.savefig(os.path.join('Episode1', 'MSE.png'))
+        #plt.show()
 
 
 

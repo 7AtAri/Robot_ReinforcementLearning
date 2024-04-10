@@ -8,6 +8,7 @@
 
 
 import os
+import shutil
 
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -356,7 +357,7 @@ class RobotEnvironment(gym.Env):
         return self.reward
     
 
-    def render(self):
+    def render(self, new_episode=False):
         """
 
         This function visualizes the voxel space with the helix path and highlights the TCP position
@@ -365,6 +366,7 @@ class RobotEnvironment(gym.Env):
         Returns:
             None
         """
+        new_episode = new_episode
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
@@ -394,28 +396,35 @@ class RobotEnvironment(gym.Env):
         #plt.legend()
         #plt.show()
 
-        if not os.path.exists('Episode1'):
-            os.makedirs('Episode1')
+      
+        if not os.path.exists('ParamCombi1'):
+            os.makedirs('ParamCombi1')
         # Create directory if not exists
-        if not os.path.exists('Episode2'):
-            os.makedirs('Episode2')
-        if not os.listdir("Episode1"): # ordner is empty
-            # Save the figure
-            plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
-            # gucekn wie viele elemente im ordner sind    
-        else:   # is not empty
-            if not os.listdir("Episode2"): # ordner is empty
-                # Save the figure
-                plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))          
-            else: # ordner empty
-            # compare both folders and save in the folder which has less files
-                num_files_in_Episode1 = len(os.listdir("Episode1"))
-                num_files_in_Episode2 = len(os.listdir("Episode2"))
+        if not os.path.exists('ParamCombi2'):
+            os.makedirs('ParamCombi2')
+            
+        if new_episode:
+            # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
+            num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+            num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
 
-                if num_files_in_Episode1 >= num_files_in_Episode2:
-                    plt.savefig(os.path.join('Episode2', f'step_{self.figure_count}.png'))
-                else:
-                    plt.savefig(os.path.join('Episode1', f'step_{self.figure_count}.png'))
+            if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+                    current_directory = 2
+                    shutil.rmtree('ParamCombi2')
+                    os.makedirs('ParamCombi2')
+                    plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))
+            else:
+                    current_directory = 1
+                    shutil.rmtree('ParamCombi1')
+                    os.makedirs('ParamCombi1')
+                    plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+        else:
+            if current_directory == 1:
+                # Save the figure in folder 1
+                plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+            else:
+                    # Save the figure in folder 2
+                    plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
         
         self.figure_count += 1
 
