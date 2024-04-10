@@ -365,7 +365,6 @@ class RobotEnvironment(gym.Env):
 
     def render(self):
         """
-
         This function visualizes the voxel space with the helix path and highlights the TCP position
         if provided and valid.
             

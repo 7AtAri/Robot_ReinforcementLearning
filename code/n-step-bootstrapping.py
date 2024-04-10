@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
+import datetime
 import os
 import shutil
 
@@ -27,7 +28,7 @@ class LogStore():
         self.filename = name
 
     def write_to_log(self, input):
-            with open("code/" +self.filename + ".txt", 'a') as log:
+            with open("code/" + self.filename + ".txt", 'a') as log:
                 log.write(input + "\n")
     
 class QNetworkCNN(nn.Module):
@@ -225,7 +226,9 @@ if __name__ == "__main__":
     for i in range(len(grid)):
         params = grid[i]
         log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
-        log.setfilename("Grid_" + str(i))
+        #now = datetime.datetime.now()
+        #+ str(datetime.datetime.today().weekday())+
+        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H:%M")))
         log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
