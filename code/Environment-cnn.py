@@ -460,7 +460,30 @@ class RobotEnvironment(gym.Env):
                 # Save the figure in folder 2
                 plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
 
-        plt.close() # close the figure  
+        # save every grid in extra folder
+                
+        # get every text file in the working directory
+        old_time = 0
+        newest_file_path = ""
+        for file in os.listdir():
+            print(file)
+            if file.endswith(".txt"):
+                # get relative file path
+                path = os.path.join(file)
+                # get the creation time of the file
+                ti_c = os.path.getctime(path)
+                if ti_c > old_time:
+                    newest_file_path = path
+
+        current_folder = newest_file_path 
+        #print("currentfolder ", current_folder[:-4])
+        #print(current_folder[:-4])
+        folder_grid= current_folder[:-4].replace(" ", "_")
+        os.makedirs(folder_grid)
+
+        plt.savefig(os.path.join(folder_grid, f'step_{self.figure_count}.png'))
+
+        plt.close() # close the figure(s)
         
         self.figure_count += 1 # increment the figure count
 
