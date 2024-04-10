@@ -333,7 +333,7 @@ class RobotEnvironment(gym.Env):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.tcp_orientation)  # Roll, Pitch, Yaw in Grad
+        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
