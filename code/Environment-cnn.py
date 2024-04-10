@@ -8,6 +8,7 @@
 
 
 import os
+import shutil
 
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -86,6 +87,7 @@ class RobotEnvironment(gym.Env):
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
+        self.out_of_voxel_space = False 
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
@@ -101,6 +103,10 @@ class RobotEnvironment(gym.Env):
 
         # closest distance
         self.closest_distance = None
+        self.closest_point = None
+
+        # counter for figures names 
+        self.figure_count = 1
 
         # tcp_data
         self.tcp_data = np.concatenate([self.tcp_position,  self.constant_orientation]) 
@@ -166,8 +172,11 @@ class RobotEnvironment(gym.Env):
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.joint_angles.tolist(),
-            'tcp_position': self.tcp_position.tolist(),
-            'closest_distance': self.closest_distance.tolist()
+            'tcp_position': self.tcp_position.tolist(), # current TCP position in voxel space
+            'closest_point': self.closest_point.tolist(), # closest point on the helix
+            'closest_distance': self.closest_distance.tolist(), # closest distance to the helix
+            'current_orientation': self.tcp_orientation, # current orientation of the TCP
+            'tcp_on_helix': self.tcp_on_helix # is the TCP on the helix?
         }
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
@@ -283,6 +292,7 @@ class RobotEnvironment(gym.Env):
             self.truncated = True
             print("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
+            self.out_of_voxel_space = True
             return False
 
 
@@ -334,6 +344,9 @@ class RobotEnvironment(gym.Env):
         self.terminated= False
         self.truncated = False
 
+        # counter for figures names
+        self.figure_count = 1
+
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.initial_joint_angles.tolist(),
@@ -347,43 +360,8 @@ class RobotEnvironment(gym.Env):
         """Calculate the reward based on the current state of the environment."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
-        ####################################################
-        ## Initialize reward, terminated, and truncated flags
-        #if tcp_on_helix:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 10  # Full reward for reaching helix with correct orientation
-        #    else:
-        #        self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
-        #    self.truncated = False
-#
-        #if self.terminated:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 1000  # Extra reward for reaching the target with correct orientation
-        #    else:
-        #        self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
-#
-        #if self.truncated:
-        #    # Terminate the episode if the TCP is not on the helix any more
-        #    self.reward -= 1
-#
-        ## Adjust reward based on orientation deviation
-        #orientation_reward = 0
-        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        #if deviation_to_last_orientation >= self.last_orientation_deviation:  # If deviation decreased
-        #    orientation_reward = 5  # Moderate reward for maintaining orientation
-        #else:  # If deviation increased
-        #    orientation_reward = -1  # Penalty for deviation from constant orientation
-#
-        ## Save last orientation deviation to check ahead if deviation got better
-        #self.last_orientation_deviation = orientation_deviation
-        ## Add orientation reward to total reward
-        #self.reward += orientation_reward
-
-        ####################################################
-
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
@@ -400,10 +378,12 @@ class RobotEnvironment(gym.Env):
         max_deviation = np.max(orientation_deviation)
         print("max_deviation (in reward)", np.round(max_deviation,2))
         if max_deviation <= self.tolerance:
-            orientation_reward = 5
+            orientation_reward = 10
         else:
-            orientation_reward = -1
+            orientation_reward = 0
 
+        if self.out_of_voxel_space:
+            self.reward -= 10
         # Add orientation reward to total reward
         self.reward += orientation_reward
 
@@ -446,8 +426,71 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-        plt.legend()
-        plt.show()
+        #plt.legend()
+        #plt.show()
+
+        # Create directory if not exists
+        if not os.path.exists('ParamCombi1'):
+            os.makedirs('ParamCombi1')
+        # Create directory if not exists
+        if not os.path.exists('ParamCombi2'):
+            os.makedirs('ParamCombi2')
+        
+        # to check if a new episode has started
+        new_episode = False 
+        
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
+
+        if os.listdir('ParamCombi1') == [] and os.listdir('ParamCombi2') == []:
+            new_episode = True
+
+        # check if the MSE file exists in folder (this means that this folders episode has ended)
+        if os.path.exists(file_path1):
+            if os.path.exists(file_path2):
+                new_episode = True
+        elif os.path.exists(file_path2) and os.listdir('ParamCombi1') == []:
+                new_episode = True
+        elif os.path.exists(file_path1) and os.listdir('ParamCombi2') == []:
+                new_episode = True
+
+
+        if new_episode:
+            print("New Episode")
+            # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
+            num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+            num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
+
+            if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+                    self.current_directory = 2
+                    print("Current Directory: 2")
+                    shutil.rmtree('ParamCombi2')
+                    os.makedirs('ParamCombi2')
+                    plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))
+            else:
+                    self.current_directory = 1
+                    print("Current Directory: 1")
+                    shutil.rmtree('ParamCombi1')
+                    os.makedirs('ParamCombi1')
+                    plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+        else:
+            if self.current_directory == 1:
+                # Save the figure in folder 1
+                plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+            else:
+                # Save the figure in folder 2
+                plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
+
+        plt.close() # close the figure  
+        
+        self.figure_count += 1 # increment the figure count
 
 
     def process_action(self, action):
