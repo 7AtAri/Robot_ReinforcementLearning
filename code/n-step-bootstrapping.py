@@ -21,6 +21,19 @@ print ("GPU erkannt: " + str(torch.cuda.is_available())) # checks if gpu is foun
 torch.set_default_dtype(torch.float)
 
 class LogStore():
+    """_summary_
+    This class is used to store the log information in a text file.
+
+    _attributes_
+    filename: str
+        The name of the file to store the log information
+    
+    _methods_
+    setfilename(name: str)
+        Set the filename to store the log information
+    write_to_log(input: str)
+        Write the input to the log file
+    """
     def __init__(self):
         self.filename = ""
 
@@ -33,6 +46,27 @@ class LogStore():
 
 
 class QNetworkCNN(nn.Module):
+    """_summary_
+    This class defines the Q-network 
+    using a Multimodal Approach: Convolutional Neural Network (CNN) architecture for the spatial data
+    and Late Feature Fusion for the TCP orientation data to predict the Q-values for the actions.
+
+    _attributes_
+    conv1 & conv2: nn.Conv3d
+        3-Dimensionaler Convolutional layer 
+    pool: nn.MaxPool3d
+        3-Dimensionaler MaxPooling layer
+    flat_features: int
+        The number of flat features calculated from the convolutional layers
+    fc1 & fc2: nn.Linear
+        Fully connected layers
+    
+    _methods_
+    forward(x, tcp_data)
+        Forward pass through the network
+    calculate_flat_features(dummy_input)
+        Calculate the number of flat features from the convolutional layers
+    """
     def __init__(self, state_size, actions, tcp_feature_size=3):
         super(QNetworkCNN, self).__init__()
         # Initialize convolutional and pooling layers
@@ -52,8 +86,9 @@ class QNetworkCNN(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
         # concatenate flattened spatial data with TCP position and orientation data
-        print("x shape:", x.shape)
-        print("tcp_data shape:", tcp_data.shape)
+        #print("x shape:", x.shape)
+        #print("tcp_data shape:", tcp_data.shape)
+        tcp_data= torch.squeeze(tcp_data, dim=1)
         combined_features = torch.cat((x, tcp_data), dim=1)
 
         x = F.relu(self.fc1(combined_features))
@@ -71,6 +106,57 @@ class QNetworkCNN(nn.Module):
 
 
 class DQNAgent:
+    """_summary_
+    This class defines the DQN agent that interacts with the environment.
+    The agent uses a Q-network to predict the Q-values for the actions and learns from the experiences in the memory.
+
+    _attributes_
+    spatial_data_shape: tuple
+        The shape of the spatial data
+    actions: int
+        The number of actions
+    epsilon: float
+        The exploration rate
+    epsilon_decay: float
+        The rate at which the epsilon value decays
+    epsilon_min: float
+        The minimum value of epsilon
+    device: str
+        The device to run the computations on
+    lr: float
+        The learning rate
+    gamma: float
+        The discount factor
+    batch_size: int
+        The batch size
+    buffer_size: int
+        The size of the memory buffer
+    n_step: int
+        The number of steps to calculate the n-step return
+    n_step_buffer: deque
+        A temporary buffer for n-step calculation
+    memory: deque
+        The memory buffer to store experiences
+    q_network: QNetworkCNN
+        The Q-network to predict Q-values
+    target_network: QNetworkCNN
+        The target network to predict Q-values
+    optimizer: optim.Adam
+        The optimizer to update the weights of the Q-network
+
+    _methods_
+    add_experience(spatial_data, tcp_data, action, reward, next_spatial_data, next_tcp_data, done)
+        Add the experience to the memory
+    calculate_n_step_info()
+        Calculate the n-step reward, final state, and done status
+    act(state)
+        Choose an action based on the epsilon-greedy policy
+    replay()
+        Learn from the experiences in the memory
+    update_target_network()
+        Update the target network with the weights of the Q-network
+    """
+
     def __init__(self, spatial_data_shape, actions, epsilon_decay, epsilon_min,device, lr=5e-4, gamma=0.99, batch_size=32, buffer_size=10000, n_step=3):
         self.spatial_data_shape = spatial_data_shape
         self.actions = actions
@@ -105,7 +191,17 @@ class DQNAgent:
                 self.n_step_buffer.clear()
 
     def calculate_n_step_info(self):
-        """Calculate n-step reward, final state, and done status."""
+        """_summary_
+        Calculate the n-step reward, final state, and done status
+
+        _returns_
+        n_step_reward: float
+            The n-step reward
+        n_step_state: tuple
+            The final state
+        n_step_done: bool
+            The done status
+        """
         n_step_reward = 0
         for idx, (_, _, reward, _, _) in enumerate(self.n_step_buffer):
             n_step_reward += (self.gamma ** idx) * reward
@@ -115,28 +211,48 @@ class DQNAgent:
 
 
     def act(self, state):
+        """_summary_
+        Choose an action based on the epsilon-greedy policy
+
+        _parameters_
+        state: tuple
+            The current state
+
+        _returns_
+        action: list
+            The chosen action
+        exploiting: bool
+            The exploitation status
+        """
+
+        exploiting  =  False
         spatial_data, tcp_data = state  # unpack the state tuple
         if np.random.rand() <= self.epsilon:
             # return random action for each component
             action = [random.randrange(3) for _ in range(6)]
             print("exploring: random action")
             #print("action shape:", len(action))
-            return action # shape [6] ?
+            return action, exploiting # shape [6] ?
 
         spatial_data = torch.FloatTensor(spatial_data).unsqueeze(0).to(device)
         tcp_data = torch.FloatTensor(tcp_data).unsqueeze(0).to(device)
         q_values = self.q_network(spatial_data, tcp_data)
         print("exploiting: q-values predicted from network") # q-values: torch.Size([1, 6, 3])
-        
+        exploiting = True
         # choose action with max Q-value for each component
         action = q_values.detach().cpu().numpy().argmax(axis=2).flatten() 
         action = action.tolist()
         #print("action shape:", len(action))
         print("-------------------------------")
-        return action
+        print("action:", action)
+        print("exploiting:", exploiting)
+        return action, exploiting
 
 
     def replay(self):
+        """_summary_
+        Learn from the experiences in the memory
+        """
         if len(self.memory) < self.batch_size:
             return
 
@@ -196,12 +312,16 @@ class DQNAgent:
             #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
+        """_summary_
+        Update the target network with the weights of the Q-network
+        """
         self.target_network.load_state_dict(self.q_network.state_dict())
 
 
 
 if __name__ == "__main__":
-    
+
+    # grid for hyperparameters grid search
     grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
@@ -211,16 +331,17 @@ if __name__ == "__main__":
                 {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
                 {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
                 {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
+    
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # delete the plot folders if they already exist before starting the training
-    # Specify the folder path
     folder_path = 'ParamCombi1'
     # Check if the folder exists and is a directory
     if os.path.isdir(folder_path):
         shutil.rmtree('ParamCombi1')
+
     folder_path = 'ParamCombi2'
     # Check if the folder exists and is a directory
     if os.path.isdir(folder_path):
@@ -237,8 +358,8 @@ if __name__ == "__main__":
     )
 
     env = gym.make('RobotEnvironment-v1')
+
     # the shapes of the components of the Tuple space
-    
     spatial_data_shape = env.observation_space[0].shape   # (2, 61, 61, 101)
     tcp_data_shape = env.observation_space[1].shape  # (6,)
 
@@ -246,7 +367,7 @@ if __name__ == "__main__":
     #print("Spatial Data Shape:", spatial_data_shape)
     #print("TCP Data Shape:", tcp_data_shape)
 
-    actions = env.action_space.shape[0] #.nvec.prod()  # actions = 6
+    actions = env.action_space.shape[0] # actions = 6
     
     # hyperparameters initialization
     episodes = 0
@@ -261,20 +382,17 @@ if __name__ == "__main__":
         log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
+
         # initialize the agent
         agent = DQNAgent(spatial_data_shape, actions, epsilon_decay, epsilon_min, device)
 
-        #agent = DQNAgent(state_size, actions, device=device)
-        print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
+        #print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
 
-        min_distances = [] # list to save the minum distanz of ech episode
-        min_distance_tcp_helix = None
+        # initialize the mse list
         mse_list = []
-        new_episode= False
    
         for episode in range(episodes):
-            state, info = env.reset()  
-            #state = torch.FloatTensor(state).unsqueeze(0)  # add batch dimension
+            state, info = env.reset()  # reset the environment and get the initial state
             terminated = False
             truncated = False
             step_counter = 0
@@ -282,35 +400,40 @@ if __name__ == "__main__":
             log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++")
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
-                action = agent.act(state)
-                #print("action:", action)
+                action, exploiting = agent.act(state)
+
+                # get results for the action from the environment:
                 next_state, reward, terminated, truncated, info = env.step(action)  
-                # if step_counter > 1:
-                #     env.render()
+
+                # get the information from the environment
                 min_distance_tcp_helix = info['closest_distance']
                 closest_helix_point = info['closest_point']
-                current_tcp_position = info['tcp_position']
+                current_tcp_position_voxels = info['tcp_position_in_voxels']
                 current_tcp_orientation = info['current_orientation']
                 tcp_on_helix = info['tcp_on_helix']
-                #print("next_state:", next_state)
-                #print("next_state shape:", next_state.shape)
-                #next_state = np.reshape(next_state, [1, state_size])
+                current_tcp_position_coordinates = info['tcp_position']
+
+                # add the experience to the agent's memory
                 agent.add_experience(*state, action, reward, *next_state, terminated or truncated)
                 state = next_state # update to the current state
                 total_reward += reward
                 step_counter += 1
-                print("total_reward", total_reward)
+
+                #print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
-                log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
-                log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+
+                # log the information
+                log.write_to_log(f"Exploiting: {exploiting}")
+                log.write_to_log(f"current TCP Position in voxels: {np.round(current_tcp_position_voxels,6)}")
                 log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
                 log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
                 log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
                 log.write_to_log(f"Total Reward: {total_reward}")
-                #if step_counter > prev_episode_steps:
-                #    episode_with_more_steps = True
-                #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+                #log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                #log.write_to_log(f"current TCP Position in coordinates: {np.round(current_tcp_position_coordinates,6)}")
+
+                # render the environment:
                 if step_counter % 7 == 0:  # every 7 steps
                     env.render()
                     
@@ -327,6 +450,8 @@ if __name__ == "__main__":
                 print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
+            # replay the agent
+            # this means that the agent learns from the experiences in the memory
             agent.replay()
 
             if episode % 10 == 0:
@@ -334,10 +459,13 @@ if __name__ == "__main__":
                 agent.update_target_network()
 
             # calcualte mse for each episode --> first arg is expected distanz --> zero?
-            mse = mean_squared_error(current_tcp_position, closest_helix_point)
+            mse = mean_squared_error(current_tcp_position_coordinates, closest_helix_point)
             mse_list.append(mse)
+
+        # log the end
         log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
         log.write_to_log("-------------------------------------End of Training with Parameter Combination-----------------------------------------------")
+        
         # mse plot
         plt.figure()
         plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')
@@ -348,7 +476,6 @@ if __name__ == "__main__":
 
         # check in which folder the file should be saved
         # check if one of the folders contains the MSE file:
-        # Specify the folder path and the filename
         folder_path1 = 'ParamCombi1'
         folder_path2 = 'ParamCombi2'
         filename = 'MSE.png'
@@ -356,7 +483,7 @@ if __name__ == "__main__":
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
 
-        # check if the folders exist
+        # check if the folders exist, if not make them
         if not os.path.exists(folder_path1):
             os.makedirs(folder_path1)
         if not os.path.exists(folder_path2):
@@ -373,7 +500,7 @@ if __name__ == "__main__":
             else:
                 folder_name = folder_path1 # save in folder 1 if mse plot is not there
         elif not os.path.exists(file_path2): # if mse plot is not in folder 1 and not in folder 2?
-                folder_name = folder_path2 # save in folder 2
+                folder_name = folder_path1 # save in folder 1
         else:
                 print("Error: File already exists in both folders")
 
