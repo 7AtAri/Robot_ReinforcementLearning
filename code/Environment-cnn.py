@@ -81,6 +81,7 @@ class RobotEnvironment(gym.Env):
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
+        self.out_of_voxel_space = False 
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
@@ -271,6 +272,7 @@ class RobotEnvironment(gym.Env):
             self.truncated = True
             print("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
+            self.out_of_voxel_space = True
             return False
 
 
@@ -353,6 +355,8 @@ class RobotEnvironment(gym.Env):
         else:
             orientation_reward = 0
 
+        if self.out_of_voxel_space:
+            self.reward -= 10
         # Add orientation reward to total reward
         self.reward += orientation_reward
 

@@ -271,12 +271,12 @@ if __name__ == "__main__":
                 state = next_state
                 total_reward += reward
                 step_counter += 1
-                print("total_reward", total_reward)
+                #print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
                 log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
                 log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
-                log.write_to_log(f"Min Distance to Helix: {min_distance_tcp_helix:.5f}")
+                log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
                 log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
                 log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
                 log.write_to_log(f"Total Reward: {total_reward}")
@@ -293,7 +293,7 @@ if __name__ == "__main__":
                 
             if terminated or truncated:
                 log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
-                log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                #log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                 print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                
