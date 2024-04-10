@@ -298,7 +298,7 @@ class RobotEnvironment(gym.Env):
                             analogous to the info returned by step()
         """
         # reset the environment 
-        print("Resetting the environment...")
+        print("__________________Resetting the environment...___________________")
         _ = seed  # acknowledging the seed parameter without using it to fit the gymnasium requirements
         self.voxel_space.fill(-1)
 
@@ -316,8 +316,6 @@ class RobotEnvironment(gym.Env):
         # reset the joint angles and TCP position to the start of the helix
     
         self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
-
-        # # set observation space to the initial state
     
         # Stack to create a two-channel observation
         self.spatial_data= np.stack([self.voxel_space, self.tcp_observation], axis=0)
@@ -348,41 +346,6 @@ class RobotEnvironment(gym.Env):
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
         _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.constant_orientation)  # Roll, Pitch, Yaw in Grad
-       
-        ####################################################
-        ## Initialize reward, terminated, and truncated flags
-        #if tcp_on_helix:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 10  # Full reward for reaching helix with correct orientation
-        #    else:
-        #        self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
-        #    self.truncated = False
-#
-        #if self.terminated:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 1000  # Extra reward for reaching the target with correct orientation
-        #    else:
-        #        self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
-#
-        #if self.truncated:
-        #    # Terminate the episode if the TCP is not on the helix any more
-        #    self.reward -= 1
-#
-        ## Adjust reward based on orientation deviation
-        #orientation_reward = 0
-        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        #if deviation_to_last_orientation >= self.last_orientation_deviation:  # If deviation decreased
-        #    orientation_reward = 5  # Moderate reward for maintaining orientation
-        #else:  # If deviation increased
-        #    orientation_reward = -1  # Penalty for deviation from constant orientation
-#
-        ## Save last orientation deviation to check ahead if deviation got better
-        #self.last_orientation_deviation = orientation_deviation
-        ## Add orientation reward to total reward
-        #self.reward += orientation_reward
-
-        ####################################################
 
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
@@ -468,7 +431,7 @@ class RobotEnvironment(gym.Env):
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles (process action):", delta_angles)
+            #print("Delta Angles (process action):", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
@@ -478,7 +441,7 @@ class RobotEnvironment(gym.Env):
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles (process action):", self.joint_angles)
+        #print("New Joint Angles (process action):", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
@@ -606,10 +569,12 @@ class RobotEnvironment(gym.Env):
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
-        print("current_tcp_pos_in_voxel_space (objective func):", current_position)
+        #print("current_tcp_pos_in_voxel_space (objective func):", current_position)
         closest_helix_point, closest_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        print("current_orientation:", np.round(current_orientation, 2))
+        # Format the orientation to two decimals
+        formatted_orientation = [f'{num:.2f}' for num in current_orientation]
+        print(formatted_orientation)
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         

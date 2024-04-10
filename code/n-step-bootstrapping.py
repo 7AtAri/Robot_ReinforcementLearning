@@ -39,7 +39,10 @@ class QNetworkCNN(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
         # concatenate flattened spatial data with TCP position and orientation data
+        print("x shape:", x.shape)
+        print("tcp_data shape:", tcp_data.shape)
         combined_features = torch.cat((x, tcp_data), dim=1)
+
         x = F.relu(self.fc1(combined_features))
         x = self.fc2(x)
         return x.view(-1, 6, 3)
@@ -65,8 +68,8 @@ class DQNAgent:
         # this ensures that the memory does not grow beyond buffer_size - oldest elements are removed:
         self.memory = deque(maxlen=buffer_size) 
         
-        self.q_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=6).to(device)
-        self.target_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=6).to(device)
+        self.q_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=3).to(device)
+        self.target_network = QNetworkCNN(self.spatial_data_shape, actions, tcp_feature_size=3).to(device)
         self.target_network.load_state_dict(self.q_network.state_dict())
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=lr)
         
@@ -177,7 +180,7 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-            print("epsilon reduced:", self.epsilon)
+            #print("epsilon reduced:", self.epsilon)
 
     def update_target_network(self):
         self.target_network.load_state_dict(self.q_network.state_dict())
@@ -185,7 +188,7 @@ class DQNAgent:
 
 
 if __name__ == "__main__":
-    grid = [{'batch_size': 16, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+    grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
                 {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
                 {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
@@ -205,9 +208,11 @@ if __name__ == "__main__":
 
     env = gym.make('RobotEnvironment-v1')
     # the shapes of the components of the Tuple space
+    
     spatial_data_shape = env.observation_space[0].shape   # (2, 61, 61, 101)
     tcp_data_shape = env.observation_space[1].shape  # (6,)
 
+    #log.write_to_log("obs space: " + str(env.observation_space[0].shape) + str(env.observation_space[1].shape))
     #print("Spatial Data Shape:", spatial_data_shape)
     #print("TCP Data Shape:", tcp_data_shape)
 
@@ -221,6 +226,9 @@ if __name__ == "__main__":
      # # Training loop
     for i in range(len(grid)):
         params = grid[i]
+        log.setfilename("Grid_" + str(i) +"_"+ str(datetime.datetime.today().strftime("%A_%H_%M")))
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        log.write_to_log("Tested Parameters: " + str(params))
         for key, val in params.items():
             exec(key + '=val')   # assign the values to the hyperparameters
         # initialize the agent
@@ -231,6 +239,8 @@ if __name__ == "__main__":
 
         min_distances = [] # list to save the minum distanz of ech episode
         min_distance_tcp_helix = None
+        mse_list = []
+        new_episode= False
    
         for episode in range(episodes):
             state, info = env.reset()  
@@ -239,6 +249,7 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
+            log.write_to_log("+++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
             while not terminated and not truncated:
                 # state is the observation (1. voxel space with helix and 2. voxel space with TCP position) 
                 action = agent.act(state)
@@ -247,6 +258,10 @@ if __name__ == "__main__":
                 # if step_counter > 1:
                 #     env.render()
                 min_distance_tcp_helix = info['closest_distance']
+                closest_helix_point = info['closest_point']
+                current_tcp_position = info['tcp_position']
+                current_tcp_orientation = info['current_orientation']
+                tcp_on_helix = info['tcp_on_helix']
                 #print("next_state:", next_state)
                 #print("next_state shape:", next_state.shape)
                 #next_state = np.reshape(next_state, [1, state_size])
@@ -257,33 +272,69 @@ if __name__ == "__main__":
                 print("total_reward", total_reward)
                 #print("terminated:", terminated)
                 #print("truncated:", truncated)
+                log.write_to_log(f"current TCP Position: {np.round(current_tcp_position,6)}")
+                log.write_to_log(f"Closest Helix Point: {np.round(closest_helix_point, 6)}")
+                log.write_to_log(f"Min Distance to Helix: {np.round(min_distance_tcp_helix,6)}")
+                log.write_to_log(f"TCP on Helix: {tcp_on_helix}")
+                log.write_to_log(f"Current TCP Orientation: {np.round(current_tcp_orientation, 2)}")
+                log.write_to_log(f"Total Reward: {total_reward}")
+                #if step_counter > prev_episode_steps:
+                #    episode_with_more_steps = True
+                #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
+                if step_counter % 7 == 0:  # every 7 steps
+                    env.render()
+                    
             
             while len(agent.n_step_buffer) > 0:
+                print("----writing n-step buffer to memory-----")
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
                 agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
-                
-            min_distances.append(min_distance_tcp_helix) # same size as episode
+
             if terminated or truncated:
+                log.write_to_log(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
+                #log.write_to_log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                 print(f"Episode: {episode+1}/{episodes}, Total Reward: {total_reward}, Total Steps: {step_counter}, Epsilon: {agent.epsilon:.2f}")
                 print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
             agent.replay()
+
             if episode % 10 == 0:
                 #env.render()
                 agent.update_target_network()
 
-        # calcualte mse for each episode --> first arg is expected distanz --> zero?
-        mse = mean_squared_error(np.zeros(episodes), min_distances)
-        # wenn for beednet wurde
-        # loop draußen dann mse plot
-        # Erstellen des Plots
-        plt.plot(range(1, episodes + 1), mse, marker='o', linestyle='-')
+            # calcualte mse for each episode --> first arg is expected distanz --> zero?
+            mse = mean_squared_error(current_tcp_position, closest_helix_point)
+            mse_list.append(mse)
+        log.write_to_log("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        log.write_to_log("-------------------------------------End of Training with Parameter Combination-----------------------------------------------")
+        # mse plot
+        plt.figure()
+        plt.plot(range(1, episodes + 1), mse_list, marker='o', linestyle='-')
         plt.xlabel('Episode')
         plt.ylabel('MSE')
         plt.title('Mean Squared Error (MSE) über Episoden')
         plt.grid(True)
-        plt.show()
 
+        # check in which folder the file should be saved
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
+
+        # check length of files in the folders
+        num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+        num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
+
+        # Check which folder to save the file in depending on the number of files in the folders
+        if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+            if os.path.exists(file_path1): # is mse plot in folder 1?
+
+              
 
 
 
