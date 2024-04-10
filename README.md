@@ -2,7 +2,9 @@
 
 ## Introduction
 The aim of this project was to train a 6-axis robot arm using reinforcement learning so that it learns to track a helix.
-Therfore it we used a CNN Netwrok with Q-Deep-Learning and the 3-step-Bootsarping method
+Therefore we implemented Deep Q-Learning with a Late Fusion Multimodal Model that uses a CNN Network for the spatial features and
+gets the orientation features concatenated into the fully connected layers directly.
+The replay memory works on basis of n-step-bootstrapping.
 
 ## Installation
 Follow these steps to install our project
