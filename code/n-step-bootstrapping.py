@@ -316,7 +316,7 @@ if __name__ == "__main__":
                     
             
             while len(agent.n_step_buffer) > 0:
-                print("----writing n-step buffer to memory-----")
+                #print("----writing n-step buffer to memory-----")
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
                 first_experience = agent.n_step_buffer.popleft()
                 agent.memory.append((first_experience[0], first_experience[1], n_step_reward, n_step_state, n_step_done))
@@ -355,6 +355,12 @@ if __name__ == "__main__":
         # Construct the full path to the file
         file_path1 = os.path.join(folder_path1, filename)
         file_path2 = os.path.join(folder_path2, filename)
+
+        # check if the folders exist
+        if not os.path.exists(folder_path1):
+            os.makedirs(folder_path1)
+        if not os.path.exists(folder_path2):
+            os.makedirs(folder_path2)
 
         # check length of files in the folders
         num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))

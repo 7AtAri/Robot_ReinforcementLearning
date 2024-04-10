@@ -144,7 +144,7 @@ class RobotEnvironment(gym.Env):
 
         #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
-        new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        new_tcp_position_in_robot_space, self.tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
         self.old_tcp_position = self.tcp_position # save the old tcp position for the reward function
@@ -158,7 +158,7 @@ class RobotEnvironment(gym.Env):
         spatial_data = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
         # tcp_data
-        self.tcp_data = np.asarray([tcp_orientation])
+        self.tcp_data = np.asarray([self.tcp_orientation])
 
         # tuple of spatial and tcp data
         self.state = (spatial_data, self.tcp_data)
@@ -268,11 +268,13 @@ class RobotEnvironment(gym.Env):
             if voxel_value == 1:
                 print("TCP reached the target!")
                 self.terminated = True
+                self.out_of_voxel_space = False
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
                 print("TCP is on the helix path.")
+                self.out_of_voxel_space = False
                 return True # TCP is on the helix path
             
             elif voxel_value == -1:
@@ -282,10 +284,12 @@ class RobotEnvironment(gym.Env):
                 if closest_distance <= self.tolerance_tcp_pos:
                     print("TCP is close to the helix.")
                     self.truncated = False
+                    self.out_of_voxel_space = False
                     return True
                 else:
                     print("TCP is outside the helix voxels.")
                     self.truncated = True
+                    self.out_of_voxel_space = False
                     return False
             
         else:
@@ -461,20 +465,20 @@ class RobotEnvironment(gym.Env):
 
 
         if new_episode:
-            print("New Episode")
+            #print("New Episode")
             # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
             num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
             num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
 
             if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
                     self.current_directory = 2
-                    print("Current Directory: 2")
+                    #print("Current Directory: 2")
                     shutil.rmtree('ParamCombi2')
                     os.makedirs('ParamCombi2')
                     plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))
             else:
                     self.current_directory = 1
-                    print("Current Directory: 1")
+                    #print("Current Directory: 1")
                     shutil.rmtree('ParamCombi1')
                     os.makedirs('ParamCombi1')
                     plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
@@ -644,21 +648,21 @@ class RobotEnvironment(gym.Env):
         Calculate the combined positional and orientational error for the robot end-effector.
         """
         # Calculate the current position and orientation from forward kinematics
-        current_position, current_orientation = self.forward_kinematics(theta) # joint angle
+        current_position, self.current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
         #print("current_tcp_pos_in_voxel_space (objective func):", current_position)
         closest_helix_point, closest_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
         # Format the orientation to two decimals
-        formatted_orientation = [f'{num:.2f}' for num in current_orientation]
+        formatted_orientation = [f'{num:.2f}' for num in self.current_orientation]
         print(formatted_orientation)
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
         # Convert orientation tuples to numpy arrays
-        current_orientation = np.array(current_orientation)
-        constant_orientation = np.array(constant_orientation)
+        current_orientation = np.array(self.current_orientation)
+        constant_orientation = np.array(self.constant_orientation)
         
         # deviation of current and constant orientation
         orientation_errors = np.abs(current_orientation - constant_orientation)
