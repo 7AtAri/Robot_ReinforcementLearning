@@ -7,3 +7,12 @@ Min Distance to Helix: 0.000797
 TCP on Helix: True
 Current TCP Orientation: [ 0.1  0.1 90. ]
 Total Reward: 10
+exploiting: q-values predicted from network
+-------------------------------
+current TCP Position: [-0.000535  0.000798  0.001594]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001861
+TCP on Helix: False
+Current TCP Orientation: [359.9 360.   90. ]
+Total Reward: 9
+Episode: 29/50, Total Reward: 9, Total Steps: 2, Epsilon: 0.59
