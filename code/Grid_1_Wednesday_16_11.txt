@@ -1,0 +1,368 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Tested Parameters: {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1}
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000549  0.000798  0.000372]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001038
+TCP on Helix: True
+Current TCP Orientation: [359.8 360.   90. ]
+Total Reward: 10
+current TCP Position: [-0.000251  0.000797 -0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000938
+TCP on Helix: True
+Current TCP Orientation: [359.8 359.8  90. ]
+Total Reward: 10
+current TCP Position: [-4.00e-04  7.98e-04 -5.30e-05]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000894
+TCP on Helix: True
+Current TCP Orientation: [359.8 359.8  90. ]
+Total Reward: 20
+current TCP Position: [-0.000937  0.001596  0.000372]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001888
+TCP on Helix: False
+Current TCP Orientation: [359.7 359.9  90. ]
+Total Reward: 19
+Episode: 1/100, Total Reward: 19, Total Steps: 4, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.000379 -0.000797 -0.000425]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000782
+TCP on Helix: True
+Current TCP Orientation: [360.  359.9  90. ]
+Total Reward: 0
+current TCP Position: [ 0.000448  0.       -0.000796]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000913
+TCP on Helix: False
+Current TCP Orientation: [  0.  359.8  90. ]
+Total Reward: -11
+Episode: 2/100, Total Reward: -11, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [0.000161 0.       0.000797]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000813
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.  90. ]
+Total Reward: 10
+current TCP Position: [ 0.000405 -0.000797  0.001594]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.001407
+TCP on Helix: True
+Current TCP Orientation: [ 0.2  0.1 90. ]
+Total Reward: 20
+current TCP Position: [0.000459 0.       0.000426]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000626
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.597e+02 9.000e+01]
+Total Reward: 20
+current TCP Position: [ 0.000998 -0.000796 -0.00037 ]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.001172
+TCP on Helix: True
+Current TCP Orientation: [2.000e-01 3.596e+02 9.000e+01]
+Total Reward: 20
+current TCP Position: [ 8.38e-04 -7.96e-04  5.40e-05]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000859
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.596e+02 9.000e+01]
+Total Reward: 30
+current TCP Position: [0.000139 0.       0.00085 ]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000861
+TCP on Helix: True
+Current TCP Orientation: [359.9 359.8  90. ]
+Total Reward: 40
+current TCP Position: [-0.000251  0.000797  0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000938
+TCP on Helix: True
+Current TCP Orientation: [359.8 359.7  90. ]
+Total Reward: 40
+current TCP Position: [-0.000489  0.001595  0.00085 ]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001872
+TCP on Helix: False
+Current TCP Orientation: [359.7 359.7  90. ]
+Total Reward: 39
+Episode: 3/100, Total Reward: 39, Total Steps: 8, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000228  0.000797  0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000932
+TCP on Helix: True
+Current TCP Orientation: [ 0.   0.1 90. ]
+Total Reward: 10
+current TCP Position: [-0.000922  0.001596  0.001594]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.002437
+TCP on Helix: False
+Current TCP Orientation: [3.598e+02 2.000e-01 9.000e+01]
+Total Reward: 9
+Episode: 4/100, Total Reward: 9, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.00016   0.       -0.000372]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000405
+TCP on Helix: True
+Current TCP Orientation: [3.599e+02 1.000e-01 9.000e+01]
+Total Reward: 0
+current TCP Position: [ 0.000542 -0.000797 -0.001541]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001818
+TCP on Helix: False
+Current TCP Orientation: [ 0.1  0.1 90. ]
+Total Reward: -11
+Episode: 5/100, Total Reward: -11, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000686  0.000798  0.000798]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001321
+TCP on Helix: True
+Current TCP Orientation: [3.599e+02 1.000e-01 9.000e+01]
+Total Reward: 10
+current TCP Position: [ 0.000161  0.       -0.000372]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000405
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.  90. ]
+Total Reward: 10
+current TCP Position: [ 4.71e-04  1.00e-06 -7.96e-04]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000925
+TCP on Helix: False
+Current TCP Orientation: [ 0.2  0.  90. ]
+Total Reward: -1
+Episode: 6/100, Total Reward: -1, Total Steps: 3, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.00016   0.        0.000797]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000813
+TCP on Helix: True
+Current TCP Orientation: [359.9 359.9  90. ]
+Total Reward: 10
+current TCP Position: [-0.000992  0.000799  0.001968]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.002345
+TCP on Helix: False
+Current TCP Orientation: [3.598e+02 1.000e-01 9.000e+01]
+Total Reward: 9
+Episode: 7/100, Total Reward: 9, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 1.2e-05  0.0e+00 -0.0e+00]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 1.2e-05
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.2 90. ]
+Total Reward: 0
+current TCP Position: [-0.000376  0.000798 -0.000797]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001189
+TCP on Helix: False
+Current TCP Orientation: [ 0.   0.1 90. ]
+Total Reward: -11
+Episode: 8/100, Total Reward: -11, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.000688 -0.000796 -0.000372]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000929
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.598e+02 9.000e+01]
+Total Reward: 0
+current TCP Position: [ 0.000919 -0.001592 -0.      ]
+Closest Helix Point: [ 5.900e-05 -1.888e-03  5.010e-04]
+Min Distance to Helix: 0.001038
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.599e+02 9.000e+01]
+Total Reward: 10
+current TCP Position: [ 0.000218 -0.000797  0.000797]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000601
+TCP on Helix: True
+Current TCP Orientation: [359.9   0.   90. ]
+Total Reward: 20
+current TCP Position: [-0.000307  0.        0.001595]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001624
+TCP on Helix: False
+Current TCP Orientation: [3.599e+02 1.000e-01 9.000e+01]
+Total Reward: 19
+Episode: 9/100, Total Reward: 19, Total Steps: 4, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.00031   0.       -0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000526
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.599e+02 9.000e+01]
+Total Reward: 0
+current TCP Position: [ 0.0007   -0.000796 -0.000425]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000974
+TCP on Helix: True
+Current TCP Orientation: [ 0.2  0.  90. ]
+Total Reward: 10
+current TCP Position: [ 0.000861 -0.000795  0.000373]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.000868
+TCP on Helix: True
+Current TCP Orientation: [3.000e-01 3.599e+02 9.000e+01]
+Total Reward: 20
+current TCP Position: [ 0.00031   0.       -0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000526
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.  90. ]
+Total Reward: 20
+current TCP Position: [ 0.001011 -0.000795 -0.001221]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001773
+TCP on Helix: False
+Current TCP Orientation: [3.000e-01 3.598e+02 9.000e+01]
+Total Reward: 9
+Episode: 10/100, Total Reward: 9, Total Steps: 5, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.000678 -0.000796 -0.001169]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001568
+TCP on Helix: False
+Current TCP Orientation: [360.  359.7  90. ]
+Total Reward: -11
+Episode: 11/100, Total Reward: -11, Total Steps: 1, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-7.80e-05  7.97e-04 -7.97e-04]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.00113
+TCP on Helix: False
+Current TCP Orientation: [  0.  359.9  90. ]
+Total Reward: -11
+Episode: 12/100, Total Reward: -11, Total Steps: 1, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.000839 -0.000796 -0.001168]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001644
+TCP on Helix: False
+Current TCP Orientation: [1.000e-01 3.597e+02 9.000e+01]
+Total Reward: -11
+Episode: 13/100, Total Reward: -11, Total Steps: 1, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000137  0.        0.000372]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000396
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.2 90. ]
+Total Reward: 10
+current TCP Position: [ 0.000119 -0.000797  0.001541]
+Closest Helix Point: [ 1.50e-05 -9.45e-04  2.51e-04]
+Min Distance to Helix: 0.001303
+TCP on Helix: True
+Current TCP Orientation: [ 0.3  0.4 90. ]
+Total Reward: 20
+current TCP Position: [ 0.00082  -0.001592  0.001115]
+Closest Helix Point: [ 5.900e-05 -1.888e-03  5.010e-04]
+Min Distance to Helix: 0.001021
+TCP on Helix: True
+Current TCP Orientation: [ 0.5  0.2 90. ]
+Total Reward: 20
+current TCP Position: [ 0.000688 -0.001591  0.002283]
+Closest Helix Point: [ 5.900e-05 -1.888e-03  5.010e-04]
+Min Distance to Helix: 0.001913
+TCP on Helix: False
+Current TCP Orientation: [ 0.6  0.4 90. ]
+Total Reward: 19
+Episode: 14/100, Total Reward: 19, Total Steps: 4, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [ 0.000459  0.       -0.000371]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.00059
+TCP on Helix: True
+Current TCP Orientation: [1.000e-01 3.597e+02 9.000e+01]
+Total Reward: 0
+current TCP Position: [ 0.00076   0.       -0.001538]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001716
+TCP on Helix: False
+Current TCP Orientation: [1.000e-01 3.594e+02 9.000e+01]
+Total Reward: -11
+Episode: 15/100, Total Reward: -11, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.0004    0.000798 -0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000989
+TCP on Helix: True
+Current TCP Orientation: [359.8   0.   90. ]
+Total Reward: 0
+current TCP Position: [ 0.000301  0.       -0.001594]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001622
+TCP on Helix: False
+Current TCP Orientation: [  0.  359.8  90. ]
+Total Reward: -11
+Episode: 16/100, Total Reward: -11, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000686  0.000798  0.000373]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001117
+TCP on Helix: True
+Current TCP Orientation: [3.599e+02 2.000e-01 9.000e+01]
+Total Reward: 10
+current TCP Position: [-0.000993  0.000799  0.001543]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.002002
+TCP on Helix: False
+Current TCP Orientation: [359.8   0.4  90. ]
+Total Reward: 9
+Episode: 17/100, Total Reward: 9, Total Steps: 2, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000538  0.000798  0.      ]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000962
+TCP on Helix: True
+Current TCP Orientation: [3.599e+02 2.000e-01 9.000e+01]
+Total Reward: 10
+current TCP Position: [0.       0.       0.000425]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000425
+TCP on Helix: True
+Current TCP Orientation: [3.6e+02 1.0e-01 9.0e+01]
+Total Reward: 20
+current TCP Position: [-0.000147  0.        0.001222]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001231
+TCP on Helix: True
+Current TCP Orientation: [3.6e+02 1.0e-01 9.0e+01]
+Total Reward: 30
+current TCP Position: [0.000164 0.       0.001647]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001656
+TCP on Helix: False
+Current TCP Orientation: [ 0.1  0.1 90. ]
+Total Reward: 29
+Episode: 18/100, Total Reward: 29, Total Steps: 4, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000846  0.000798  0.00117 ]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.00165
+TCP on Helix: False
+Current TCP Orientation: [3.598e+02 1.000e-01 9.000e+01]
+Total Reward: -1
+Episode: 19/100, Total Reward: -1, Total Steps: 1, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000388  0.000798 -0.000797]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001193
+TCP on Helix: False
+Current TCP Orientation: [359.9   0.   90. ]
+Total Reward: -11
+Episode: 20/100, Total Reward: -11, Total Steps: 1, Epsilon: 1.00
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++
+current TCP Position: [-0.000388  0.000798 -0.000797]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.001193
+TCP on Helix: False
+Current TCP Orientation: [3.599e+02 1.000e-01 9.000e+01]
+Total Reward: -11
+Episode: 21/100, Total Reward: -11, Total Steps: 1, Epsilon: 1.00

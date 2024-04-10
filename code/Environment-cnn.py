@@ -8,6 +8,7 @@
 
 
 import os
+import shutil
 
 # mute the MKL warning on macOS
 os.environ["MKL_DEBUG_CPU_TYPE"] = "5"
@@ -20,8 +21,39 @@ import gymnasium as gym  # original gym is no longer maintained and now called g
 
 
 class RobotEnvironment(gym.Env):
-    """Custom Environment that follows gym interface"""
-    """Every Gym environment must have the attributes action_space and observation_space (containing states). """
+    """_summary_: Custom Environment that follows gym interface for a 6-joint robot arm in a voxel space with a helix path.
+        
+        note:   Custom Environment that follows gym interface
+                Every Gym environment must have the attributes action_space and observation_space (containing states). 
+    
+    _gymnasium attributes_:
+
+    action space: The action space consists of 6 discrete actions, one for each joint.
+    state / observation space: The observation space consists of a 3D voxel grid and the current TCP position.
+
+    _gymnasium methods_:
+
+    - __init__(self, radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001): Initializes the environment
+    - step(self, action): Updates the environment with actions and returns the next agent observation, reward, and info.
+    - reset(self, seed=None, options=None): Resets the environment to an initial internal state.
+    - render(self): Visualizes the voxel space with the helix path and highlights the TCP position if provided.
+
+    _custom methods_:
+
+    - init_helix(self): Initializes a helix path in the voxel space.
+    - is_on_helix(self, tcp_coords): Checks if the TCP coordinates lie on the helix path.
+    - process_action(self, action): Processes the action provided to generate new joint angles.
+    - init_translation_matrix(self): Initializes the translation matrix based on the initial TCP position.
+    - translate_robot_to_voxel_space(self, point): Translates a point from robot space to voxel space.
+    - update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space): Updates the TCP position in voxel space.
+    - dh_transform_matrix(self, a, d, alpha, theta): Computes the standard Denavit-Hartenberg transformation matrix.
+    - forward_kinematics(self, theta_degrees): Calculates the end-effector position and orientation using the provided joint angles.
+    - objective_function_with_orientation(self, theta, constant_orientation): Calculates the combined positional and orientational error.
+    - find_closest_helix_point(self, current_tcp_position, helix_points): Finds the closest point on the helix to the current TCP position.
+    - reward_function(self, tcp_on_helix): Calculates the reward based on the current state of the environment.
+
+    """
+    
 
     def __init__(self,  radius=0.03, height_per_turn=0.05, turns=2, resolution=0.001):
         # each joint can have one of three actions: decrease (-0.1°), keep (0.0°), increase (+0.1°)
@@ -44,11 +76,17 @@ class RobotEnvironment(gym.Env):
         self.y_size = int((self.y_range[1] - self.y_range[0]) / self.resolution) + 1
         self.z_size = int((self.z_range[1] - self.z_range[0]) / self.resolution) + 1
 
-        # Adjusted setup for a two-channel input
-        num_channels = 2  # For voxel_space and TCP position
-        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=(num_channels, self.x_size, self.y_size, self.z_size), dtype=np.float64)
-        # observation space defined by dimensions and possible voxel values (-1 to 1)
-      
+        # combined observation space for voxel_space and TCP position  
+        num_channels = 2  # # spatial observation space setup for a two-channel input:
+        self.tcp_data_length = 3  # 3 orientation angle values
+        # combine the two observation spaces with gym.tuple: spatial data and TCP data
+        self.observation_space = gym.spaces.Tuple((
+            gym.spaces.Box(low=-1, high=1, shape=(num_channels, self.x_size, self.y_size, self.z_size), dtype=np.float64), #  spacial data observation space defined by dimensions and possible voxel values (-1 to 1)
+            gym.spaces.Box(low=-360, high=360, 
+                                                shape=(self.tcp_data_length,), 
+                                                dtype=np.float64) # observation space for the TCP data
+        ))
+
         # init voxel space 
         self.voxel_space = np.full((self.x_size, self.y_size, self.z_size), -1)  # initialize all voxels with -1
         
@@ -66,27 +104,27 @@ class RobotEnvironment(gym.Env):
         self.init_helix()
 
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        #for reward fct 
-        self.old_tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
-        print(self.old_tcp_position)
-        print(self.tcp_position)
+        self.old_tcp_position = self.tcp_position
         #print("Initial Voxel TCP Position:", self.tcp_position)
-        # # set the TCP position in the voxel space channel 2
+
+        # # set the TCP position for the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
         # stack to create a two-channel observation
         self.observation = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
-        #self.tcp_position = self.forward_kinematics(self.joint_angles)  # initial end-effector position
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)  # is the TCP is on the helix?
-        print("TCP on Helix:", self.tcp_on_helix)
-        self.tcp_orientation= None
+        #print("TCP on Helix:", self.tcp_on_helix)
+        self.tcp_orientation= self.init_orientation
         self.reward = 0 # reward points
         self.terminated = False
         self.truncated = False
+        self.out_of_voxel_space = False 
+
+        self.tcp_in_voxels = None
 
         # tcp orientation
         self.tolerance = 10 # 10 ° tolerance
-        self.constant_orientation = (0, 0, -180)  # Roll-, pitch- und yaw in rad
+        self.constant_orientation = (0, 0, 180)  # Roll-, pitch- und yaw in rad
         #self.last_orientation_deviation = 0  # Initialization of the variable for storing the previous orientation deviation
         #ori_hold = np.all(ori_diff <= self.tolerances[1]) or np.all(ori_diff >= (360-self.tolerances[1]))  
         
@@ -98,6 +136,17 @@ class RobotEnvironment(gym.Env):
 
         # closest distance
         self.closest_distance = None
+        self.closest_point = None
+
+        # counter for figures names 
+        self.figure_count = 1
+
+        # tcp_data
+        self.tcp_data = np.asarray([self.init_orientation]) 
+
+        # tuple of spatial and tcp data
+        self.state = (self.observation, self.tcp_data)
+      
 
 
     def step(self, action):
@@ -110,12 +159,12 @@ class RobotEnvironment(gym.Env):
             action (np.array): action provided by the agent (array of 6 integers between 0 and 2)
 
         Returns:
-            observation (state):  stacked voxel_space and 
-                                            current position of the TCP (end-effector) in the 3D space
+            observation (state):  Tuple of stacked voxel_space and current position of the TCP (end-effector) in the 3D space
+                                  and the TCP Orientation
             reward (float): Amount of reward due to the agent actions
             terminated (bool): A boolean, indicating whether the episode has ended successfully
             truncated (bool): A boolean, indicating whether the episode has ended prematurely
-            info (dict): A dictionary containing other information from the environment
+            info (dict): A dictionary containing other customizable information from the environment
         """
         # convert action to delta angles and apply them
         delta_angles = self.process_action(action)
@@ -128,18 +177,25 @@ class RobotEnvironment(gym.Env):
 
         #print("Joint Angles in step:", self.joint_angles)
         # update TCP position (based on the new joint angles - not on the delta angles) 
-        new_tcp_position_in_robot_space, tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
+        new_tcp_position_in_robot_space, self.tcp_orientation = self.forward_kinematics(self.joint_angles)  # self.joint_angles are updated in process_action
         #print("new_TCP Position in robot space (step):", new_tcp_position_in_robot_space)
         #print("new Orientierung (Roll, Pitch, Yaw) in step:", tcp_orientation)
-        self.old_tcp_position = self.tcp_position
+        self.old_tcp_position = self.tcp_position # save the old tcp position for the reward function
         self.tcp_position = self.translate_robot_to_voxel_space(new_tcp_position_in_robot_space)
         #print("New Voxel TCP Position in step:", self.tcp_position)
 
-        # set the TCP position in the voxel space channel 2
+        # set the TCP position for the voxel space channel 2
         self.tcp_observation = self.embed_tcp_position(self.tcp_position)
+        
         # stack to create a two-channel observation
-        self.state = np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        spatial_data = np.stack([self.voxel_space, self.tcp_observation], axis=0)
 
+        # tcp_data
+        self.tcp_data = np.asarray([self.tcp_orientation])
+
+        # tuple of spatial and tcp data
+        self.state = (spatial_data, self.tcp_data)
+     
         # is TCP on the helix?
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
 
@@ -149,8 +205,12 @@ class RobotEnvironment(gym.Env):
         # eventually also return an info dictionary (for debugging)
         info = {
             'robot_state': self.joint_angles.tolist(),
-            'tcp_position': self.tcp_position.tolist(),
-            'closest_distance': self.closest_distance.tolist()
+            'tcp_position_in_coordinates': self.tcp_position.tolist(), # current TCP position in voxel space
+            'tcp_position_in_voxels': self.tcp_in_voxels, # current TCP position in voxel indices
+            'closest_point': self.closest_point.tolist(), # closest point on the helix
+            'closest_distance': self.closest_distance.tolist(), # closest distance to the helix
+            'current_orientation': self.tcp_orientation, # current orientation of the TCP
+            'tcp_on_helix': self.tcp_on_helix # is the TCP on the helix?
         }
 
         # has to return: new observation (state), reward, terminated(bool), truncated(bool) info(dict)
@@ -159,17 +219,10 @@ class RobotEnvironment(gym.Env):
 
 
     def init_helix(self):
-        """
-        Initialize a helix path in the voxel space.
+        """_summary_: Initialize a helix path in the voxel space.
 
         This function computes the coordinates of points along a helix path
         defined by the given radius, height per turn, and number of turns.
-
-        Parameters:
-            self
-
-        Returns:
-            None
         """
 
         # initialize helix
@@ -179,7 +232,7 @@ class RobotEnvironment(gym.Env):
         t = np.linspace(0, self.turns, num=int(self.turns*helix_resolution) ) # parameter t from 0 to 2 for 2 complete turns
 
         offset = self.radius
-        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset# 
+        helix_x = r * np.cos(2 * np.pi * t + np.pi)  + offset  
         helix_y = r * np.sin(2 * np.pi * t + np.pi)  
         helix_z = h * t  
 
@@ -210,8 +263,7 @@ class RobotEnvironment(gym.Env):
         #print(self.helix_points)
 
     def is_on_helix(self, tcp_coords):
-        """
-        Check if the TCP (Tool Center Point) coordinates lie on the helix path.
+        """_summary_Check if the TCP (Tool Center Point) coordinates lie on the helix path.
 
         This function converts the TCP coordinates to voxel indices within the voxel space
         and determines whether the TCP is on the helix path, at the target/end of the helix, 
@@ -231,7 +283,7 @@ class RobotEnvironment(gym.Env):
         z_idx = int(round((tcp_coords[2] - self.z_range[0]) / self.resolution))
 
         print(f"TCP coords: {tcp_coords} -> Voxel indices: x:{x_idx}, y:{y_idx}, z:{z_idx}")  # debugging info
-
+        self.tcp_in_voxels= [x_idx, y_idx, z_idx]
         # check if these indices are in the voxel space. If not, the TCP is outside the voxel space.
         if 0 <= x_idx < self.voxel_space.shape[0] and 0 <= y_idx < self.voxel_space.shape[1] and 0 <= z_idx < self.voxel_space.shape[2]:
             # get value of the voxel at the calculated indices. check if voxel
@@ -242,36 +294,41 @@ class RobotEnvironment(gym.Env):
             if voxel_value == 1:
                 print("TCP reached the target!")
                 self.terminated = True
+                self.out_of_voxel_space = False
                 return True  # TCP is on the helix 
             
             # TCP is on a voxel of helix path but has not yet reached the end yet (voxel-value = 0):
             elif voxel_value == 0:
                 print("TCP is on the helix path.")
+                self.out_of_voxel_space = False
                 return True # TCP is on the helix path
             
             elif voxel_value == -1:
                 # Check if the distance to the helix is less than or equal to 0.001
-                _, closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
+                self.closest_point, self.closest_distance = self.find_closest_helix_point(tcp_coords, self.helix_points)
                 #max_distance = np.max(closest_distance)
-                if closest_distance <= self.tolerance_tcp_pos:
+                if self.closest_distance <= self.tolerance_tcp_pos:
                     print("TCP is close to the helix.")
                     self.truncated = False
+                    self.out_of_voxel_space = False
                     return True
                 else:
                     print("TCP is outside the helix voxels.")
                     self.truncated = True
+                    self.out_of_voxel_space = False
                     return False
             
         else:
             self.truncated = True
             print("TCP is outside the voxel space.")
             # otherwise the TCP is not on the helix path any more
+            self.out_of_voxel_space = True
             return False
 
 
 
     def reset(self, seed=None, options=None):
-        """Resets the environment to an initial internal state, returning an initial observation and info.
+        """_summary_: Resets the environment to an initial internal state, returning an initial observation and info.
 
         Returns:
             observsation (state): Observation of the initial state. 
@@ -281,7 +338,7 @@ class RobotEnvironment(gym.Env):
                             analogous to the info returned by step()
         """
         # reset the environment 
-        print("Resetting the environment...")
+        print("__________________Resetting the environment...___________________")
         _ = seed  # acknowledging the seed parameter without using it to fit the gymnasium requirements
         self.voxel_space.fill(-1)
 
@@ -294,21 +351,29 @@ class RobotEnvironment(gym.Env):
         # Populate the voxel space with a helix
         self.init_helix()
         self.tcp_position = self.translate_robot_to_voxel_space(self.initial_tcp_position)
+
         #print("Voxel TCP Position (Reset):", self.tcp_position)
         # reset the joint angles and TCP position to the start of the helix
     
         self.tcp_observation = self.embed_tcp_position(self.tcp_position) # initial end-effector position
-
-        # # set observation space to the initial state
     
         # Stack to create a two-channel observation
-        self.state= np.stack([self.voxel_space, self.tcp_observation], axis=0)
+        self.spatial_data= np.stack([self.voxel_space, self.tcp_observation], axis=0)
+
+        # tcp_data
+        self.tcp_data = np.asarray([self.init_orientation])
+
+        # tuple of spatial and tcp data
+        self.state = (self.spatial_data, self.tcp_data)
 
         # reset the reward and Flags
         self.tcp_on_helix = self.is_on_helix(self.tcp_position)
         self.reward = 0
         self.terminated= False
         self.truncated = False
+
+        # counter for figures names
+        self.figure_count = 1
 
         # eventually also return an info dictionary (for debugging)
         info = {
@@ -320,46 +385,11 @@ class RobotEnvironment(gym.Env):
 
 
     def reward_function(self, tcp_on_helix):
-        """Calculate the reward based on the current state of the environment."""
+        """Calculate the reward based on the current TCP position."""
         self.reward = 0
         #closest_point, closest_distance = self.find_closest_helix_point(, self.helix_points)
-        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles,self.constant_orientation)  # Roll, Pitch, Yaw in Grad
+        _, orientation_deviation, _ = self.objective_function_with_orientation(self.joint_angles, self.constant_orientation)  # Roll, Pitch, Yaw in Grad
        
-        ####################################################
-        ## Initialize reward, terminated, and truncated flags
-        #if tcp_on_helix:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 10  # Full reward for reaching helix with correct orientation
-        #    else:
-        #        self.reward += 5  # Reduced reward for reaching helix with incorrect orientation
-        #    self.truncated = False
-#
-        #if self.terminated:
-        #    if orientation_deviation >= 0:
-        #        self.reward += 1000  # Extra reward for reaching the target with correct orientation
-        #    else:
-        #        self.reward += 500  # Reduced extra reward for reaching the target with incorrect orientation
-#
-        #if self.truncated:
-        #    # Terminate the episode if the TCP is not on the helix any more
-        #    self.reward -= 1
-#
-        ## Adjust reward based on orientation deviation
-        #orientation_reward = 0
-        #deviation_to_last_orientation = self.last_orientation_deviation - orientation_deviation
-        #deviation_to_last_orientation = np.max(deviation_to_last_orientation) # worst angle as a measure
-        #if deviation_to_last_orientation >= self.last_orientation_deviation:  # If deviation decreased
-        #    orientation_reward = 5  # Moderate reward for maintaining orientation
-        #else:  # If deviation increased
-        #    orientation_reward = -1  # Penalty for deviation from constant orientation
-#
-        ## Save last orientation deviation to check ahead if deviation got better
-        #self.last_orientation_deviation = orientation_deviation
-        ## Add orientation reward to total reward
-        #self.reward += orientation_reward
-
-        ####################################################
-
         # initialize reward, terminated, and truncated flags
         if tcp_on_helix and self.tcp_position[2] >= self.old_tcp_position[2]:
             self.reward += 10
@@ -376,10 +406,12 @@ class RobotEnvironment(gym.Env):
         max_deviation = np.max(orientation_deviation)
         print("max_deviation (in reward)", np.round(max_deviation,2))
         if max_deviation <= self.tolerance:
-            orientation_reward = 5
+            orientation_reward = 10
         else:
-            orientation_reward = -1
+            orientation_reward = 0
 
+        if self.out_of_voxel_space:
+            self.reward -= 10
         # Add orientation reward to total reward
         self.reward += orientation_reward
 
@@ -387,13 +419,7 @@ class RobotEnvironment(gym.Env):
     
 
     def render(self):
-        """
-
-        This function visualizes the voxel space with the helix path and highlights the TCP position
-        if provided and valid.
-            
-        Returns:
-            None
+        """_summary_: This function visualizes the voxel space with the helix path and highlights the TCP position 
         """
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -412,6 +438,7 @@ class RobotEnvironment(gym.Env):
             # highlight TCP position
         ax.scatter([x_idx], [y_idx], [z_idx], c='orange', s=100, alpha= 1, label='TCP Position')
         # Erstellen Sie den Pfeil für die Orientierung
+        #ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
         ax.quiver(x_idx, y_idx, z_idx, self.tcp_orientation[0], self.tcp_orientation[1], self.tcp_orientation[2], color='black', length=15, normalize=True, arrow_length_ratio=0.2, linewidth=1)
         # Set axis limits to start from 0
         #ax.set_xlim(0, self.x_size)
@@ -421,13 +448,75 @@ class RobotEnvironment(gym.Env):
         ax.set_ylabel('Y Index')
         ax.set_zlabel('Z Index')
         ax.set_title('3D Plot of the Voxel Space')
-#        plt.legend()
-#        plt.show()
+        #plt.legend()
+        #plt.show()
+
+        # Create directory if not exists
+        if not os.path.exists('ParamCombi1'):
+            os.makedirs('ParamCombi1')
+        # Create directory if not exists
+        if not os.path.exists('ParamCombi2'):
+            os.makedirs('ParamCombi2')
+        
+        # to check if a new episode has started
+        new_episode = False 
+        
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
+
+        if os.listdir('ParamCombi1') == [] and os.listdir('ParamCombi2') == []:
+            new_episode = True
+
+        # check if the MSE file exists in folder (this means that this folders episode has ended)
+        if os.path.exists(file_path1):
+            if os.path.exists(file_path2):
+                new_episode = True
+        elif os.path.exists(file_path2) and os.listdir('ParamCombi1') == []:
+                new_episode = True
+        elif os.path.exists(file_path1) and os.listdir('ParamCombi2') == []:
+                new_episode = True
+
+
+        if new_episode:
+            #print("New Episode")
+            # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
+            num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))
+            num_files_in_ParamCombi2 = len(os.listdir("ParamCombi2"))    
+
+            if num_files_in_ParamCombi1 >= num_files_in_ParamCombi2:
+                    self.current_directory = 2
+                    #print("Current Directory: 2")
+                    shutil.rmtree('ParamCombi2')
+                    os.makedirs('ParamCombi2')
+                    plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))
+            else:
+                    self.current_directory = 1
+                    #print("Current Directory: 1")
+                    shutil.rmtree('ParamCombi1')
+                    os.makedirs('ParamCombi1')
+                    plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+        else:
+            if self.current_directory == 1:
+                # Save the figure in folder 1
+                plt.savefig(os.path.join('ParamCombi1', f'step_{self.figure_count}.png'))
+            else:
+                # Save the figure in folder 2
+                plt.savefig(os.path.join('ParamCombi2', f'step_{self.figure_count}.png'))          
+
+        plt.close() # close the figure  
+        
+        self.figure_count += 1 # increment the figure count
 
 
     def process_action(self, action):
-        """
-        Process the action provided to generate new joint angles.
+        """_summary_: Process the action provided to generate new joint angles.
 
         This function calculates the delta angles for each action and updates the joint angles accordingly.
         The delta angles are calculated based on the action values provided, and the joint angles are limited
@@ -443,7 +532,7 @@ class RobotEnvironment(gym.Env):
         if isinstance(action, (list, tuple)):
         # If yes, calculate the delta angles for each action
             delta_angles = np.array([(a - 1) * 0.1 for a in action])
-            print("Delta Angles (process action):", delta_angles)
+            #print("Delta Angles (process action):", delta_angles)
         else:
         # Otherwise, there is only one action, so calculate the delta angle directly
             delta_angles = np.array([(action - 1) * 0.1])
@@ -453,19 +542,15 @@ class RobotEnvironment(gym.Env):
 
         # Limit the new joint angles within the range of -180 to 180 degrees
         self.joint_angles = np.clip(new_angles, -180, 180)
-        print("New Joint Angles (process action):", self.joint_angles)
+        #print("New Joint Angles (process action):", self.joint_angles)
         # Return the delta angles
         return delta_angles
 
     def init_translation_matrix(self):
-        """
-        Initialize the translation matrix based on the initial TCP position.
+        """_summary_: Initialize the translation matrix based on the initial TCP position.
 
         This function computes the translation vector as the negative of the initial TCP position,
         and constructs the translation matrix accordingly.
-
-        Returns:
-            None
         """
         # self.initial_tcp_position is the initial TCP position
         # the translation vector is the negative of this position
@@ -479,6 +564,7 @@ class RobotEnvironment(gym.Env):
         ])
 
     def translate_robot_to_voxel_space(self, point):
+        """_summary_: Translate a point from robot space to voxel space."""
         # convert the point to homogeneous coordinates for matrix multiplication
         homogeneous_point = np.append(point, 1)
         # apply the translation matrix
@@ -488,6 +574,7 @@ class RobotEnvironment(gym.Env):
         return translated_point
     
     def update_tcp_position_in_voxel_space(self, new_tcp_position_robot_space):
+        """_summary_: Update the TCP position in voxel space."""
         # translate new TCP position to voxel space
         translated_position = self.translate_robot_to_voxel_space(new_tcp_position_robot_space)
         # convert translated position to voxel indices
@@ -496,6 +583,20 @@ class RobotEnvironment(gym.Env):
         return x_idx, y_idx, z_idx
 
     def dh_transform_matrix(self,a, d, alpha, theta):
+        """_summary_: Compute the standard Denavit-Hartenberg transformation matrix.
+
+        This function computes the standard Denavit-Hartenberg transformation matrix based on the provided DH parameters.
+        The transformation matrix is computed using the cosine and sine functions of the given angles.
+
+        Parameters:
+            a: The link length.
+            d: The link offset.
+            alpha: The link twist angle.
+            theta: The joint angle.
+
+        Returns:
+            np.ndarray: The computed transformation matrix.
+        """ 
     
     ## compute the standard Denavit-Hartenberg transformation matrix.
     ## source: wikipedia
@@ -507,17 +608,16 @@ class RobotEnvironment(gym.Env):
             ])
 
     def forward_kinematics(self, theta_degrees):
-        """
-        Calculate the end-effector position and orientation using the provided joint angles.
+        """_summary_: Calculate the TCP position and orientation using the provided joint angles.
 
-        This function computes the end-effector position and orientation based on the Denavit-Hartenberg (DH) parameters
+        This function computes the TCP position and orientation based on the Denavit-Hartenberg (DH) parameters
         and the given joint angles.
 
         Parameters:
             theta_degrees: Joint angles in degrees.
 
         Returns:
-            tuple: A tuple containing the end-effector position (x, y, z) and orientation angles (alpha, beta, gamma).
+            tuple: A tuple containing the TCP position (x, y, z) and orientation angles (alpha, beta, gamma).
         """
         theta = np.radians(theta_degrees) # convert angles from degree to radians for cos and sin functions
         # DH parameters for each joint: (a, d, alpha, theta)
@@ -574,18 +674,18 @@ class RobotEnvironment(gym.Env):
 
 
     def objective_function_with_orientation(self, theta, constant_orientation): # closes_target_pos
-        """
-        Calculate the combined positional and orientational error for the robot end-effector.
+        """_summary_: Calculate the error based on the current position and orientation.
         """
         # Calculate the current position and orientation from forward kinematics
         current_position, current_orientation = self.forward_kinematics(theta) # joint angle
         current_position = self.translate_robot_to_voxel_space(current_position)
         # get closest point (closest_target_pos)xxx
-        print("current_tcp_pos_in_voxel_space (objective func):", current_position)
-        closest_helix_point, closes_distance = self.find_closest_helix_point(current_position, self.helix_points)
+        #print("current_tcp_pos_in_voxel_space (objective func):", current_position)
+        closest_helix_point, closest_distance = self.find_closest_helix_point(current_position, self.helix_points)
 
-        
-        print("current_orientation:", np.round(current_orientation, 2))
+        # Format the orientation to two decimals
+        formatted_orientation = [f'{num:.2f}' for num in current_orientation]
+        print(formatted_orientation)
         # Calculate the positional error
         position_error = np.linalg.norm(np.array(current_position) - np.array(closest_helix_point))
         
@@ -598,36 +698,13 @@ class RobotEnvironment(gym.Env):
         # Combine errors, possibly with weighting factors if needed
         #total_error = position_error + orientation_error
 
-        return position_error, orientation_errors, closes_distance
+        return position_error, orientation_errors, closest_distance
     
-    #def find_closest_helix_point(self, current_tcp_position, helix_points):
-    #    """
-    #    Find the closest point on the helix to the current TCP position.
-    #    """
-    #    # calculate distance between every helix point and every current tcp position
-    #    distances_x = np.linalg.norm(helix_points[0] - current_tcp_position[0])
-    #    distances_y = np.linalg.norm(helix_points[1] - current_tcp_position[1])
-    #    distances_z = np.linalg.norm(helix_points[2] - current_tcp_position[2])
-    #    distances = [distances_x, distances_y, distances_z]
-    #    # find index with smallest distance
-    #    closest_index_x = np.argmin(distances_x)
-    #    closest_index_y = np.argmin(distances_y)
-    #    closest_index_z = np.argmin(distances_z)
-    #    closest_index = [closest_index_x, closest_index_y, closest_index_z]
-    #    # Return of the point on the helix closest to the current TCP position and the corresponding distance
-    #    closest_point = helix_points[closest_index]
-    #    closest_distance = distances[closest_index]
-    #    print("closest point ", closest_point)
-    #    print("closest distance ", closest_distance) # double
-#
-    #    self.closest_distance = closest_distance
-#
-    #    return closest_point, closest_distance
+
 
     def find_closest_helix_point(self, current_tcp_position, helix_points):
-        """
-        Find the closest point on the helix to the current TCP position.
-        """
+        """_summary_: Find the closest point on the helix to the current TCP position."""
+   
         # calculate distance between every helix point and every current tcp position
         differences = helix_points - current_tcp_position.reshape(3, 1)
         distances = np.linalg.norm(differences, axis=0)
@@ -639,37 +716,23 @@ class RobotEnvironment(gym.Env):
         closest_point = helix_points[:, closest_index]
         closest_distance = distances[closest_index]
 
-        print("closest point ", closest_point)
-        print("closest distance ", np.round(closest_distance,4)) # double
+        #print("closest point ", closest_point)
+        #print("closest distance ", np.round(closest_distance,4)) # double
         #x_idx = int(round(closest_point[0] / self.resolution))
         x_idx = (closest_point[0] - self.x_range[0]) / self.resolution
         y_idx = (closest_point[1] - self.y_range[0]) / self.resolution
         z_idx = (closest_point[2] - self.z_range[0]) / self.resolution
         test = [ x_idx,  y_idx,  z_idx]
-        print("closest_point invoxel_space", test)
+        #print("closest_point invoxel_space", test)
         self.closest_distance = closest_distance
+        self.closest_point = closest_point
 
         return closest_point, closest_distance
 
 
 
-    # def get_closest_distance_tcp_helix(self):
-    #     return self.closest_distance_TCP_Helix
-
-
-    # def tcp_position_to_grid_index(self, tcp_position):
-    #     """Converts the TCP position to voxel grid indices."""
-    #     # Implement conversion from TCP position to grid indices based on your environment's specifics
-    #     # This is a placeholder function; you'll need to adjust it based on how your environment and TCP positions are defined
-    #     #print("TCP Position:", tcp_position)
-    #     x_idx = int(round((tcp_position[0] - self.x_range[0]) / self.resolution))
-    #     y_idx = int(round((tcp_position[1] - self.y_range[0]) / self.resolution))
-    #     z_idx = int(round((tcp_position[2] - self.z_range[0]) / self.resolution))
-    #     print("TCP Position Indices:", x_idx, y_idx, z_idx)
-    #     return x_idx, y_idx, z_idx
-    
     def position_to_voxel_indices(self, point_in_voxel_space):
-        """
+        """_summary_:
         This function converts the coordinates of a point in voxel space to voxel indices,
         considering the resolution of the voxel grid.
 
@@ -686,7 +749,7 @@ class RobotEnvironment(gym.Env):
         return x_idx, y_idx, z_idx
 
     def embed_tcp_position(self, tcp_position):
-        """Embeds the TCP position in a 3D grid of the same shape as the voxel space."""
+        """_summary_: Embeds the TCP position in a 3D grid of the same shape as the voxel space."""
         grid = np.zeros(self.voxel_space.shape, dtype=np.float32)
         # TCP position to grid index + set to 1
         #x_idx, y_idx, z_idx = self.tcp_position_to_grid_index(tcp_position)
@@ -703,17 +766,3 @@ if __name__ == "__main__":
     env = RobotEnvironment()
     env.render()
     
-    #joint_angles = np.array([85.06, 24.65, 164.58, 179.33, -179.90, 0. ])
-    #joint_angles= np.array([ 120., 35.06747416 , 163.77471266 , 180.  ,  -180., 0.   ])
-    #joint_angles = np.array([ 89.99683147,  23.85781021, 164.55283017, 179.55921263 ,180., 180. ])
-    #tcp_position = env.forward_kinematics(joint_angles)
-    #print("TCP Position env:", tcp_position)
-    #x,y,z= env.tcp_position_to_grid_index(tcp_position)
-    #print("TCP Position Indices:", x, y, z)
-    #state_size = np.prod(env.observation_space.shape)
-    # print("action space: ", env.action_space) # action space:  MultiDiscrete([3 3 3 3 3 3])
-    # print("obs space:", env.observation_space.shape)  #obs space: (2, 61, 61, 101)
-    # action_size = env.action_space.shape[0] #.nvec.prod()   #Action size: (6,)  # tuple
-    # print(f"State size: {state_size}, Action size: {action_size}") #State size: 751642
-
-    # print("channels: ", env.observation_space.shape[0])  # channels: 2

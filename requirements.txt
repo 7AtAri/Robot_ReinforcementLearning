@@ -1,0 +1,10 @@
+Scikit-learn
+Gymnasium
+Matplotlib
+Numpy
+Mpl_toolkits 
+Collections 
+Scipy
+Sympy
+Torch
+#cuda # if you have a gpu

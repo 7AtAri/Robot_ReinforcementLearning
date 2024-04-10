@@ -1,66 +1,54 @@
-# Reinforcement Learning for Robotics
+# Robotproject with Reinforcement Learning
 
-## Project: 6-joint Robot Arm
+## Introduction
+The aim of this project was to train a 6-axis robot arm using reinforcement learning so that it learns to track a helix.
+Therefore we implemented Deep Q-Learning with a Late Fusion Multimodal Model that uses a CNN Network for the spatial features and
+gets the orientation features concatenated into the fully connected layers directly.
+The replay memory works on basis of n-step-bootstrapping.
 
-- [ ] presentation [slides](https://docs.google.com/presentation/d/1iGImbkl8Not4Z9-GkAs32dncCGfMc--StngshL4tsVA/edit?usp=sharing)
-- [x] read the [task](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023%20WiSe_2PZR_Coding_Task_05.pdf)
-- [x] [notes on the task](https://docs.google.com/document/d/1-oN-ch47fVDCPkOF1WOgRCZygJi9Pc00SBXlcemRMhU/edit?usp=sharing) 
+## Installation
+Follow these steps to install our project
 
-- [x]	Define the 3D-trajectory mathematically.
-- [x]	Define the Observation Space in the form of the voxel where the trajectory will be.
-- [x] Code the Environment with the given direct kinematics and the constraints of the join angles and the chosen voxel.
-      Define a suitable Reward Function for the Agent,
-      as well as the strategy how to deal with occasions where the TCP leaves the trajectory and/or the voxel.
-- [ ]	Code the defined algorithm to come to an optimal Policy.
-- [ ]	Verify the performance vs. time of the Learning process showing that your Agent is in fact learning
-      and the decisions are becoming “better” after each training.
-- [ ] Once your Agent learned the optimal Policy, test the Policy
-      showing that the robot’s TCP is indeed following the trajectory.
-      Compute the mean square error (MSE) from the ideal trajectory and what the Agent is doing in reality.
-- [ ]	Propose new ideas how to reduce the MSE …
-      you don’t need to code them, but your ideas must be plausible and realistic: Substantiate them! 
-- [ ]	Make sure that your code has some tools to allow for easy verification of the performance of your Agent.
+      git clone https://github.com/7AtAri/Robot_ReinforcementLearning.git
 
-### Presentation of the project (30 min):
-upload your code + environment two days before the appointment
+Install the required dependencies 
 
-- [ ] make [slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
-
-Questions:
-
-- [ ] Prepare a short summary of the problem and the way to solve it
-- [ ] Create a few test scenarios upfront to test the performance of your code
-- [ ] Document your code
-- [ ] Show the behaviour of the Environment
-- [ ] Show that the learned policy performs well
-- [ ] Be prepared to make a few changes in your code and re-run it showing the new performance!
-
-Dependencies:
-- pip install numpy
-- pip install matplotlib
-- pip install gymnasium
-- pip install torch
-- pip install scikit-learn
+      python -m pip install --upgrade pip
+      python -m pip install -r requirements.txt
 
 
-## Paper: 6-legged Robot
+**The only important files are in the folder "code":**
+* n-step-bootstrapping.py
+* Environment-cnn.py
 
-- [x] read the [paper](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/2023WiSe_2PZR_RL_05.pdf)
-- [x] take [notes](https://docs.google.com/document/d/1rnW2lWlUQMY4ahw68WoXD42BBrlzWxlGkcxe9iR7dCI/edit)
-      
-### Presentation of the paper (20 min):
+if you want to run the project please run the file **n-step-bootstrapping.py**
 
-- [x] make [slideshow](https://docs.google.com/presentation/d/1c81UuuYcv-xGZ58Bya9-mc7IEekxRP4rj4RAE2KFHCg/edit#slide=id.p)
-- [x] 20 min -> 20 slides / 8 Questions = 2,5 slides per topic -> 5 slides for each
+## Different Branches
+We have to different branches with different methods with what kind of Networks we are training our Agent
 
-Questions:
+1. "main" branch
 
-- [x] What is the problem? Describe the environment using mathematics (Ari)
-- [x] How has the problem been solved so far? What are the drawbacks of that solution? (Philipp)
-- [x] Why can RL solve the problem in a better manner? (Dennis)
-- [x] What are the metrics (figures of merit)? When is a solution good enough for that problem? (Philipp)
-- [x] Which Algorithms are the authors testing? Are they a good choice? (Dennis)
-- [x] Do they achieve a better solution compared to the previous solutions? (Ari)
-- [x] What could be changed / improved (in our opinion)?
-- [x] A few simulations that confirm our proposals for improvement
+here we work with a Convolutional neural network (CNN) which can operate with 3D datas and the orientation of TCP 
+will inserted just in the Fully Connected Layer (FC).
 
+2. "working-secondbranch"
+
+in that Version we also work with a CNN but we are not implementing the orientation of the TCP in the CNN.
+
+## Usage
+ In our environment we use the following functions based on the gymnasium environment
+
+ - step(): updates the environment based on the actions of the agent
+
+ - Reset(): resets the environment an set the enviroment to initial settings (TCP on Startposition, Reard to zero, Observation, Kinematics)
+
+ - render(): visulize the Helix, current TCP position with current orientation (arrow) and the target voxel
+ 
+<img src="./images_read_me/HelixVisu.PNG" alt="drawing" width="500"/>
+
+Here you can see the model of our environment in which the robotarm has to be trained
+
+## Overview with Class Diagramm
+In the following figure you can see a class diagramm to give an overview of our Code...
+
+<img src="./images_read_me/Classdiagram.PNG" alt="drawing" width="500"/>
