@@ -1,0 +1,9 @@
+epsilon reduced: 0.5904900000000002
++++++++++++++++++++++++++++Start Episode+++++++++++++++++++++++++++++++++++
+exploring: random action
+current TCP Position: [1.20e-05 0.00e+00 7.97e-04]
+Closest Helix Point: [0. 0. 0.]
+Min Distance to Helix: 0.000797
+TCP on Helix: True
+Current TCP Orientation: [ 0.1  0.1 90. ]
+Total Reward: 10
