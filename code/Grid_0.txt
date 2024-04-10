@@ -917,3 +917,8 @@ exploring: random action
 exploring: random action
 Episode: 10/10, Total Reward: 16, Total Steps: 3, Epsilon: 1.00
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+Episode: 1/10, Total Reward: -2, Total Steps: 1, Epsilon: 1.00
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+exploring: random action
+exploring: random action

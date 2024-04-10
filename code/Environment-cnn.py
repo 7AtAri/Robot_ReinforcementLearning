@@ -357,7 +357,7 @@ class RobotEnvironment(gym.Env):
         return self.reward
     
 
-    def render(self, new_episode=False):
+    def render(self):
         """
 
         This function visualizes the voxel space with the helix path and highlights the TCP position
@@ -366,7 +366,7 @@ class RobotEnvironment(gym.Env):
         Returns:
             None
         """
-        new_episode = new_episode
+    
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(*np.where(self.voxel_space == 1), c='r', s=40, alpha=1)  # helix end points
@@ -396,13 +396,34 @@ class RobotEnvironment(gym.Env):
         #plt.legend()
         #plt.show()
 
-      
+        # Create directory if not exists
         if not os.path.exists('ParamCombi1'):
             os.makedirs('ParamCombi1')
         # Create directory if not exists
         if not os.path.exists('ParamCombi2'):
             os.makedirs('ParamCombi2')
-            
+        
+        # to check if a new episode has started
+        new_episode = False 
+
+        # check if one of the folders contains the MSE file:
+        # Specify the folder path and the filename
+        folder_path1 = 'ParamCombi1'
+        folder_path2 = 'ParamCombi2'
+        filename = 'MSE.png'
+
+        # Construct the full path to the file
+        file_path1 = os.path.join(folder_path1, filename)
+        file_path2 = os.path.join(folder_path2, filename)
+
+        if os.listdir('ParamCombi1') == [] or os.listdir('ParamCombi2') == []:
+            new_episode = True
+
+        # check if the MSE file exists in folder 1 (this means that the episode has ended)
+        if os.path.exists(file_path1):
+            if os.path.exists(file_path2):
+                new_episode = True
+
         if new_episode:
             # check which folder contains more elements and delete the one with less elements and save in the folder which has less files
             num_files_in_ParamCombi1 = len(os.listdir("ParamCombi1"))

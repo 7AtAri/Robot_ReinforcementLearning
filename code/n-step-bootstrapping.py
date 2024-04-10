@@ -229,8 +229,7 @@ if __name__ == "__main__":
             truncated = False
             step_counter = 0
             total_reward = 0
-            if episode == 0:
-                new_episode = True
+
             #prev_episode_steps = 0 # counter for max steps per episode
             #episode_with_more_steps = False
             while not terminated and not truncated:
@@ -260,7 +259,7 @@ if __name__ == "__main__":
                 #    episode_with_more_steps = True
                 #    prev_episode_steps = step_counter  # Update the number of steps in the previous episode
                 if step_counter % 2 == 0:  # every 4 steps
-                    env.render(new_episode)
+                    env.render()
                     
             while len(agent.n_step_buffer) > 0:
                 n_step_reward, n_step_state, n_step_done = agent.calculate_n_step_info()
