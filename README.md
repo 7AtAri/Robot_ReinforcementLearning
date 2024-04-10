@@ -39,13 +39,13 @@ in that Version we also work with a CNN but we are not using the orientation of 
 
  - step(): updates the environment based on the actions of the agent
 
- - Reset(): resets the environment an set the enviroment to initial settings (TCP on Startposition, Reard to zero, Observation, Kinematics)
+ - Reset(): resets the environment to initial settings (TCP on Startposition, Reard to zero, Observation, Kinematics)
 
- - render(): visulize the Helix, current TCP position with current orientation (arrow) and the target voxel
+ - render(): to visualize the Helix, current TCP position with current orientation (arrow) and the target voxel
  
 <img src="./images_read_me/HelixVisu.PNG" alt="drawing" width="500"/>
 
-Here you can see the model of our environment in which the robotarm has to be trained
+Here you can see the model of our environment in which the robotarm is trained
 
 ## Overview with Class Diagramm
 In the following figure you can see a class diagramm to give an overview of our Code...
