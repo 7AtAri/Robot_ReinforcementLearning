@@ -4,7 +4,7 @@
 from the project description given:
 "Please observe that the actions are given as “deltas” and not as absolute angles for the joints, that means that the Agent must decide if the angles increase, decrease or keep a joint angle. However, that must be defined for all six joints, meaning that the Agent can take at every Time Stamp $3^6$ possible Actions (= 729)! Every joint angle is bounded to $-180°<θ_i<+180°  ∀i∈[1,2,3,4,5,6]$."
 
-Action pro joint〖δθ〗_i [Degree]
+Action pro joint δθ_i [Degree]
 
 - Decrease: - 0.1°
 
