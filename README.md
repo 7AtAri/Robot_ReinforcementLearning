@@ -51,3 +51,8 @@ Here you can see the model of our environment in which the robotarm is trained
 In the following figure you can see a class diagramm to give an overview of our Code...
 
 <img src="./images_read_me/Classdiagram.PNG" alt="drawing" width="500"/>
+
+## Presentation of the project:
+
+[slideshow](https://docs.google.com/presentation/d/1K-Z_9DINiN5YOrNhcSbybdJc9_H6uGj8DYdVeNjimRg/edit?usp=sharing)
+
