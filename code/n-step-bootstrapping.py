@@ -467,7 +467,7 @@ if __name__ == "__main__":
         #plt.show()
 
         # Save the model weights after training for each parameter combination
-        save_model_weights(agent, os.path.join("model_weights", f"model_weights_{i}.pth"))
+        save_model_weights(agent, os.path.join(f"model_weights_{i}.pth"))
 
 
 
