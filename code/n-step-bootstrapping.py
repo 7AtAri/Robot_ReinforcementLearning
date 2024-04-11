@@ -441,7 +441,7 @@ if __name__ == "__main__":
         agent = DQNAgent(spatial_data_shape, actions, epsilon_decay, epsilon_min, device)
 
         #Loadbefehl stellt alten Stand wieder her
-        #load_model_weights("model_weights/model_weights.pth")
+        load_model_weights("model_weights/model_weights.pth")
         #print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
 
         # initialize the mse list
