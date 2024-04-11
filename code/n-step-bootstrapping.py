@@ -317,20 +317,28 @@ class DQNAgent:
         """
         self.target_network.load_state_dict(self.q_network.state_dict())
 
+def save_model_weights(agent, file_path):
+    """Save the weights of the agent's Q-network to a file."""
+    torch.save(agent.q_network.state_dict(), file_path)
+def load_model_weights(agent, file_path):
+    """Load the weights of the Q-network from a file."""
+    agent.q_network.load_state_dict(torch.load(file_path))
+
 
 
 if __name__ == "__main__":
 
     # grid for hyperparameters grid search
-    grid = [{'batch_size': 8, 'episodes': 20, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
-                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
-                {'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
-                {'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
-                {'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
-                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
-                {'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
-                {'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
-                {'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}]
+    grid = [{'batch_size': 8, 'episodes': 10, 'epsilon_decay': 0.9, 'epsilon_min': 0.25},
+                #{'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.95, 'epsilon_min': 0.1},
+                #{'batch_size': 8, 'episodes': 100, 'epsilon_decay': 0.995, 'epsilon_min': 0.2},
+                #{'batch_size': 16, 'episodes': 100, 'epsilon_decay': 0.9, 'epsilon_min': 0.2},
+                #{'batch_size': 32, 'episodes': 500, 'epsilon_decay': 0.95, 'epsilon_min': 0.2},
+                #{'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.99, 'epsilon_min': 0.2},
+                #{'batch_size': 32, 'episodes': 200, 'epsilon_decay': 0.9, 'epsilon_min': 0.4},
+                #{'batch_size': 16, 'episodes': 300, 'epsilon_decay': 0.95, 'epsilon_min': 0.3},
+                #{'batch_size': 64, 'episodes': 1000, 'epsilon_decay': 0.995, 'epsilon_min': 0.1}
+            ]
     
     # check which device is available
     #device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
@@ -507,3 +515,6 @@ if __name__ == "__main__":
         # Save the figure
         plt.savefig(os.path.join(folder_name, 'MSE.png'))
         #plt.show()
+
+        # Save the model weights after training for each parameter combination
+        save_model_weights(agent, os.path.join("model_weights", f"model_weights_{i}.pth"))
