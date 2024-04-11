@@ -1,16 +1,16 @@
 from PIL import Image
 import os
 # Verzeichnis mit Bildern
-image_folder = 'Figure_1'
+image_folder = 'ParamCombi2'
 
 # Dateinamen der Bilder
-images = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(".png")]
+images = [os.path.join(image_folder, img) for img in os.listdir(image_folder) if img.endswith(".jpeg")]
 
 # Bilder in der richtigen Reihenfolge sortieren
 images.sort(key=lambda x: int(x.split('_')[-1].split('.')[0]))
 
 # GIF erstellen
-gif_path = 'Figure_1/Figure_1.gif'
+gif_path = 'ParamCombi2/Figure_1.gif'
 
 # Bilder öffnen und zu GIF hinzufügen
 frames = []
