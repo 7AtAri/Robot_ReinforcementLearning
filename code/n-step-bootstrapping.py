@@ -282,6 +282,12 @@ class DQNAgent:
         """
         self.target_network.load_state_dict(self.q_network.state_dict())
 
+def save_model_weights(agent, file_path):
+    """Save the weights of the agent's Q-network to a file."""
+    torch.save(agent.q_network.state_dict(), file_path)
+def load_model_weights(agent, file_path):
+    """Load the weights of the Q-network from a file."""
+    agent.q_network.load_state_dict(torch.load(file_path))
 
 if __name__ == "__main__":
 
@@ -369,7 +375,7 @@ if __name__ == "__main__":
                 #     env.render()
                 min_distance_tcp_helix = info['closest_distance']
                 closest_helix_point = info['closest_point']
-                current_tcp_position = info['tcp_position']
+                current_tcp_position = info['tcp_position_in_coordinates']
                 current_tcp_orientation = info['current_orientation']
                 tcp_on_helix = info['tcp_on_helix']
 
@@ -460,7 +466,8 @@ if __name__ == "__main__":
         plt.savefig(os.path.join(folder_name, 'MSE.png'))
         #plt.show()
 
-
+        # Save the model weights after training for each parameter combination
+        save_model_weights(agent, os.path.join("model_weights", f"model_weights_{i}.pth"))
 
 
 
