@@ -22,22 +22,25 @@ We have two different branches that have different Deep Q-Networks implemented.
 
 ### 1. "main" branch
 
-The main file of the 'main' branch is a jupyter notebook in the folder "code": **Multimodal_Deep_Q_Learning.ipynb**
+The main file of the 'main' branch is a jupyter notebook in the folder "code": **[Multimodal_Deep_Q_Learning.ipynb](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/code/Multimodal_Deep_Q_Learning.ipynb)**
 
 - Here we work with a Late Fusion Convolutional neural network (CNN) which can operate with 3D data and the orientation of TCP that is inserted just in the Fully Connected Layer (FC).
 
-- To run [the main notebook](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/code/Multimodal_Deep_Q_Learning.ipynb), please click through its cells from top to bottom.
+- To run , please click through its cells from top to bottom.
+- It includes the network, agent, environment, and helperclasses and functions
 
 ### 2. "working-secondbranch"
 
 The main files of 'working-secondbranch' are in the folder "code":
 
-* **n-step-bootstrapping.py**
-* **Environment-cnn.py**
-
 - In that Version we also work with a CNN but we are not using the orientation of the TCP.
+
+- To run the project use: **[n-step-bootstrapping.py](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/working-secondbranch/code/n-step-bootstrapping.py)**
+
+- Here our [old Environment](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/working-secondbranch/code/Environment-cnn.py) is in a separate file.
+
+
   
-- To run the project please run the file [n-step-bootstrapping.py](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/working-secondbranch/code/n-step-bootstrapping.py)
 
 ## Usage
  In our environment we use the following functions based on the gymnasium environment
