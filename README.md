@@ -20,24 +20,24 @@ Install the required dependencies
 ## Different Branches
 We have two different branches that have different Deep Q-Networks implemented.
 
-**1. "main" branch**
+### 1. "main" branch**
 
-The main file of the 'main' branch is a jupyter notebook in the folder "code": ***Multimodal_Deep_Q_Learning.ipynb***
+The main file of the 'main' branch is a jupyter notebook in the folder "code": **Multimodal_Deep_Q_Learning.ipynb**
 
-To run [the main notebook](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/code/Multimodal_Deep_Q_Learning.ipynb), please click through its cells from top to bottom.
+- Here we work with a Late Fusion Convolutional neural network (CNN) which can operate with 3D data and the orientation of TCP that is inserted just in the Fully Connected Layer (FC).
 
-Hre we work with a Late Fusion Convolutional neural network (CNN) which can operate with 3D data and the orientation of TCP that is inserted just in the Fully Connected Layer (FC).
+- To run [the main notebook](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/main/code/Multimodal_Deep_Q_Learning.ipynb), please click through its cells from top to bottom.
 
-**2. "working-secondbranch"**
-
-in that Version we also work with a CNN but we are not using the orientation of the TCP.
+### 2. "working-secondbranch"**
 
 The main files of 'working-secondbranch' are in the folder "code":
 
-* ***n-step-bootstrapping.py***
-* ***Environment-cnn.py***
+* **n-step-bootstrapping.py**
+* **Environment-cnn.py**
 
-To run the project please run the file [n-step-bootstrapping.py](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/working-secondbranch/code/n-step-bootstrapping.py)
+- In that Version we also work with a CNN but we are not using the orientation of the TCP.
+  
+- To run the project please run the file [n-step-bootstrapping.py](https://github.com/7AtAri/Robot_ReinforcementLearning/blob/working-secondbranch/code/n-step-bootstrapping.py)
 
 ## Usage
  In our environment we use the following functions based on the gymnasium environment
