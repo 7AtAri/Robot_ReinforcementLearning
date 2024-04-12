@@ -317,14 +317,6 @@ class DQNAgent:
         """
         self.target_network.load_state_dict(self.q_network.state_dict())
 
-def save_model_weights(agent, file_path):
-    """Save the weights of the agent's Q-network to a file."""
-    torch.save(agent.q_network.state_dict(), file_path)
-def load_model_weights(agent, file_path):
-    """Load the weights of the Q-network from a file."""
-    agent.q_network.load_state_dict(torch.load(file_path))
-
-
 
 if __name__ == "__main__":
 
@@ -382,50 +374,38 @@ if __name__ == "__main__":
     epsilon_decay = 0
     epsilon_min = 0
 
-    """
-        Wechsel zwischen Save und Load Mode:
+    load_mode = False
+    save = True
 
-        SAVE:
-            -Save Befehl in 507 ausklammern
-            -Wenn altes Load vorhanden aus dem Ordner "model_weights" entfernen
-            -Nur ein Grid anlegen (muss das selbe wie im LOAD sein!!!)
-            -Load Befehl in 385 einklammern
+    if save:
+        def save_model_weights(agent, file_path, batch_size=32, episodes=1000, state_size= [env.observation_space[0].shape, env.observation_space[1].shape] , actions = env.action_space.shape[0]):
+            """Save the weights of the agent's Q-network to a file."""
+            torch.save(agent.q_network.state_dict(), file_path)
+            checkpoint = {
+                'batch_size':  batch_size, 
+                'episodes': episodes,
+                'state_size': state_size,
+                'actions': actions, 
+                "model_state": agent.q_network.state_dict(),
+                "optim_state": agent.optimizer.state_dict(),
+            }
+            torch.save(checkpoint, file_path)
+            
+            print(agent.optimizer.state_dict())
 
-        LOAD:
-            -Save Befehl in 495 einklammern
-            -Darauf achten das Gridparaneter gleich sind 
-            -Load Befehl in 379 ausklammern
+    if load_mode:
+        def load_model_weights(file_path):
+            """Load the weights of the Q-network from a file."""
+            #grid = [{'batch_size': 8, 'episodes': 10, 'epsilon_decay': 0.9, 'epsilon_min': 0.25}]
+            loaded_checkpoint = torch.load(file_path)
 
-        DO TO: Episodenstartwert anpassen
-    """
-    def save_model_weights(agent, file_path, batch_size, episodes, state_size= env.observation_space.shape , actions = env.action_space.shape[0]):
-        """Save the weights of the agent's Q-network to a file."""
-        torch.save(agent.q_network.state_dict(), file_path)
-        checkpoint = {
-            'batch_size':  batch_size, 
-            'episodes': episodes,
-            'state_size': state_size,
-            'actions': actions,
-            "model_state": agent.q_network.state_dict(),
-            "optim_state": agent.optimizer.state_dict(),
-        }
-        torch.save(checkpoint, file_path)
-        
-        print(agent.optimizer.state_dict())
+            agent.q_network = QNetworkCNN(loaded_checkpoint["state_size"], loaded_checkpoint["actions"]).to(device)
+            agent.optimizer = optim.Adam(agent.q_network.parameters(), lr=0)
 
+            agent.q_network.load_state_dict(loaded_checkpoint["model_state"])
+            agent.optimizer.load_state_dict(loaded_checkpoint["optim_state"])
 
-    def load_model_weights(file_path):
-        """Load the weights of the Q-network from a file."""
-        #grid = [{'batch_size': 8, 'episodes': 10, 'epsilon_decay': 0.9, 'epsilon_min': 0.25}]
-        loaded_checkpoint = torch.load(file_path)
-
-        agent.q_network = QNetworkCNN(loaded_checkpoint["state_size"], loaded_checkpoint["actions"]).to(device)
-        agent.optimizer = optim.Adam(agent.q_network.parameters(), lr=0)
-
-        agent.q_network.load_state_dict(loaded_checkpoint["model_state"])
-        agent.optimizer.load_state_dict(loaded_checkpoint["optim_state"])
-
-        print(agent.optimizer.state_dict())
+            print(agent.optimizer.state_dict())
 
 
      # # Training loop
@@ -441,7 +421,8 @@ if __name__ == "__main__":
         agent = DQNAgent(spatial_data_shape, actions, epsilon_decay, epsilon_min, device)
 
         #Loadbefehl stellt alten Stand wieder her
-        load_model_weights("model_weights/model_weights.pth")
+        if load_mode:
+            load_model_weights("model_weights/model_weights.pth")
         #print(f"spatial_data_shape: {spatial_data_shape}, Action size: {actions}")
 
         # initialize the mse list
@@ -566,4 +547,4 @@ if __name__ == "__main__":
 
         # Save the model weights after training for each parameter combination
         # Im Loadfall ausklammern
-        save_model_weights(agent, os.path.join("model_weights", f"model_weights.pth"), 8, 10)
+        save_model_weights(agent, os.path.join("model_weights", f"model_weights.pth"))
